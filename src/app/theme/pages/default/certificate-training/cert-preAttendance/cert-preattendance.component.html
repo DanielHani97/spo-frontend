@@ -1,0 +1,131 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				Kemaskini Kehadiran
+			</h3>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Maklumat
+					</h3>
+					</div>
+				</div>
+			<div class="tab-content">
+					<div class="tab-pane active" id="m_user_profile_tab_1">
+						<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="certForm" id="certForm" (ngSubmit)="onSubmit()">
+							<div class="m-portlet__body">
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Nama Peserta
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="name">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Email
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="email">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Badan Persijilan
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" disabled="true">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Nama Persijilan
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="title">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Tarikh Mula
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="startDate">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Tempat
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="place">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-title">
+						<h3 class="m-portlet__head-text">
+							Pengesahan Kehadiran
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="belowForm" id="belowForm" (ngSubmit)="onSubmit()">
+		<div class="m-portlet__body">
+			<div class="col m--align-center">
+
+						<div class="m-radio-inline">
+							<label class="m-radio m-radio--bold m-radio--state-brand">
+							<input formControlName="status" name="status" type="radio" value="1" id="yesCheck" 			(click)="yesCheck()"> Hadir
+								<span></span>
+							</label>
+							<label class="m-radio m-radio--bold m-radio--state-brand">
+							<input formControlName="status" name="status" type="radio" value="2" id="noCheck" 			(click)="noCheck()"> Tidak Hadir
+								<span></span>
+							</label>
+						</div>
+<br>
+				<div class="form-group m-form__group row" id="ifNo" style="visibility:hidden;">
+					<label class="col-3 col-form-label" for="example-text-input">
+						Catatan (Jika tidak hadir)
+					</label>
+					<div class="col-7">
+						<textarea class="form-control m-input m-input" rows="3" formControlName="remarks" name="remarks"></textarea>
+					</div>
+				</div>
+			</div>
+<br>
+			<div class="col m--align-center">
+				<button type="submit" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-success">
+                  Hantar
+                </button>
+				<button type="reset" class="btn btn-outline-danger" (click)="redirectListPage()">
+                  Kembali
+                </button>
+			</div>
+		</div>
+ 	</form>
+</div>

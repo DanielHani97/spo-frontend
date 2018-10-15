@@ -1,0 +1,188 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Prasarana
+			</h3>
+			
+		</div>
+		<div>
+			<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
+				<a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+					<i class="la la-plus m--hide"></i>
+					<i class="la la-ellipsis-h"></i>
+				</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Kelulusan Prasarana
+					</h3>
+				</div>
+			</div>
+		</div>
+		<!--begin::Form-->
+		<form class="m-form m-form--fit m-form--label-align-right"  novalidate [formGroup]="infraForm" id="infraForm" (ngSubmit)="onSubmit()">
+			<div class="m-portlet__body">
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Pemohon
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="pemohon" name="pemohon">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Agensi
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="agency" name="agency">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Jenis
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="type" name="type">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Tujuan
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<div><textarea class="form-control m-input" rows="5" formControlName="remarks" name="remarks"></textarea></div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Sistem Operasi
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="os" name="os">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Virtual CPU (Core)
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="vcpu" name="vcpu">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Memori (GB)
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="memori" name="memori">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Root Disk (GB)
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="rootDisk" name="rootDisk">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Ephemeral Disk (GB)
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="ephemeralDisk" name="ephemeralDisk">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Swap Disk (GB)
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="swapDisk" name="swapDisk">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Persistent Disk (GB)
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="persistentDisk" name="persistentDisk">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Language
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="language" name="language">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Framework
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="framework" name="framework">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Database
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="database" name="database">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Web Server
+					</label>
+					<div class="col-7">
+						<input class="form-control m-input" type="text" formControlName="webServer" name="webServer">
+					</div>
+				</div>
+			</div>
+
+			<div class="m-portlet__foot m-portlet__foot--fit">
+				<div class="m-form__actions m-form__actions">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">
+							Catatan
+						</label>
+						<div class="col-lg-7 col-md-7 col-sm-12">
+							<div><textarea class="form-control m-input" rows="5" formControlName="adminRemarks" name="adminRemarks"></textarea></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-9 ml-lg-auto">
+							<button type="button" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-success" (click)="accepted()">
+								Terima
+							</button>
+							<button type="button" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-danger" (click)="rejected()">
+								Tolak
+							</button>
+							<button type="button" class="btn btn-outline-primary" (click)="redirectListPage()">
+								Kembali
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Portlet-->
+</div>

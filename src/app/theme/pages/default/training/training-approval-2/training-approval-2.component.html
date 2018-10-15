@@ -1,0 +1,184 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				Kelulusan Permohonan
+			</h3>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Maklumat Latihan
+					</h3>
+					</div>
+				</div>
+			<div class="tab-content">
+					<div class="tab-pane active" id="m_user_profile_tab_1">
+						<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="trainingForm" id="trainingForm" (ngSubmit)="onSubmit()">
+							<div class="m-portlet__body">
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Nama Peserta
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="name">
+									</div>
+									<button type="reset" class="btn btn-outline-primary" (click)="LihatProfilPage()">
+					                  Lihat Profil
+					                </button>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Agensi
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="agency">
+									</div>
+								</div>
+								<!-- <div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Pencapaian Taksiran
+									</label>
+
+									<div class="col-5">
+									<div class="progress">
+									<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 60%"></div>
+									</div>
+									</div> 64%
+								</div> -->
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Nama Latihan
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="title">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Teknologi
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="technology">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+                  <label for="example-text-input" class="col-2 col-form-label">
+                    Markah
+									</label>
+									<div class="col-7">
+                    <div class="m-widget4__progress-wrapper">
+                      <span class="m-widget17__progress-number">
+                        {{mark}}%
+                      </span>
+                      <div class="progress m-progress--sm">
+                        <div class="progress-bar bg-brand" role="progressbar" [style.width]="mark + '%'" aria-valuenow="65" aria-valuemin="0" aria-valuemax="23"></div>
+                      </div>
+                    </div>
+									</div>
+                </div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Tarikh Mula
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="startDate">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Tarikh Tamat
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="endDate">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Tahap Kesukaran
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="level">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-title">
+						<h3 class="m-portlet__head-text">
+							Pengesahan Kelulusan
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="belowForm" id="belowForm" (ngSubmit)="onSubmit()">
+		<div class="m-portlet__body">
+			<div class="col m--align-center">
+
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label">
+						Cadangan Kelayakan
+					</label>
+				<div class="m-radio-inline" class="col-5 col-form-label">
+					<label class="m-radio m-radio--bold m-radio--state-brand">
+					<input formControlName="qualification" name="qualification" type="radio" value="1"> Layak
+						<span></span>
+					</label>
+					<label class="m-radio m-radio--bold m-radio--state-brand">
+					<input formControlName="qualification" name="qualification" type="radio" value="2"> Tidak Layak
+						<span></span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">
+					Catatan Coach
+				</label>
+				<div class="col-7">
+					<textarea class="form-control m-input m-input" rows="3" formControlName="coach_remarks" name="coach_remarks"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">
+					Catatan Pentadbir
+				</label>
+				<div class="col-7">
+					<textarea class="form-control m-input m-input" rows="3" formControlName="admin_remarks" name="admin_remarks"></textarea>
+				</div>
+			</div>
+			<div class="m-portlet__foot m-portlet__foot--fit">
+					<div class="m-form__actions">
+						<div class="row">
+						<div class="col m--align-center">
+		                <button type="button" class="btn btn-outline-primary" (click)="redirectListPage()"> <i class="fa fa-chevron-left"></i>
+		                  Kembali
+		                </button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>

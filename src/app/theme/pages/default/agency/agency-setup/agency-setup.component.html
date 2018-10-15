@@ -1,0 +1,155 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Agensi
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a href="#" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Tetapan Global
+						</span>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Agensi
+						</span>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Tetapan Agensi
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<div class="row">
+		<div class="col-md-12">
+      <!--begin::Portlet-->
+      <div class="m-portlet m-portlet--tab">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                Cipta Agensi Baru
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="agencyForm" id="agencyForm" (ngSubmit)="onSubmit()">
+          <div class="m-portlet__body">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								Nama Agensi *
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<input type="text" class="form-control m-input" formControlName="name" name="name" placeholder="">
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								Nama Singkatan *
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<input type="text" class="form-control m-input" formControlName="code" name="code" placeholder="">
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								Alamat
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<input type="text" class="form-control m-input" formControlName="address" name="address" placeholder="">
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								Negeri
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<select #state (change)="setSBState(state.value)" formControlName="state" name="state">
+										<option value="">Sila Pilih</option>
+								    <option *ngFor="let state of stateLs" [value]="state.id">
+								        {{state.name}}
+								    </option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								Bandar
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<select #city (change)="setSBCity(city.value)" formControlName="city" name="city">
+										<option value="">Sila Pilih</option>
+										<option *ngFor="let city of cities" [value]="city.id">
+												{{city.name}}
+										</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								Poskod
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<input type="text" class="form-control m-input" formControlName="postcode" name="postcode" placeholder="">
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">
+								No Tel. *
+							</label>
+							<div class="col-lg-4 col-md-9 col-sm-12">
+								<input type="text" class="form-control m-input" formControlName="phoneNo" name="phoneNo" placeholder="">
+							</div>
+						</div>
+        			</div>
+					<div class="m-portlet__foot m-portlet__foot--fit">
+						<div class="m-form__actions m-form__actions">
+							<div class="row">
+								<div class="col-lg-9 ml-lg-auto">
+									<button type="submit" class="btn btn-outline-success">
+	                  					Submit
+	               					 </button>
+	               					 <button type="reset" class="btn btn-outline-danger" (click)="redirectAgencyPage()">
+	                 					 Cancel
+	                				</button>
+								</div>
+							</div>
+						</div>
+					</div>
+      </form>
+      </div>
+      <!--end::Portlet-->
+    </div>
+  </div>
+</div>

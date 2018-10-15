@@ -1,0 +1,76 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				Senarai Penilaian Peserta Kepakaran
+			</h3>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Maklumat
+					</h3>
+					</div>
+				</div>
+			<div class="tab-content">
+					<div class="tab-pane active" id="m_user_profile_tab_1">
+						<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="capForm" id="capForm" (ngSubmit)="onSubmit()">
+							<div class="m-portlet__body">
+								<div class="form-group m-form__group row"  *ngFor="let item of users">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Nama Peserta
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" type="email" formControlName="name" name="name" placeholder={{item.user.name}} >
+									</div>
+									<button id="{{item.id}}" (click)="redirectValuation(item.id)"  class="btn btn-outline-primary" type="button">
+									Nilai
+									</button>
+								</div>
+							</div>
+						</form>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="m_modal_kosong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--bordered">
+                <h5 class="modal-title text-white" id="exampleModalLabel">
+                    Tiada Peserta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body col-centered">
+                <div class="form-group m-form__group row">
+                    <label class="col-form-label col-lg-12 col-sm-12">
+                        <p class="lead">Tiada permohonan peserta buat masa ini.</p>
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-centered">
+                        <button type="button" class="btn btn-outline-success" (click)="close()">
+                            Okay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

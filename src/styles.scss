@@ -1,0 +1,263 @@
+/* You can add global styles to this file, and also import other style files */
+.uploader input {
+  display: none;
+}
+
+.uploader {
+  -webkit-align-items: center;
+  align-items: center;
+  background-color: #efefef;
+  background-color: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  display: -webkit-flex;
+  display: flex;
+  height: 220px;
+  -webkit-justify-content: center;
+  justify-content: center;
+  outline: 3px dashed #ccc;
+  outline-offset: 5px;
+  position: relative;
+  width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.uploader img,
+.uploader .icon {
+  pointer-events: none;
+}
+
+.uploader,
+.uploader .icon {
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  -ms-transition: all 100ms ease-in;
+  -o-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+}
+
+.uploader .icon {
+  color: #eee;
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 5em;
+}
+
+.uploader img {
+  left: 50%;
+  opacity: 0;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transition: all 300ms ease-in;
+  -moz-transition: all 300ms ease-in;
+  -ms-transition: all 300ms ease-in;
+  -o-transition: all 300ms ease-in;
+  transition: all 300ms ease-in;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  //z-index: -1;
+}
+
+.uploader img.loaded {
+  opacity: 1;
+}
+
+.star-checked {
+    color: orange;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+.size-2{
+  font-size: 2rem !important;
+}
+.size-3{
+  font-size: 2.5rem !important;
+}
+.hoverDiv:hover {
+  border-left: solid 5px #36a3f7 !important;
+  box-shadow: 0 5px 10px 2px rgba(52,191,163,.19);
+}
+.hideShowBtn {
+    display: none;
+}
+
+.hoverDiv:hover .hideShowBtn {
+    display: block;
+}
+
+.m-wizard.m-wizard--2 .m-wizard__head {
+    position: relative;
+    margin: 3rem 0 0 0;
+    padding: 0 5rem;
+}
+
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__progress {
+    width: 78%;
+    margin: 0 auto;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__progress .progress {
+    height: 0.36rem;
+    -webkit-border-radius: 0.71rem;
+    -moz-border-radius: 0.71rem;
+    -ms-border-radius: 0.71rem;
+    -o-border-radius: 0.71rem;
+    border-radius: 0.71rem;
+}
+.progress {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+.m-wizard.m-wizard--2.m-wizard--success .m-wizard__head .m-wizard__progress .progress .progress-bar {
+    background-color: #00c5dc;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__progress .progress .progress-bar {
+    -webkit-border-radius: 0.71rem;
+    -moz-border-radius: 0.71rem;
+    -ms-border-radius: 0.71rem;
+    -o-border-radius: 0.71rem;
+    border-radius: 0.71rem;
+}
+.progress .progress-bar {
+    transition: all 0.5s ease;
+}
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    background-color: #5867dd;
+    transition: width 0.6s ease;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2.85rem;
+    padding: 0;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step {
+    width: 20%;
+    padding: 0 0.5rem 0 0.5rem;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number {
+    text-decoration: none;
+    outline: none !important;
+}
+a, area, button, [role="button"], input:not([type="range"]), label, select, summary, textarea {
+    touch-action: manipulation;
+}
+a {
+    color: #5867dd;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+.m-wizard.m-wizard--2.m-wizard--success .m-wizard__head .m-wizard__steps .m-wizard__step.m-wizard__step--current .m-wizard__step-number > span {
+    background-color: #00c5dc;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number > span {
+    background-color: #e2e5ec;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number > span {
+    position: relative;
+    z-index: 1;
+    margin: -5.05rem auto 0 auto;
+    width: 4rem;
+    height: 4rem;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-info {
+    text-align: center;
+    padding-top: 0.5rem;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-info .m-wizard__step-title {
+    color: #898b96;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-info .m-wizard__step-title {
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0.6rem 0 0.7rem 0;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-info .m-wizard__step-desc {
+    color: #6f727d;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number > span > i {
+    color: #fff;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number > span > i {
+    font-size: 1.8rem;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number > span > i {
+    color: #fff;
+}
+.m-wizard.m-wizard--2 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-number > span > i {
+    font-size: 1.8rem;
+}
+.alert-custom1 {
+    color: #fff;
+    background-color: #2c2e3e;
+    border-color: #2c2e3e;
+}
+
+.custom-radio > span {
+    top: 20px !important;
+    left: 23px !important;
+}
+
+.custom-current-danger{
+  background-color: #f4516c !important;
+}
+
+.custom-current-danger:hover{
+  color: #fff !important;
+  background-color: #f22d4e !important;
+  border-color: #f12143 !important;
+}
+.custom-next:hover{
+  color: #fff !important;
+  background-color: #00a3b6 !important;
+  border-color: #0097a9 !important;
+}
+
+.ui-paginator{
+  text-align: center !important;
+}
+
+.ui-paginator-element{
+  padding: 5px !important;
+}
+
+dl, ol, ul {
+    list-style-type: none !important;
+}
+
+.icon-middle {
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.editableText {
+  text-decoration: underline;
+}
+
+.size-10{
+  font-size: 10rem !important;
+}

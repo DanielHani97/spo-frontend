@@ -1,0 +1,105 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Permohonan
+			</h3>
+
+		</div>
+		<div>
+			<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
+				<a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+					<i class="la la-plus m--hide"></i>
+					<i class="la la-ellipsis-h"></i>
+				</a>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Permohonan Peranan
+					</h3>
+				</div>
+			</div>
+		</div>
+		<!--begin::Form-->
+		<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="appForm" id="appForm" (ngSubmit)="onSubmit()">
+			<div class="m-portlet__body">
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Nama Penuh
+					</label>
+						<div class="col-7">
+							<input class="form-control m-input" type="text" name="name" formControlName="name">
+						</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Nama Agensi
+					</label>
+						<div class="col-7">
+							<input class="form-control m-input" type="text" name="agency" formControlName="agency">
+						</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Alamat Email
+					</label>
+						<div class="col-7">
+							<input class="form-control m-input" type="email" name="email" formControlName="email">
+						</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Peranan yang dimohon
+					</label>
+						<div class="col-7">
+							<select class="form-control m-input m-input--solid" name="role" formControlName="role">
+								<option value="0">Sila Pilih</option>
+								<option *ngFor="let role of roleLs" [value]="role.name">
+									{{role.rolename}}
+								</option>
+							</select>
+							<div *ngIf="isNotValid" style="color: #f4516c;font-weight: 400;font-size: .85rem;">This field is required.</div>
+						</div>
+
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Huraian
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<div><textarea class="form-control m-input" name="remarks" formControlName="remarks" rows="3"></textarea></div>
+					</div>
+				</div>
+			</div>
+			<div class="m-portlet__foot m-portlet__foot--fit">
+				<div class="m-form__actions m-form__actions">
+					<div class="row">
+						<div class="col-lg-9 ml-lg-auto">
+							<button type="submit" class="btn btn-outline-success" (submit)="submit()">
+								Hantar
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Portlet-->
+</div>

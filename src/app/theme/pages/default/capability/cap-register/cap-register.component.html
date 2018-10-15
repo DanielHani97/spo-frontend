@@ -1,0 +1,130 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				Senarai Kepakaran
+			</h3>
+		</div>
+		<div>
+			<button type="button" class="btn btn-outline-primary" (click)="redirecListPage()">
+				Kembali
+			</button>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--Begin::Main Portlet-->
+	<p-dataList [value]="capab" [paginator]="true" [rows]="5" [paginatorPosition]="both">
+		<ng-template let-cap pTemplate="item">
+			<!--begin:: Widgets/Top Products-->
+			<div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">{{cap.name}}</h3>
+						</div>
+					</div>
+					<div class="m-portlet__head-tools">
+						<ul class="m-portlet__nav">
+							<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<!--begin::Widget5-->
+					<div class="m-widget4">
+						<div class="m-widget4__item">
+							<div class="m-widget4__img m-widget4__img--logo">
+								<i class="la la-slideshare size-3 m--font-info"></i>
+							</div>
+							<div class="m-widget4__info">
+								<span class="m-widget4__title">{{cap.kepakaran.name}}</span>
+							</div>
+						</div>
+						<div class="m-widget4__item">
+							<div class="m-widget4__img m-widget4__img--logo">
+								<i class="la la-hourglass-start size-3 m--font-success"></i>
+							</div>
+							<div class="m-widget4__info">
+								<span class="m-widget4__title">Tarikh Mula: {{cap.starting_date | date : "dd/MM/yyyy"}}</span>
+								<br>
+								<span class="m-widget4__sub">
+								</span>
+							</div>
+							<span class="m-widget4__ext">
+								<span class="m-widget4__number m--font-danger">
+								</span>
+							</span>
+						</div>
+						<div class="m-widget4__item">
+							<div class="m-widget4__img m-widget4__img--logo">
+								<i class="la la-hourglass-end size-3 m--font-danger"></i>
+							</div>
+							<div class="m-widget4__info">
+								<span class="m-widget4__title">Tarikh Tamat: {{cap.ending_date | date : "dd/MM/yyyy"}}</span>
+								<br>
+								<span class="m-widget4__sub">
+								</span>
+							</div>
+							<span class="m-widget4__ext">
+								<span class="m-widget4__number m--font-danger">
+
+								</span>
+							</span>
+						</div>
+						
+						<p align="right">
+								<button (click)="redirectNewListPage(cap.id)" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn m-btn--pill    btn-outline-primary" type="button">
+									Mohon
+								</button>
+
+							<button (click)="redirectNewDetailsPage(cap.id)" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" type="button">
+								<i class="flaticon-more-v3"></i>
+							</button>
+						</p>
+					</div>
+					<!--end::Widget 5-->
+				</div>
+				<!--begin::Modal-->
+				
+				<!--end::Modal-->
+			</div>
+			<!--end:: Widgets/Top Products-->
+		</ng-template>>
+	</p-dataList>
+<div class="modal fade" id="m_modal_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header m-portlet m-portlet--{{confirmType}} m-portlet--head-solid-bg m-portlet--bordered">
+				<h5 class="modal-title text-white" id="exampleModalLabel">
+					Pengesahan
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">
+						&times;
+					</span>
+				</button>
+			</div>
+			<div class="modal-body col-centered">
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-12 col-sm-12">
+						<p class="lead">{{confirmMsg}}</p>
+					</label>
+				</div>
+				<div class="row">
+					<div class="col-centered">
+						<button type="reset" class="btn btn-outline-danger" data-dismiss="modal">
+							Batal
+						</button>
+						<button type="reset" class="btn btn-outline-success" (click)="onConfirm($event)" >
+							Teruskan
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

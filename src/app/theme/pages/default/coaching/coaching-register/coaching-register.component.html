@@ -1,0 +1,399 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Permohonan Coaching
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a href="#" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Coaching
+						</span>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Permohonan Coaching
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div>
+			<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
+				<a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+					<i class="la la-plus m--hide"></i>
+					<i class="la la-ellipsis-h"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Maklumat Coaching
+					</h3>
+				</div>
+			</div>
+		</div>
+		<!--begin::Form-->
+		<form enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="coachingForm" id="coachingForm" (ngSubmit)="onSubmit()" >
+			<div class="m-portlet__body">
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Nama Coaching*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<input type="text" class="form-control m-input" id="name" formControlName="name" name="name" placeholder="Nama Coaching" required="true">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Pemohon
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<input class="form-control m-input" type="email" formControlName="pemohon" name="pemohon">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Agensi
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<input class="form-control m-input" type="email" formControlName="agency" name="agency">
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Framework*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<select class="form-control m-input" #frontend (change)="setFrontend(frontend.value)" formControlName="frontend" name="frontend">
+							<option *ngFor="let frontendR of frontendLs" [value]="frontendR.id">
+							{{frontendR.name}}
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Tahap Kemahiran Framework*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+					<select class="form-control m-input" formControlName="frontendlevel" name="frontendlevel">
+						<option value="Permulaan">
+							Permulaan
+						</option>
+						<option value="Pertengahan">
+							Pertengahan
+						</option>
+						<option value="Mahir">
+							Mahir
+						</option>
+					</select>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Language*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<select class="form-control m-input" #backend (change)="setBackend(backend.value)" formControlName="backend" name="backend">
+							<option *ngFor="let backendR of backendLs" [value]="backendR.id">
+							{{backendR.name}}
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Tahap Kemahiran Language*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+					<select class="form-control m-input" formControlName="backendlevel" name="backendlevel">
+						<option value="Permulaan">
+							Permulaan
+						</option>
+						<option value="Pertengahan">
+							Pertengahan
+						</option>
+						<option value="Mahir">
+							Mahir
+						</option>
+					</select>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Database*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<select class="form-control m-input" #database (change)="setDatabase(database.value)" formControlName="database" name="database">
+							<option *ngFor="let databaseR of databaseLs" [value]="databaseR.id">
+							{{databaseR.name}}
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Tahap Kemahiran Database*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+					<select class="form-control m-input" formControlName="databaselevel" name="databaselevel">
+						<option value="Permulaan">
+							Permulaan
+						</option>
+						<option value="Pertengahan">
+							Pertengahan
+						</option>
+						<option value="Mahir">
+							Mahir
+						</option>
+					</select>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Penerangan Keperluan Coaching*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<textarea class="form-control m-input" id="Textarea" rows="5" formControlName="remarks" name="remarks"></textarea>
+					</div>
+				</div>
+
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						Ahli Pasukan*
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<table class="table m-table m-table--head-bg-brand">
+							<thead>
+                                <tr>
+
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+							<tbody>
+								<tr *ngFor="let userR of userArray; let i = index">
+
+									<th>{{userR.name}}</th>
+									<th>{{userR.email}}</th>
+									<th><span style="overflow: visible; width: 110px;">
+										<a (click)="onCheckOff(i)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Padam"><i class="la la-trash"></i></a>
+									</span></th>
+								</tr>
+							</tbody>
+						</table>
+						<div class="col-lg-7 col-md-7 col-sm-12">
+							<a href="#" class="btn btn-outline-primary" (click)="openModal()">
+								<span>
+									<i class="la la-plus"></i>
+									<span>
+										Tambah Peserta
+									</span>
+								</span>
+							</a>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						User Requirement Specification
+					</label>
+					<div class="col-9">
+						<label for="fileURS" class="btn btn-secondary m-btn m-btn m-btn--icon">
+								<i class="la la-cloud-upload"></i> Sila Pilih
+						</label>
+						&nbsp;&nbsp;
+						<span>{{ursName}}</span>
+						<input style="display:none" id="fileURS" (change)="fileURSChange($event)" #fileURS type="file"/>
+						<p>
+							<span class="m-form__help">
+								Fail: Format
+							 <code>.pdf</code> sahaja & Maksima saiz setiap fail adalah <code>10Mb</code>.
+							</span>
+						</p>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						System Requirement Specification
+					</label>
+					<div class="col-9">
+						<label for="fileSRS" class="btn btn-secondary m-btn m-btn m-btn--icon">
+								<i class="la la-cloud-upload"></i> Sila Pilih
+						</label>
+						&nbsp;&nbsp;
+						<span>{{srsName}}</span>
+						<input style="display:none" id="fileSRS" (change)="fileSRSChange($event)" #fileSRS type="file"/>
+						<p>
+							<span class="m-form__help">
+								Fail: Format
+							 <code>.pdf</code> sahaja & Maksima saiz setiap fail adalah <code>10Mb</code>.
+							</span>
+						</p>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						System Design Specification
+					</label>
+					<div class="col-9">
+						<label for="fileSDS" class="btn btn-secondary m-btn m-btn m-btn--icon">
+								<i class="la la-cloud-upload"></i> Sila Pilih
+						</label>
+						&nbsp;&nbsp;
+						<span>{{sdsName}}</span>
+						<input style="display:none" id="fileSDS" (change)="fileSDSChange($event)" #fileSDS type="file"/>
+						<p>
+							<span class="m-form__help">
+								Fail: Format
+							 <code>.pdf</code> sahaja & Maksima saiz setiap fail adalah <code>10Mb</code>.
+							</span>
+						</p>
+					</div>
+				</div>
+
+				<!-- <div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						User Requirement Specification
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<label class="custom-file">
+							<input class="custom-file-input" id="file1" type="file">
+							<span class="custom-file-control"></span>
+						</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						System Requirement Specification
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<label class="custom-file">
+							<input class="custom-file-input" id="file1" type="file">
+							<span class="custom-file-control"></span>
+						</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">
+						System Design Specification
+					</label>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<label class="custom-file">
+							<input class="custom-file-input" id="file1" type="file">
+							<span class="custom-file-control"></span>
+						</label>
+					</div>
+				</div> -->
+
+			</div>
+			<div class="m-portlet__foot m-portlet__foot--fit">
+				<div class="m-form__actions m-form__actions">
+					<div class="row">
+						<div class="col-lg-9 ml-lg-auto">
+							<button type="submit" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-success">
+								Hantar
+							</button>
+							<button type="reset" class="btn btn-outline-danger" (click)="redirectCoachingPage()">
+								Kembali
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								Tambah Peserta
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">
+									&times;
+								</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+								<div class="row align-items-center">
+									 <div class="col-xl-8 order-2 order-xl-1">
+				                        <div class="form-group m-form__group row align-items-center">
+				                            <div class="col-md-4">
+				                               <div class="m-input-icon m-input-icon--left">
+				                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="m_form_search">
+				                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+				                                        <span>
+				                                            <i class="la la-search"></i>
+				                                        </span>
+				                                    </span>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+								</div>
+							</div>
+								<div class="m-section__content">
+									<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30 collapse" id="m_datatable_group_action_form">
+										<div class="row align-items-center">
+											<div class="col-xl-12">
+												<div class="m-form__group m-form__group--inline">
+													<div class="m-form__control">
+														<div class="btn-toolbar">
+															<button class="btn btn-sm btn-primary" type="button" id="m_datatable_check_all">
+																Tambah Peserta
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="m_datatable" id="api_methods">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!--end::Form-->
+	</div>
+	<!--end::Portlet-->
+</div>
