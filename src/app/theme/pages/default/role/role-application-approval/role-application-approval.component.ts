@@ -16,94 +16,94 @@ import { RoleService } from '../../../../../services/setup/role.service';
 })
 export class RoleApplicationApprovalComponent implements OnInit, AfterViewInit {
 
-    appForm : FormGroup;
-    currentUser : any;
+    appForm: FormGroup;
+    currentUser: any;
 
-    roleLs : any[];
-    currentRole : any[];
+    roleLs: any[];
+    currentRole: any[];
 
-    isNotValid : boolean;
-    isEditable : boolean = true;
+    isNotValid: boolean;
+    isEditable: boolean = true;
 
-    app : AppAuthority;
+    app: AppAuthority;
 
     id: string;
     private sub: any;
 
 
     constructor(
-      private _script: ScriptLoaderService,
-      private roleService : RoleService,
-      private router : Router,
-      private route: ActivatedRoute
+        private _script: ScriptLoaderService,
+        private roleService: RoleService,
+        private router: Router,
+        private route: ActivatedRoute
     ) {
 
     }
     ngOnInit() {
 
-      this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
-      });
+        this.sub = this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
 
-      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-      this.appForm = new FormGroup({
-        name: new FormControl({value: '', disabled: true}),
-        agency: new FormControl({value: '', disabled: true}),
-        email: new FormControl({value: '', disabled: true}),
-        role: new FormControl({value: '', disabled: true}),
-        remarks: new FormControl({value: '', disabled: true}),
-        adminremarks: new FormControl(''),
-        status: new FormControl('')
-      });
+        this.appForm = new FormGroup({
+            name: new FormControl({ value: '', disabled: true }),
+            agency: new FormControl({ value: '', disabled: true }),
+            email: new FormControl({ value: '', disabled: true }),
+            role: new FormControl({ value: '', disabled: true }),
+            remarks: new FormControl({ value: '', disabled: true }),
+            adminremarks: new FormControl(''),
+            status: new FormControl('')
+        });
 
-      if(this.id){
-        this.roleService.getAppAuthById(this.id).subscribe(
-          success => {
+        if (this.id) {
+            this.roleService.getAppAuthById(this.id).subscribe(
+                success => {
 
-              var type = success.user.type;
-              var agencyName = "";
+                    var type = success.user.type;
+                    var agencyName = "";
 
-              if(type === "GOV"){
-                var agency = success.user.agency
-                if(agency){
-                  agencyName = agency.name;
+                    if (type === "GOV") {
+                        var agency = success.user.agency
+                        if (agency) {
+                            agencyName = agency.name;
+                        }
+                    } else {
+                        var company = success.user.company
+                        if (company) {
+                            agencyName = company.name;
+                        }
+                    }
+
+                    this.appForm.patchValue({
+                        name: success.user.name,
+                        agency: agencyName,
+                        email: success.user.email,
+                        role: success.roleid,
+                        remarks: success.remarks
+                    });
+
+                    if (success.status === "APPROVE") {
+                        this.appForm.patchValue({
+                            status: "1",
+                            adminremarks: success.adminremarks
+                        });
+                        this.appForm.get("status").disable();
+                        this.appForm.get("adminremarks").disable();
+                        this.isEditable = false;
+                    } else if (success.status === "REJECT") {
+                        this.appForm.patchValue({
+                            status: "0",
+                            adminremarks: success.adminremarks
+                        });
+                        this.appForm.get("status").disable();
+                        this.appForm.get("adminremarks").disable();
+                        this.isEditable = false;
+                    }
                 }
-              }else{
-                var company = success.user.company
-                if(company){
-                  agencyName = company.name;
-                }
-              }
-
-              this.appForm.patchValue({
-                name: success.user.name,
-                agency: agencyName,
-                email: success.user.email,
-                role: success.roleid,
-                remarks: success.remarks
-              });
-
-              if(success.status === "APPROVE"){
-                this.appForm.patchValue({
-                  status : "1",
-                  adminremarks: success.adminremarks
-                });
-                this.appForm.get("status").disable();
-                this.appForm.get("adminremarks").disable();
-                this.isEditable = false;
-              }else if(success.status === "REJECT"){
-                this.appForm.patchValue({
-                  status : "0",
-                  adminremarks: success.adminremarks
-                });
-                this.appForm.get("status").disable();
-                this.appForm.get("adminremarks").disable();
-                this.isEditable = false;
-              }
-          }
-        );
-      }
+            );
+        }
 
     }
     ngAfterViewInit() {
@@ -112,41 +112,41 @@ export class RoleApplicationApprovalComponent implements OnInit, AfterViewInit {
 
     }
 
-    onSubmit(){
-      var status = this.appForm.controls['status'].value;
+    onSubmit() {
+        var status = this.appForm.controls['status'].value;
 
-      if(status === null || status === undefined || status === ""){
-        this.isNotValid = true;
-        return false;
-      }else{
-        if(status === "0"){
-          status = "REJECT";
-        }else{
-          status = "APPROVE";
+        if (status === null || status === undefined || status === "") {
+            this.isNotValid = true;
+            return false;
+        } else {
+            if (status === "0") {
+                status = "REJECT";
+            } else {
+                status = "APPROVE";
+            }
+
+            let app: AppAuthority = new AppAuthority(
+                this.id,
+                null,
+                status,
+                null,
+                null,
+                null,
+                null,
+                null,
+                this.currentUser,
+                this.appForm.controls['adminremarks'].value);
+
+            this.roleService.updateAppAuth(app).subscribe(
+                success => {
+                    this.redirectToList();
+                }
+            );
         }
-
-        let app: AppAuthority = new AppAuthority(
-        this.id,
-        null,
-        status,
-        null,
-        null,
-        null,
-        null,
-        null,
-        this.currentUser,
-        this.appForm.controls['adminremarks'].value);
-
-        this.roleService.updateAppAuth(app).subscribe(
-          success => {
-            this.redirectToList();
-          }
-        );
-      }
     }
 
-    redirectToList(){
-      this.router.navigate(['/role/approval']);
+    redirectToList() {
+        this.router.navigate(['/role/approval']);
     }
 
 }

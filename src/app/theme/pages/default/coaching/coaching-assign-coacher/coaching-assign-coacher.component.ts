@@ -12,7 +12,7 @@ import { User } from '../../../../../model/user';
 import { UserService } from '../../../../../services/user.service';
 import { environment } from "../../../../../../environments/environment";
 declare var $: any;
-declare let toastr:any;
+declare let toastr: any;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./coaching-assign-coacher.component.html",
@@ -21,9 +21,9 @@ declare let toastr:any;
 })
 export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	coaching: Coaching;
-	id: string;
-    bearToken : string;
+    coaching: Coaching;
+    id: string;
+    bearToken: string;
     //used in userForm
     user: any;
 
@@ -31,7 +31,7 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
     coachLs: any[];
 
     //FormGrouping
-	coachingForm: FormGroup;
+    coachingForm: FormGroup;
 
     //for function getoach
     currentCoach: any;
@@ -42,42 +42,42 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
     loading: boolean = false;
     isEditable = false;
     message: any = {
-      success: "Coach Telah Berjaya Ditetapkan"
+        success: "Coach Telah Berjaya Ditetapkan"
     }
 
     coachList: String[] = [];
 
 
-	//catch coaching id
+    //catch coaching id
     private sub: any;
     private coachers = [];
 
 
-    constructor(private _script: ScriptLoaderService, private coachingService:CoachingService,private userService:UserService, private router:Router, private route: ActivatedRoute) { }
+    constructor(private _script: ScriptLoaderService, private coachingService: CoachingService, private userService: UserService, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
 
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
 
 
         //for userForm
 
 
-    	this.coachingForm = new FormGroup({
-    		name: new FormControl({value: '', disabled: true}, Validators.required),
-            user: new FormControl({value: '', disabled: true}, Validators.required),
-	        agency: new FormControl({value: '', disabled: true}, Validators.required),
-	        status: new FormControl({value: '', disabled: true}, Validators.required),
-	        frontend: new FormControl({value: '', disabled: true}, Validators.required),
-	        backend: new FormControl({value: '', disabled: true}, Validators.required),
-	        frontendlevel: new FormControl({value: '', disabled: true}, Validators.required),
-            backendlevel: new FormControl({value: '', disabled: true}, Validators.required),
-            databaselevel: new FormControl({value: '', disabled: true}, Validators.required),
-	        database: new FormControl({value: '', disabled: true}, Validators.required),
-	        remarks: new FormControl({value: '', disabled: true}, Validators.required),
-            admin_remarks: new FormControl({value: '', disabled: true}, Validators.required),
-            coach_remarks: new FormControl({value: '', disabled: true}, Validators.required)
-	    });
+        this.coachingForm = new FormGroup({
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+            user: new FormControl({ value: '', disabled: true }, Validators.required),
+            agency: new FormControl({ value: '', disabled: true }, Validators.required),
+            status: new FormControl({ value: '', disabled: true }, Validators.required),
+            frontend: new FormControl({ value: '', disabled: true }, Validators.required),
+            backend: new FormControl({ value: '', disabled: true }, Validators.required),
+            frontendlevel: new FormControl({ value: '', disabled: true }, Validators.required),
+            backendlevel: new FormControl({ value: '', disabled: true }, Validators.required),
+            databaselevel: new FormControl({ value: '', disabled: true }, Validators.required),
+            database: new FormControl({ value: '', disabled: true }, Validators.required),
+            remarks: new FormControl({ value: '', disabled: true }, Validators.required),
+            admin_remarks: new FormControl({ value: '', disabled: true }, Validators.required),
+            coach_remarks: new FormControl({ value: '', disabled: true }, Validators.required)
+        });
 
 
 
@@ -87,52 +87,52 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
                 this.id = params['id'];
 
                 //for coachingForm
-                if (this.id){
+                if (this.id) {
                     this.coachingService.getCoachingById(this.id).subscribe(
                         coaching => {
                             let agensi = "";
 
-                            if(coaching.user.type=="GOV"){
-                                if(coaching.user.agency!=null){
+                            if (coaching.user.type == "GOV") {
+                                if (coaching.user.agency != null) {
                                     agensi = coaching.user.agency.name;
-                                }else{
+                                } else {
                                     agensi = "";
                                 }
-                            }else if(coaching.user.type=="PRIVATE"){
-                                if(coaching.user.company!=null){
+                            } else if (coaching.user.type == "PRIVATE") {
+                                if (coaching.user.company != null) {
                                     agensi = coaching.user.company.name;
-                                }else{
+                                } else {
                                     agensi = "";
                                 }
-                            }else{
+                            } else {
                                 agensi = "";
                             }
 
-                             var frameName = "";
-                             var langName = "";
-                             var dbName = "";
+                            var frameName = "";
+                            var langName = "";
+                            var dbName = "";
 
-                             var frameLvl = "";
-                             var langLvl = "";
-                             var dbLvl = "";
+                            var frameLvl = "";
+                            var langLvl = "";
+                            var dbLvl = "";
 
-                             var frameId = "";
-                             var langId = "";
-                             var dbId = "";
+                            var frameId = "";
+                            var langId = "";
+                            var dbId = "";
 
-                             if(coaching.frontend){
-                               frameName = coaching.frontend.name;
-                               frameId = coaching.frontend.id;
-                               frameLvl= coaching.frontendlevel;
-                             }if(coaching.backend){
-                               langName = coaching.backend.name;
-                               langId = coaching.backend.id;
-                               langLvl= coaching.backendlevel;
-                             }if(coaching.database){
-                               dbName = coaching.database.name;
-                               dbId = coaching.database.id;
-                               dbLvl= coaching.databaselevel;
-                             }
+                            if (coaching.frontend) {
+                                frameName = coaching.frontend.name;
+                                frameId = coaching.frontend.id;
+                                frameLvl = coaching.frontendlevel;
+                            } if (coaching.backend) {
+                                langName = coaching.backend.name;
+                                langId = coaching.backend.id;
+                                langLvl = coaching.backendlevel;
+                            } if (coaching.database) {
+                                dbName = coaching.database.name;
+                                dbId = coaching.database.id;
+                                dbLvl = coaching.databaselevel;
+                            }
 
 
                             this.id = coaching.id;
@@ -160,37 +160,37 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
                                     this.user = data;
 
 
-                                    for(let obj of this.user){
-                                      var skills = obj.user.skill;
+                                    for (let obj of this.user) {
+                                        var skills = obj.user.skill;
 
-                                      for(let skill of skills){
-                                        var skillTechId = skill.technology.id
-                                        var skillLvl = skill.level;
-                                        var skillMark = skill.mark;
+                                        for (let skill of skills) {
+                                            var skillTechId = skill.technology.id
+                                            var skillLvl = skill.level;
+                                            var skillMark = skill.mark;
 
-                                        if(frameId){
-                                          if((frameId == skillTechId) && (frameLvl == skillLvl) ){
-                                            obj.coaching.frontend.modifiedby = skillMark;
-                                          }else{
-                                            obj.coaching.frontend.modifiedby = 0;
-                                          }
-                                        }
-                                        if(langId){
-                                          if((langId == skillTechId) && (langLvl == skillLvl) ){
-                                            obj.coaching.backend.modifiedby = skillMark;
-                                          }else{
-                                            obj.coaching.backend.modifiedby = 0;
-                                          }
-                                        }
-                                        if(dbId){
-                                          if((dbId == skillTechId) && (dbLvl == skillLvl) ){
-                                            obj.coaching.database.modifiedby = skillMark;
-                                          }else{
-                                            obj.coaching.database.modifiedby = 0;
-                                          }
-                                        }
+                                            if (frameId) {
+                                                if ((frameId == skillTechId) && (frameLvl == skillLvl)) {
+                                                    obj.coaching.frontend.modifiedby = skillMark;
+                                                } else {
+                                                    obj.coaching.frontend.modifiedby = 0;
+                                                }
+                                            }
+                                            if (langId) {
+                                                if ((langId == skillTechId) && (langLvl == skillLvl)) {
+                                                    obj.coaching.backend.modifiedby = skillMark;
+                                                } else {
+                                                    obj.coaching.backend.modifiedby = 0;
+                                                }
+                                            }
+                                            if (dbId) {
+                                                if ((dbId == skillTechId) && (dbLvl == skillLvl)) {
+                                                    obj.coaching.database.modifiedby = skillMark;
+                                                } else {
+                                                    obj.coaching.database.modifiedby = 0;
+                                                }
+                                            }
 
-                                      }
+                                        }
                                     }
                                 }
                             );
@@ -250,159 +250,159 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
         );
 
         $(document).on('click', '#m_datatable_check_all', (e) => {
-                  e.preventDefault();
-                  let cbArr: any[] = new Array();
-                  var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
+            e.preventDefault();
+            let cbArr: any[] = new Array();
+            var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
 
-                  $cbAnswer.each( function(i) {
-                    var status = $(this).is(":checked");
-                    if(status){
-                      var id = $(this).val();
+            $cbAnswer.each(function(i) {
+                var status = $(this).is(":checked");
+                if (status) {
+                    var id = $(this).val();
 
-                      cbArr.push(id);
-                    }
-                  });
+                    cbArr.push(id);
+                }
+            });
 
-                  for (var i = 0; i < cbArr.length; ++i) {
-                    this.onCheckOn(cbArr[i])
-                  }
+            for (var i = 0; i < cbArr.length; ++i) {
+                this.onCheckOn(cbArr[i])
+            }
 
-                   $("#m_modal_1").modal("hide");
+            $("#m_modal_1").modal("hide");
 
-                });
+        });
     }
 
-    ngOnDestroy(): void{
-       this.sub.unsubscribe();
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
 
-    modalCoach(){
+    modalCoach() {
 
-        if(this.datatable!=null){
+        if (this.datatable != null) {
             this.datatable.destroy();
         }
-        
-        
-            var options = {
-                data: {
-                        type: "remote",
-                        source: {
-                            read: {
 
-                                url: environment.hostname+"/api/usergetcoach",
-                                headers: {
-                                    "Authorization": this.bearToken,
-                                },
-                                params:{
-                                    coachLs: this.coachList
-                                }
-                                
-                            }
+
+        var options = {
+            data: {
+                type: "remote",
+                source: {
+                    read: {
+
+                        url: environment.hostname + "/api/usergetcoach",
+                        headers: {
+                            "Authorization": this.bearToken,
                         },
-                        pageSize: 10,
-                        saveState: {
-                            cookie: false,
-                            webstorage: false
-                        },
-                        serverPaging: !0,
-                        serverFiltering: !0,
-                        serverSorting: !0
-                    },
-                    layout: {
-                        theme: "default",
-                        class: "",
-                        scroll: !1,
-                        height: 550,
-                        footer: !1
-                    },
-                    sortable: !0,
-                    pagination: !0,
-                    columns: [{
-                        field: "id",
-                        title: "#",
-                        sortable: !1,
-                        width: 40,
-                        textAlign: "center",
-                        template: function(row){
-                            return row.user.id;
-                           },
-                        selector: {
-                            class: "m-checkbox--solid m-checkbox--brand checkFn"
+                        params: {
+                            coachLs: this.coachList
                         }
-                    }, {
-                        field: "name",
-                        title: "Nama",
-                        sortable: "asc",
-                        filterable: !1,
-                        width: 150,
-                        template: function(row){
-                            return row.user.name;
-                           }
-                    }, {
-                        field: "skill",
-                        title: "Kepakaran",
-                        width: 150,
-                        sortable: false,
-                        template: function(row){
 
-                            var result = "";
-                            var skills = row.user.skill;
+                    }
+                },
+                pageSize: 10,
+                saveState: {
+                    cookie: false,
+                    webstorage: false
+                },
+                serverPaging: !0,
+                serverFiltering: !0,
+                serverSorting: !0
+            },
+            layout: {
+                theme: "default",
+                class: "",
+                scroll: !1,
+                height: 550,
+                footer: !1
+            },
+            sortable: !0,
+            pagination: !0,
+            columns: [{
+                field: "id",
+                title: "#",
+                sortable: !1,
+                width: 40,
+                textAlign: "center",
+                template: function(row) {
+                    return row.user.id;
+                },
+                selector: {
+                    class: "m-checkbox--solid m-checkbox--brand checkFn"
+                }
+            }, {
+                field: "name",
+                title: "Nama",
+                sortable: "asc",
+                filterable: !1,
+                width: 150,
+                template: function(row) {
+                    return row.user.name;
+                }
+            }, {
+                field: "skill",
+                title: "Kepakaran",
+                width: 150,
+                sortable: false,
+                template: function(row) {
 
-                            if(skills!=null){
-                                for(let obj of skills){
-                                    result+=obj.technology.name+","
-                                }
-                                result = result.slice(0,-1)
-                            }
+                    var result = "";
+                    var skills = row.user.skill;
 
-                            return result;
+                    if (skills != null) {
+                        for (let obj of skills) {
+                            result += obj.technology.name + ","
                         }
-                    }, {
-                        field: "email",
-                        title: "Email",
-                        width: 150,
-                        template: function(row){
-                            return row.user.email;
-                           }
-                    }]
-                  }
+                        result = result.slice(0, -1)
+                    }
 
-                let datatable = (<any>$('#api_methods')).mDatatable(options);
+                    return result;
+                }
+            }, {
+                field: "email",
+                title: "Email",
+                width: 150,
+                template: function(row) {
+                    return row.user.email;
+                }
+            }]
+        }
 
-                
-                
-
-                this.datatable = datatable;
-                
-                //datatable.setDataSourceParam("coachLs", "jj")
-                this.datatable.load();
-
-                $("#m_form_search").on("keyup", function(e) {
-                    this.datatable.setDataSourceParam("search", $(this).val());
-
-                    this.datatable.load();
-                })
-
-                
+        let datatable = (<any>$('#api_methods')).mDatatable(options);
 
 
 
-              $(".m_datatable").on("m-datatable--on-check", function(e, a) {
-                  var l = datatable.setSelectedRecords().getSelectedRecords().length;
-                  $("#m_datatable_selected_number").html(l), l > 0 && $("#m_datatable_group_action_form").slideDown()
-              }).on("m-datatable--on-uncheck m-datatable--on-layout-updated", function(e, a) {
-                  var l = datatable.setSelectedRecords().getSelectedRecords().length;
-                  $("#m_datatable_selected_number").html(l), 0 === l && $("#m_datatable_group_action_form").slideUp()
-              })
-        
+
+        this.datatable = datatable;
+
+        //datatable.setDataSourceParam("coachLs", "jj")
+        this.datatable.load();
+
+        $("#m_form_search").on("keyup", function(e) {
+            this.datatable.setDataSourceParam("search", $(this).val());
+
+            this.datatable.load();
+        })
+
+
+
+
+
+        $(".m_datatable").on("m-datatable--on-check", function(e, a) {
+            var l = datatable.setSelectedRecords().getSelectedRecords().length;
+            $("#m_datatable_selected_number").html(l), l > 0 && $("#m_datatable_group_action_form").slideDown()
+        }).on("m-datatable--on-uncheck m-datatable--on-layout-updated", function(e, a) {
+            var l = datatable.setSelectedRecords().getSelectedRecords().length;
+            $("#m_datatable_selected_number").html(l), 0 === l && $("#m_datatable_group_action_form").slideUp()
+        })
+
     }
 
 
-    onCheckOn(id: string){
+    onCheckOn(id: string) {
 
         for (var i = 0; i < this.coachers.length; ++i) {
-            if(this.coachers[i].id == id){
+            if (this.coachers[i].id == id) {
                 this.coachList.splice(i, 1)
                 this.coachers.splice(i, 1)
                 break;
@@ -421,20 +421,20 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
         )
     }
 
-    onCheckOff(index){
-      this.coachers.splice(index, 1);
-      this.coachList.splice(index, 1);
+    onCheckOff(index) {
+        this.coachers.splice(index, 1);
+        this.coachList.splice(index, 1);
     }
 
     ngAfterViewInit() {
-         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-             'assets/osdec/validation/coaching/coaching-val.js');
+        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/osdec/validation/coaching/coaching-val.js');
     }
 
-    onSubmit(){
+    onSubmit() {
 
         if (this.id) {
-            if(this.coachers.length>0){
+            if (this.coachers.length > 0) {
                 let coaching: Coaching = new Coaching(
                     null,
                     null,
@@ -459,21 +459,21 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
                     null,
                     null,
                     null,
-                    this.id,null,null,null
+                    this.id, null, null, null
                 );
 
                 this.coachingService.updateCoaching(coaching).subscribe(
-                    success=>{
+                    success => {
                         for (var i = 0; i < this.coachers.length; ++i) {
                             this.userService.getUserById(this.coachers[i].id).subscribe(
-                                data =>{
-                                    let coachingCoach : CoachingCoach = new CoachingCoach(
+                                data => {
+                                    let coachingCoach: CoachingCoach = new CoachingCoach(
                                         data,
                                         this.coachingObj,
                                         null
                                     )
                                     this.coachingService.createCoach(coachingCoach).subscribe(
-                                        success=>{
+                                        success => {
                                             this.isEditable = true;
                                             this.loading = false;
                                             toastr.success(this.message.success);
@@ -485,17 +485,17 @@ export class CoachingAssignCoacherComponent implements OnInit, AfterViewInit, On
                         }
                     }
                 );
-            }else{
+            } else {
                 $("#m_modal_coach").modal("show");
             }
         }
     }
 
     redirectListPage() {
-      this.router.navigate(['/coaching/list/admin']);
+        this.router.navigate(['/coaching/list/admin']);
     }
 
-    redirectProfile(id){
-      this.router.navigate(['/header/profile/view/', id]);
+    redirectProfile(id) {
+        this.router.navigate(['/header/profile/view/', id]);
     }
 }

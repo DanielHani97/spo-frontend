@@ -12,8 +12,8 @@ import { TrainingTx } from '../../../../../model/training/trainingTx';
 import { AssesmentService } from '../../../../../services/assesment/assesment.service';
 import { Assesment } from '../../../../../model/assesment/assesment'
 
-declare let toastr:any;
-declare let jQuery:any;
+declare let toastr: any;
+declare let jQuery: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -33,18 +33,18 @@ export class TrainingDetailsComponent implements OnInit, AfterViewInit {
     isEditable = false;
 
     message: any = {
-      success: "Permohonan latihan telah berjaya disimpan",
-      error404: "Penilaian Kendiri tiada bagi Latihan ini, Sila hubungi Pentadbir sistem untuk maklumat lanjut",
-      error409: "Anda telah membuat Penilaian Kendiri untuk Latihan ini. Adakah anda pasti untuk meneruskan permohonan latihan?",
-      new: "Anda belum membuat Penilaian Kendiri untuk Latihan ini. Adakah anda ingin membuat Penilaian Kendiri terlebih dahulu? ",
-      danger: "Permohonan Latihan ini telah wujud."
+        success: "Permohonan latihan telah berjaya disimpan",
+        error404: "Penilaian Kendiri tiada bagi Latihan ini, Sila hubungi Pentadbir sistem untuk maklumat lanjut",
+        error409: "Anda telah membuat Penilaian Kendiri untuk Latihan ini. Adakah anda pasti untuk meneruskan permohonan latihan?",
+        new: "Anda belum membuat Penilaian Kendiri untuk Latihan ini. Adakah anda ingin membuat Penilaian Kendiri terlebih dahulu? ",
+        danger: "Permohonan Latihan ini telah wujud."
     }
 
-    title : string;
-    endDate : string;
-    startDate : string;
-    level : string;
-    remark : string;
+    title: string;
+    endDate: string;
+    startDate: string;
+    level: string;
+    remark: string;
 
     objUser = null;
     userObj: any;
@@ -54,15 +54,15 @@ export class TrainingDetailsComponent implements OnInit, AfterViewInit {
     private sub: any;
     imageStr: string = "";
 
-    action : string;
-    confirmType : string = "success";
-    confirmMsg : string;
+    action: string;
+    confirmType: string = "success";
+    confirmMsg: string;
 
     constructor(private _script: ScriptLoaderService,
-      private trainingService:TrainingService,
-      private router:Router,
-      private route: ActivatedRoute,
-      private assesmentService: AssesmentService,
+        private trainingService: TrainingService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private assesmentService: AssesmentService,
 
     ) { }
 
@@ -86,160 +86,160 @@ export class TrainingDetailsComponent implements OnInit, AfterViewInit {
         );
 
         this.trainingService.getUser(this.userid).subscribe(
-                data => {
-                    this.objUser = data;
-                }
+            data => {
+                this.objUser = data;
+            }
         )
 
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
-           this.trainingService.getTrainingById(this.id).subscribe(
+            this.trainingService.getTrainingById(this.id).subscribe(
                 data => {
 
-                this.title = data.title,
-                this.endDate = this.formatDate(data.endDate),
-                this.startDate = this.formatDate(data.startDate),
-                this.level = data.level,
-                this.remark = data.remark
+                    this.title = data.title,
+                        this.endDate = this.formatDate(data.endDate),
+                        this.startDate = this.formatDate(data.startDate),
+                        this.level = data.level,
+                        this.remark = data.remark
 
-                this.imageStr=data.image;
+                    this.imageStr = data.image;
 
-                this.training = data;
+                    this.training = data;
 
                 });
-               },
+        },
 
             error => {
-              console.log(error);
+                console.log(error);
             }
-           );
-      }
+        );
+    }
 
     ngAfterViewInit() {
 
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
     redirectListPage() {
-      this.router.navigate(['/training/register']);
+        this.router.navigate(['/training/register']);
     }
 
     redirectNewListPage(id: string) {
 
         if (this.id) {
 
-          let assesArr: any[] = new Array();
+            let assesArr: any[] = new Array();
 
-          let assesObj : Assesment =  new Assesment (
-            null,
-            null,
-            null,
-            this.training.level,//level
-            null,
-            this.training.technology,//tech
-            null,
-            null,
-            null,
-            null,
-            this.objUser//user
-          )
+            let assesObj: Assesment = new Assesment(
+                null,
+                null,
+                null,
+                this.training.level,//level
+                null,
+                this.training.technology,//tech
+                null,
+                null,
+                null,
+                null,
+                this.objUser//user
+            )
 
-          assesArr.push(assesObj);
+            assesArr.push(assesObj);
 
-          let trainingTx: TrainingTx = new TrainingTx (
-            this.objUser,
-            this.training,
-            null,
-            null,
-            null,
-            "1",
-            null,
-            null,
-            null,
-            null,
-            null
-          );
+            let trainingTx: TrainingTx = new TrainingTx(
+                this.objUser,
+                this.training,
+                null,
+                null,
+                null,
+                "1",
+                null,
+                null,
+                null,
+                null,
+                null
+            );
 
-          //check whether user already apply for this training
-          this.trainingService.isExistTrainingTx(trainingTx).subscribe(
-            success => {//not apply
-                this.loading = false;
+            //check whether user already apply for this training
+            this.trainingService.isExistTrainingTx(trainingTx).subscribe(
+                success => {//not apply
+                    this.loading = false;
 
-                this.assesmentService.generateQue(assesArr).subscribe(
-                  success => {
-                    this.action = "NEW";
-                    this.confirmMsg = this.message.new;
-                    this.confirmType = "danger";
-                    jQuery('#m_modal_add').modal('show');
-                    localStorage.setItem("EXAMOBJ",JSON.stringify(success));
-                    localStorage.setItem("TRAININGOBJ",JSON.stringify(this.training));
-                    localStorage.setItem("ASSESMODE","TRAINING");
-                  },
-                  error => {
-                    var errorType = error;
+                    this.assesmentService.generateQue(assesArr).subscribe(
+                        success => {
+                            this.action = "NEW";
+                            this.confirmMsg = this.message.new;
+                            this.confirmType = "danger";
+                            jQuery('#m_modal_add').modal('show');
+                            localStorage.setItem("EXAMOBJ", JSON.stringify(success));
+                            localStorage.setItem("TRAININGOBJ", JSON.stringify(this.training));
+                            localStorage.setItem("ASSESMODE", "TRAINING");
+                        },
+                        error => {
+                            var errorType = error;
 
-                    if(errorType == 404){
-                      toastr.error(this.message.error404);
-                    }else if(errorType == 409){
-                      this.confirmMsg = this.message.error409;
-                      this.confirmType = "success";
-                      this.action = "EXIST";
-                      jQuery('#m_modal_add').modal('show');
+                            if (errorType == 404) {
+                                toastr.error(this.message.error404);
+                            } else if (errorType == 409) {
+                                this.confirmMsg = this.message.error409;
+                                this.confirmType = "success";
+                                this.action = "EXIST";
+                                jQuery('#m_modal_add').modal('show');
 
-                    }
-                  }
-                );
-            },
-            error => {//already apply
-              toastr.error(this.message.danger);
-            }
-          );
+                            }
+                        }
+                    );
+                },
+                error => {//already apply
+                    toastr.error(this.message.danger);
+                }
+            );
         }
 
     }
 
-    onConfirm($event){
-      $event.preventDefault();
+    onConfirm($event) {
+        $event.preventDefault();
 
-      console.log(this.action);
+        console.log(this.action);
 
-      if(this.action === "NEW"){
+        if (this.action === "NEW") {
 
-        jQuery('#m_modal_add').modal('hide');
-        this.router.navigate(['assesment/user']);
-      }else if(this.action === "EXIST"){
+            jQuery('#m_modal_add').modal('hide');
+            this.router.navigate(['assesment/user']);
+        } else if (this.action === "EXIST") {
 
-        let trainingTx: TrainingTx = new TrainingTx (
-        this.objUser,
-        this.training,
-        null,
-        null,
-        null,
-        "1",
-        null,
-        null,
-        this.objUser,
-        null,
-        null
-        );
+            let trainingTx: TrainingTx = new TrainingTx(
+                this.objUser,
+                this.training,
+                null,
+                null,
+                null,
+                "1",
+                null,
+                null,
+                this.objUser,
+                null,
+                null
+            );
 
-        this.trainingService.createTrainingTx(trainingTx).subscribe(
-          success => {
-              this.router.navigate(['training/list/']);
-              this.isEditable = true;
-              this.loading = false;
-              toastr.success(this.message.success);
+            this.trainingService.createTrainingTx(trainingTx).subscribe(
+                success => {
+                    this.router.navigate(['training/list/']);
+                    this.isEditable = true;
+                    this.loading = false;
+                    toastr.success(this.message.success);
 
-              jQuery('#m_modal_add').modal('hide');
-          }
-        );
-      }
+                    jQuery('#m_modal_add').modal('hide');
+                }
+            );
+        }
     }
 }

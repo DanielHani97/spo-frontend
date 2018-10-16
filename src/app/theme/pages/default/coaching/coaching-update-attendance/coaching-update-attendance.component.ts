@@ -16,9 +16,9 @@ import { Attendance } from '../../../../../model/attendance/attendance';
 import { KeygenService } from '../../../../../services/keygen.service';
 import { Keygen } from '../../../../../model/keygen';
 
-declare let $:any;
-declare let moment:any;
-declare let toastr:any;
+declare let $: any;
+declare let moment: any;
+declare let toastr: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -28,10 +28,10 @@ declare let toastr:any;
 })
 export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit {
 
-   id: string;
+    id: string;
     userObj: any;
-    fullCalendar : any;
-    bearToken : string;
+    fullCalendar: any;
+    bearToken: string;
     private sub: any;
     userid: string;
     attForm: FormGroup;
@@ -48,9 +48,9 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
     tamat: any;
 
     message: any = {
-          danger: "Kehadiran Telah Wujud",
-          success: "Kehadiran Telah Disimpan"
-        }
+        danger: "Kehadiran Telah Wujud",
+        success: "Kehadiran Telah Disimpan"
+    }
 
     constructor(
         private _script: ScriptLoaderService,
@@ -59,7 +59,7 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
         private userService: UserService,
         private attendanceService: AttendanceService,
         private coachingService: CoachingService,
-        private router:Router,
+        private router: Router,
         private route: ActivatedRoute) {
 
     }
@@ -69,7 +69,7 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
         this.user = currentUser;
         localStorage.setItem('userIdAttendance', this.userid);
 
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
         this.sub = this.route.params.subscribe(
             params => {
                 this.id = params['id'];
@@ -77,7 +77,7 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 this.userid = currentUser.id;
                 this.userService.getUserById(this.userid).subscribe(
-                    data=>{
+                    data => {
                         this.userObj = data;
                     }
                 )
@@ -87,7 +87,7 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
         this.mandayService.getManday().subscribe(
             data => {
                 this.manday = data;
-                this.manday2= this.manday.filter(value =>value.category==='coaching');
+                this.manday2 = this.manday.filter(value => value.category === 'coaching');
                 this.mandayObj = this.manday2[0];
                 this.usedManday = this.mandayObj.mandayUsed;
             }
@@ -95,8 +95,8 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
 
         this.attForm = new FormGroup({
             attendance: new FormControl(),
-            date: new FormControl({value: '', disabled: true}, Validators.required),
-            name: new FormControl({value: '', disabled: true}, Validators.required)
+            date: new FormControl({ value: '', disabled: true }, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required)
 
         })
     }
@@ -104,130 +104,129 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/osdec/validation/coaching/coaching-attendance.js',
-             'assets/osdec/validation/validation.js');
+            'assets/osdec/validation/validation.js');
 
         var CalendarBackgroundEvents = {
-            init: function () {
+            init: function() {
 
                 $("#m_calendar_coach").fullCalendar({
 
-                        buttonText: {
-                            today:    'Hari Ini',
-                            month:    'Bulan',
-                            week:     'Minggu',
-                            day:      'Hari',
-                            list:     'Senarai'
-                        },
+                    buttonText: {
+                        today: 'Hari Ini',
+                        month: 'Bulan',
+                        week: 'Minggu',
+                        day: 'Hari',
+                        list: 'Senarai'
+                    },
 
-                        weekends: false,
+                    weekends: false,
 
-                        dayNamesShort: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
+                    dayNamesShort: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
 
-                        dayNames: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
+                    dayNames: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
 
-                        header: {
-                            left: "prev,next today",
-                            center: "title",
-                            right: "month,agendaWeek,agendaDay,listWeek"
-                        },
-                        editable: !0,
-                        eventLimit: !0,
-                        navLinks: !0,
-                        businessHours: !0,
-                        eventSources: [
+                    header: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "month,agendaWeek,agendaDay,listWeek"
+                    },
+                    editable: !0,
+                    eventLimit: !0,
+                    navLinks: !0,
+                    businessHours: !0,
+                    eventSources: [
 
 
-                            {
-                                url: environment.hostname+"/api/coachingActivities/all/"+localStorage.getItem('tokenId')+"/"+localStorage.getItem('userIdAttendance'),
-                                headers: {
-                                    "Authorization": "Bearer "+localStorage.getItem('jwtToken')
-                                },
-                                type: 'GET'
+                        {
+                            url: environment.hostname + "/api/coachingActivities/all/" + localStorage.getItem('tokenId') + "/" + localStorage.getItem('userIdAttendance'),
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem('jwtToken')
                             },
-                            {
-                                url: environment.hostname+"/api/coachingActivities/all2/"+localStorage.getItem('tokenId')+"/"+localStorage.getItem('userIdAttendance'),
-                                headers: {
-                                    "Authorization": "Bearer "+localStorage.getItem('jwtToken')
-                                },
-                                type: 'GET'
-                            }
-
-
-
-                        ],
-
-                        eventRender: function (event, element) {
-
-                            if(moment(event.start).isoWeekday() == 7||moment(event.start).isoWeekday() == 6)
-                            {
-                                return false;
-                            }
-
-                            element.attr('href', 'javascript:void(0);');
-
-                                element.click(function() {
-
-                                    if(event.attendance == "Tiada"){
-                                        $("#eventTitle2").attr('value', event.title);
-                                        $("#eventVenue2").attr('placeholder', event.description);
-                                        $("#eventDate2").attr('value', moment(event.start).format('DD/MM/YYYY'));
-                                        $("#m_modal_2").modal("show");
-                                    }else{
-                                        if(event.isExist){
-                                            $("#eventTitle3").attr('value', event.title);
-                                            $("#eventVenue3").attr('placeholder', event.description);
-                                            $("#eventDate3").attr('value', moment(event.start).format('DD/MM/YYYY'));
-                                            $("#m_modal_3").modal("show");
-                                        }else{
-                                            $("#eventTitle").attr('placeholder', event.title);
-                                            $("#eventTitle").attr('value', event.id);
-                                            $("#eventVenue").attr('placeholder', event.description);
-                                            $("#eventDate").attr('placeholder', moment(event.start).format('DD/MM/YYYY'));
-                                            $("#eventDate").attr('value', event.start);
-
-                                            $("#m_modal_1").modal("show");
-                                        }
-
-                                    }
-                                }
-                            );
+                            type: 'GET'
+                        },
+                        {
+                            url: environment.hostname + "/api/coachingActivities/all2/" + localStorage.getItem('tokenId') + "/" + localStorage.getItem('userIdAttendance'),
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem('jwtToken')
+                            },
+                            type: 'GET'
                         }
-                        /*eventRender: function (e, t) {
-                            t.hasClass("fc-day-grid-event") ? (t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)) : t.hasClass(
-                                    "fc-time-grid-event") ? t.find(".fc-title")
-                                .append('<div class="fc-description">' + e.description + "</div>") : 0 !== t.find(".fc-list-item-title")
-                                .lenght && t.find(".fc-list-item-title")
-                                .append('<div class="fc-description">' + e.description + "</div>")
-                        }*/
-                    })
+
+
+
+                    ],
+
+                    eventRender: function(event, element) {
+
+                        if (moment(event.start).isoWeekday() == 7 || moment(event.start).isoWeekday() == 6) {
+                            return false;
+                        }
+
+                        element.attr('href', 'javascript:void(0);');
+
+                        element.click(function() {
+
+                            if (event.attendance == "Tiada") {
+                                $("#eventTitle2").attr('value', event.title);
+                                $("#eventVenue2").attr('placeholder', event.description);
+                                $("#eventDate2").attr('value', moment(event.start).format('DD/MM/YYYY'));
+                                $("#m_modal_2").modal("show");
+                            } else {
+                                if (event.isExist) {
+                                    $("#eventTitle3").attr('value', event.title);
+                                    $("#eventVenue3").attr('placeholder', event.description);
+                                    $("#eventDate3").attr('value', moment(event.start).format('DD/MM/YYYY'));
+                                    $("#m_modal_3").modal("show");
+                                } else {
+                                    $("#eventTitle").attr('placeholder', event.title);
+                                    $("#eventTitle").attr('value', event.id);
+                                    $("#eventVenue").attr('placeholder', event.description);
+                                    $("#eventDate").attr('placeholder', moment(event.start).format('DD/MM/YYYY'));
+                                    $("#eventDate").attr('value', event.start);
+
+                                    $("#m_modal_1").modal("show");
+                                }
+
+                            }
+                        }
+                        );
+                    }
+                    /*eventRender: function (e, t) {
+                        t.hasClass("fc-day-grid-event") ? (t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)) : t.hasClass(
+                                "fc-time-grid-event") ? t.find(".fc-title")
+                            .append('<div class="fc-description">' + e.description + "</div>") : 0 !== t.find(".fc-list-item-title")
+                            .lenght && t.find(".fc-list-item-title")
+                            .append('<div class="fc-description">' + e.description + "</div>")
+                    }*/
+                })
             }
         };
 
-        jQuery(document).ready(function () {
-                CalendarBackgroundEvents.init()
-            });
+        jQuery(document).ready(function() {
+            CalendarBackgroundEvents.init()
+        });
     }
 
-    generate(){
+    generate() {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for (var i = 0; i < 5; i++){
+        for (var i = 0; i < 5; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
 
         return text;
     }
-    
-    onSubmit(){
-    
-        if(this.attForm.valid){
+
+    onSubmit() {
+
+        if (this.attForm.valid) {
             var dateEvent = $('#eventDate').attr('value');
             var idEvent = $('#eventTitle').attr('value');
             var checker = "no";
             var mandayTxId = "";
 
-            let attendance : Attendance = new Attendance (
+            let attendance: Attendance = new Attendance(
                 this.user,
                 null,
                 null,
@@ -237,18 +236,18 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                 null
             )
             this.attendanceService.createAttendance(attendance).subscribe(
-                success=>{
+                success => {
                     this.mandayService.getMandayTrans().subscribe(
-                        data=>{
+                        data => {
                             this.attendanceObj = data;
                             for (var i = 0; i < this.attendanceObj.length; ++i) {
-                                if(this.attendanceObj[i].instanceId == idEvent && this.attendanceObj[i].instanceDate == dateEvent) {
+                                if (this.attendanceObj[i].instanceId == idEvent && this.attendanceObj[i].instanceDate == dateEvent) {
                                     checker = "yes";
                                     mandayTxId = this.attendanceObj[i].id;
                                 }
                             }
 
-                            if(checker == "no"){
+                            if (checker == "no") {
                                 let mandayTx: MandayTransaction = new MandayTransaction(
                                     'Coaching',
                                     idEvent,
@@ -257,10 +256,10 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                                     dateEvent
                                 )
 
-                                this.usedManday = this.usedManday +1;
+                                this.usedManday = this.usedManday + 1;
 
                                 this.mandayService.createMandayTrans(mandayTx).subscribe(
-                                    success=>{
+                                    success => {
                                         let manday: Manday = new Manday(
                                             null,
                                             null,
@@ -269,7 +268,7 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                                             this.mandayObj.id
                                         )
                                         this.mandayService.updateMandayUsed(manday).subscribe(
-                                            success=>{
+                                            success => {
 
                                                 this.isEditable = true;
                                                 this.loading = false;
@@ -279,17 +278,17 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                                                 window.location.reload();
                                                 $("m_calendar").fullCalendar('refetchEvents');
                                                 $("m_calendar").fullCalendar('rerenderEvents');
-                                                    
-                                                
+
+
                                             }
                                         )
                                     }
                                 )
-                            }else{
+                            } else {
 
                                 this.mandayService.updateCoachingManday(mandayTxId).subscribe(
-                                    success=>{
-                                        this.usedManday = this.usedManday +1;
+                                    success => {
+                                        this.usedManday = this.usedManday + 1;
                                         let manday: Manday = new Manday(
                                             null,
                                             null,
@@ -298,7 +297,7 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                                             this.mandayObj.id
                                         )
                                         this.mandayService.updateMandayUsed(manday).subscribe(
-                                            success=>{
+                                            success => {
 
                                                 this.isEditable = true;
                                                 this.loading = false;
@@ -308,8 +307,8 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                                                 window.location.reload();
                                                 $("m_calendar").fullCalendar('refetchEvents');
                                                 $("m_calendar").fullCalendar('rerenderEvents');
-                                                    
-                                                
+
+
                                             }
                                         )
                                     }
@@ -320,24 +319,24 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                 }
             )
         }
-        
+
     }
 
-    keygen(){
+    keygen() {
 
         this.keygenService.isExist(this.id).subscribe(
-            data=>{
+            data => {
 
-                if (data == true){
+                if (data == true) {
                     this.keygenService.getKeygenByInstanceId(this.id).subscribe(
-                        key=>{
+                        key => {
                             this.key = key.keygen;
                             this.tamat = key.expiredDate;
                             $("#keygen_exist").modal("show");
                         }
                     )
-                
-                }else{
+
+                } else {
 
                     let key = this.generate();
 
@@ -349,9 +348,9 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
                         null
                     )
                     this.keygenService.createKeygen(keygen).subscribe(
-                        success=>{
+                        success => {
                             this.keygenService.getKeygenByInstanceId(this.id).subscribe(
-                                key=>{
+                                key => {
                                     this.key = key.keygen;
                                     this.tamat = key.expiredDate;
                                     $("#keygen_exist").modal("show");
@@ -364,12 +363,12 @@ export class CoachingUpdateAttendanceComponent implements OnInit, AfterViewInit 
         )
     }
 
-    redirectFeedback(){
-      this.router.navigate(['/coaching/feedback', this.id]);
+    redirectFeedback() {
+        this.router.navigate(['/coaching/feedback', this.id]);
     }
 
-    redirectInfo(){
-      this.router.navigate(['/coaching/info', this.id]);
+    redirectInfo() {
+        this.router.navigate(['/coaching/info', this.id]);
     }
 
 }

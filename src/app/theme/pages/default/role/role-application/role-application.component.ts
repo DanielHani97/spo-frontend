@@ -12,7 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { message } from "../../../../../message/default";
 
-declare let toastr : any;
+declare let toastr: any;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./role-application.component.html",
@@ -21,85 +21,85 @@ declare let toastr : any;
 })
 export class RoleApplicationComponent implements OnInit, AfterViewInit {
 
-    appForm : FormGroup;
-    currentUser : any;
+    appForm: FormGroup;
+    currentUser: any;
 
-    roleLs : any[];
-    currentRole : any[];
+    roleLs: any[];
+    currentRole: any[];
 
-    isNotValid : boolean;
+    isNotValid: boolean;
 
-    app : AppAuthority;
+    app: AppAuthority;
 
 
     constructor(
-      private _script: ScriptLoaderService,
-      private roleService : RoleService,
-      private router: Router,
-      private userService: UserService
+        private _script: ScriptLoaderService,
+        private roleService: RoleService,
+        private router: Router,
+        private userService: UserService
     ) {
 
     }
     ngOnInit() {
 
-      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-      this.appForm = new FormGroup({
-        name: new FormControl({value: '', disabled: true}),
-        agency: new FormControl({value: '', disabled: true}),
-        email: new FormControl({value: '', disabled: true}),
-        role: new FormControl(''),
-        remarks: new FormControl()
-      });
+        this.appForm = new FormGroup({
+            name: new FormControl({ value: '', disabled: true }),
+            agency: new FormControl({ value: '', disabled: true }),
+            email: new FormControl({ value: '', disabled: true }),
+            role: new FormControl(''),
+            remarks: new FormControl()
+        });
 
-    //this.countryForm.controls['country'].setValue
+        //this.countryForm.controls['country'].setValue
 
-    this.roleService.getRole().subscribe(
-      success => {
-        this.roleLs = success;
-
-        this.currentRole = this.currentUser.authorities;
-        for(var i=0; i < this.currentRole.length; i++){
-          var role = this.currentRole[i].authority;
-
-          for(var j=0; j < this.roleLs.length; j++){
-            var name = this.roleLs[j].name;
-            if(name === role){
-              this.roleLs.splice(j, 1);
-            }
-          }
-        }
-
-        if(this.currentUser.id){
-          this.userService.getUserById(this.currentUser.id).subscribe(
+        this.roleService.getRole().subscribe(
             success => {
+                this.roleLs = success;
 
-              var type = success.type;
-              var agencyName = "";
+                this.currentRole = this.currentUser.authorities;
+                for (var i = 0; i < this.currentRole.length; i++) {
+                    var role = this.currentRole[i].authority;
 
-              if(type === "GOV"){
-                var agency = success.agency
-                if(agency){
-                  agencyName = agency.name;
+                    for (var j = 0; j < this.roleLs.length; j++) {
+                        var name = this.roleLs[j].name;
+                        if (name === role) {
+                            this.roleLs.splice(j, 1);
+                        }
+                    }
                 }
-              }else{
-                var company = success.company
-                if(company){
-                  agencyName = company.name;
-                }
-              }
 
-              this.appForm.patchValue({
-              name: success.name,
-              agency: agencyName,
-              email: success.email,
-              role: "0"
-            });
+                if (this.currentUser.id) {
+                    this.userService.getUserById(this.currentUser.id).subscribe(
+                        success => {
+
+                            var type = success.type;
+                            var agencyName = "";
+
+                            if (type === "GOV") {
+                                var agency = success.agency
+                                if (agency) {
+                                    agencyName = agency.name;
+                                }
+                            } else {
+                                var company = success.company
+                                if (company) {
+                                    agencyName = company.name;
+                                }
+                            }
+
+                            this.appForm.patchValue({
+                                name: success.name,
+                                agency: agencyName,
+                                email: success.email,
+                                role: "0"
+                            });
+                        }
+                    );
+                }
             }
-          );
-        }
-      }
-    );
+        );
 
 
 
@@ -110,33 +110,33 @@ export class RoleApplicationComponent implements OnInit, AfterViewInit {
 
     }
 
-    onSubmit(){
-      var role = this.appForm.controls['role'].value;
+    onSubmit() {
+        var role = this.appForm.controls['role'].value;
 
-      if(role === "0"){
-        this.isNotValid = true;
-        return false;
-      }else{
+        if (role === "0") {
+            this.isNotValid = true;
+            return false;
+        } else {
 
-        let app: AppAuthority = new AppAuthority(
-        null,
-        this.appForm.controls['remarks'].value,
-        "NEW",
-        null,
-        null,
-        null,
-        null,
-        role,
-        this.currentUser,
-      null);
+            let app: AppAuthority = new AppAuthority(
+                null,
+                this.appForm.controls['remarks'].value,
+                "NEW",
+                null,
+                null,
+                null,
+                null,
+                role,
+                this.currentUser,
+                null);
 
-        this.roleService.createAppAuth(app).subscribe(
-          success => {
-            toastr.success(message.global.success);
-            this.router.navigate(['indexUser']);
-          }
-        );
-      }
+            this.roleService.createAppAuth(app).subscribe(
+                success => {
+                    toastr.success(message.global.success);
+                    this.router.navigate(['indexUser']);
+                }
+            );
+        }
     }
 
 }

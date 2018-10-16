@@ -1,12 +1,12 @@
 import {
-  Component,
-  ComponentFactoryResolver,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-  ViewEncapsulation,
-  AfterViewInit,
-  ViewChildren, QueryList
+    Component,
+    ComponentFactoryResolver,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+    ViewEncapsulation,
+    AfterViewInit,
+    ViewChildren, QueryList
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ScriptLoaderService } from "../_services/script-loader.service";
@@ -35,14 +35,14 @@ export class AuthComponent implements OnInit, AfterViewInit {
     loading = false;
     returnUrl: string;
 
-    agencyLs : any[];
+    agencyLs: any[];
     currentAgency: any;
-    agency : Agency;
+    agency: Agency;
 
-    isNotValid : boolean;
+    isNotValid: boolean;
 
     isGov: boolean = true;
-    roles : any;
+    roles: any;
 
     @ViewChild('alertSignin', { read: ViewContainerRef }) alertSignin: ViewContainerRef;
     @ViewChild('alertSignup', { read: ViewContainerRef }) alertSignup: ViewContainerRef;
@@ -57,7 +57,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
         private _alertService: AlertService,
         private cfr: ComponentFactoryResolver,
         private _agencyService: AgencyService) {
-          this.isNotValid = false;
+        this.isNotValid = false;
     }
 
     ngOnInit() {
@@ -68,44 +68,44 @@ export class AuthComponent implements OnInit, AfterViewInit {
         // this._router.navigate([this.returnUrl]);
 
         this._script.load('body', 'assets/vendors/base/vendors.bundle.js',
-        'assets/demo/default/base/scripts.bundle.js')
+            'assets/demo/default/base/scripts.bundle.js')
             .then(() => {
                 Helpers.setLoading(false);
                 LoginCustom.init();
             });
 
-        
+
 
 
     }
 
     ngAfterViewInit() {
 
-      this.agencyid.changes.subscribe(t => {
-          this.ngForRendred();
-      })
+        this.agencyid.changes.subscribe(t => {
+            this.ngForRendred();
+        })
     }
 
     ngForRendred() {
-      $(".m_selectpicker").selectpicker('refresh');
+        $(".m_selectpicker").selectpicker('refresh');
     }
 
-    register(){
-      $(".m_selectpicker").selectpicker();
+    register() {
+        $(".m_selectpicker").selectpicker();
 
         this._agencyService.getAgency().subscribe(
-          success => {
-            this.agencyLs = success;
-          }
+            success => {
+                this.agencyLs = success;
+            }
         );
 
         $(document).on('click', '.cbAnswer', (e) => {
-          var radio = this.model.type;
-          if(radio){
-            this.isGov = false;
-          }else{
-            this.isGov = true;
-          }
+            var radio = this.model.type;
+            if (radio) {
+                this.isGov = false;
+            } else {
+                this.isGov = true;
+            }
 
         });
     }
@@ -117,26 +117,26 @@ export class AuthComponent implements OnInit, AfterViewInit {
             success => {
                 var token = this._authService.getJwtToken();
                 this._authService.getUserDetail(token).subscribe(
-                  res => {
-                    this._authService.setCurrentUser(res);
-                    localStorage.setItem('currentName', res.name);
+                    res => {
+                        this._authService.setCurrentUser(res);
+                        localStorage.setItem('currentName', res.name);
 
-                    this.roles = res.authorities;
+                        this.roles = res.authorities;
 
-                    var isAdmin = this.roles.findIndex(i => {
-                      if(i.authority === 'ROLE_ADMIN' || i.authority === 'ROLE_SUPERVISOR'){
-                        return true;
-                      }return false;
+                        var isAdmin = this.roles.findIndex(i => {
+                            if (i.authority === 'ROLE_ADMIN' || i.authority === 'ROLE_SUPERVISOR') {
+                                return true;
+                            } return false;
 
-                    });
+                        });
 
-                    if (isAdmin > -1) {//exist
-                      this._router.navigate(['/index']);
-                    }else{
-                      this._router.navigate(['/indexUser']);
+                        if (isAdmin > -1) {//exist
+                            this._router.navigate(['/index']);
+                        } else {
+                            this._router.navigate(['/indexUser']);
+                        }
+
                     }
-
-                  }
                 );
             },
             error => {
@@ -154,71 +154,71 @@ export class AuthComponent implements OnInit, AfterViewInit {
         var type = "";
         var txtMessage = "Terima Kasih. Untuk melengkapkan pendaftaran anda, sila periksa emel anda.";
 
-        if(isGov){
-          type = "GOV"
-          if(typeof this.agency !== "undefined"){
+        if (isGov) {
+            type = "GOV"
+            if (typeof this.agency !== "undefined") {
+                isValid = true;
+            }
+        } else {
+            txtMessage = "Terima Kasih. Sila hubungi pentadbir sistem untuk proses permohonan ini."
+            type = "PRIVATE"
             isValid = true;
-          }
-        }else{
-          txtMessage = "Terima Kasih. Sila hubungi pentadbir sistem untuk proses permohonan ini."
-          type = "PRIVATE"
-          isValid = true;
         }
 
-        if(isValid){
-          this.loading = true;
-          this.isNotValid = false;
+        if (isValid) {
+            this.loading = true;
+            this.isNotValid = false;
 
-          let company: Company = new Company(
-            null,
-            this.model.company,
-            null,
-            null,
-            null,
-            null,
-            null
-          );
+            let company: Company = new Company(
+                null,
+                this.model.company,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
 
-          let user : User = new User(
-            null,
-            this.model.username,
-            this.model.name,
-            this.model.email,
-            null,
-            null,//password
-            null,
-            null,
-            null,
-            null,
-            this.agency,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            type,
-            company
-          );
+            let user: User = new User(
+                null,
+                this.model.username,
+                this.model.name,
+                this.model.email,
+                null,
+                null,//password
+                null,
+                null,
+                null,
+                null,
+                this.agency,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                type,
+                company
+            );
 
-          this._authService.signup(user).subscribe(
-            data => {
-                  this.showAlert('alertSignin');
-                  this._alertService.success(txtMessage, true);
-                  this.loading = false;
-                  LoginCustom.displaySignInForm();
-                  this.model = {};
-            },
-            error => {
-                  this.showAlert('alertSignup');
-                  this._alertService.error(error);
-                  this.loading = false;
-            }
-          );
-        }else{
-          this.isNotValid = true;
+            this._authService.signup(user).subscribe(
+                data => {
+                    this.showAlert('alertSignin');
+                    this._alertService.success(txtMessage, true);
+                    this.loading = false;
+                    LoginCustom.displaySignInForm();
+                    this.model = {};
+                },
+                error => {
+                    this.showAlert('alertSignup');
+                    this._alertService.error(error);
+                    this.loading = false;
+                }
+            );
+        } else {
+            this.isNotValid = true;
         }
 
     }
@@ -226,28 +226,28 @@ export class AuthComponent implements OnInit, AfterViewInit {
     forgotPass() {
         this.loading = true;
 
-        let user : User = new User(
-          null,
-          null,
-          null,
-          this.model.email,
-          null,
-          null,//password
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
+        let user: User = new User(
+            null,
+            null,
+            null,
+            this.model.email,
+            null,
+            null,//password
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         this._authService.resetPassword(user)
@@ -274,9 +274,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
     }
 
     setSBAgency(id: any): void {
-      // Match the selected ID with the ID's in array
-      this.currentAgency= this.agencyLs.filter(value => value.id === id);
-      this.agency = this.currentAgency[0];
+        // Match the selected ID with the ID's in array
+        this.currentAgency = this.agencyLs.filter(value => value.id === id);
+        this.agency = this.currentAgency[0];
 
     }
 }

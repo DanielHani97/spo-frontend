@@ -13,9 +13,9 @@ import { AttendanceService } from '../../../../../services/attendance/attendance
 import { KeygenService } from '../../../../../services/keygen.service';
 import { Keygen } from '../../../../../model/keygen';
 
-declare let $:any;
-declare let moment:any;
-declare let toastr:any;
+declare let $: any;
+declare let moment: any;
+declare let toastr: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -27,8 +27,8 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
     kehadiran: boolean = false;
     id: string;
     userObj: any;
-    fullCalendar : any;
-    bearToken : string;
+    fullCalendar: any;
+    bearToken: string;
     private sub: any;
     userid: string;
     attForm: FormGroup;
@@ -38,17 +38,17 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
     user: any;
 
     message: any = {
-          danger: "Kehadiran Telah Wujud",
-          success: "Kehadiran Telah Disimpan"
-        }
+        danger: "Kehadiran Telah Wujud",
+        success: "Kehadiran Telah Disimpan"
+    }
 
     constructor(
         private _script: ScriptLoaderService,
         private coachingService: CoachingService,
-        private userService:UserService,
-        private attendanceService:AttendanceService,
+        private userService: UserService,
+        private attendanceService: AttendanceService,
         private keygenService: KeygenService,
-        private router:Router,
+        private router: Router,
         private route: ActivatedRoute) {
 
     }
@@ -59,7 +59,7 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
         this.user = currentUser;
         localStorage.setItem('userIdAttendance', this.userid);
 
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
         this.sub = this.route.params.subscribe(
             params => {
                 this.id = params['id'];
@@ -67,7 +67,7 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 this.userid = currentUser.id;
                 this.userService.getUserById(this.userid).subscribe(
-                    data=>{
+                    data => {
                         this.userObj = data;
                     }
                 )
@@ -78,8 +78,8 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
             remarks: new FormControl('', Validators.required),
             attendance: new FormControl(),
             kodKehadiran: new FormControl(),
-            date: new FormControl({value: '', disabled: true}, Validators.required),
-            name: new FormControl({value: '', disabled: true}, Validators.required)
+            date: new FormControl({ value: '', disabled: true }, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required)
 
         })
 
@@ -87,144 +87,143 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/osdec/validation/coaching/coaching-attendance2.js',
-             'assets/osdec/validation/validation.js');
+            'assets/osdec/validation/validation.js');
 
         var CalendarBackgroundEvents = {
-            init: function () {
+            init: function() {
 
                 $("#m_calendar").fullCalendar({
 
-                        buttonText: {
-                            today:    'Hari Ini',
-                            month:    'Bulan',
-                            week:     'Minggu',
-                            day:      'Hari',
-                            list:     'Senarai'
-                        },
+                    buttonText: {
+                        today: 'Hari Ini',
+                        month: 'Bulan',
+                        week: 'Minggu',
+                        day: 'Hari',
+                        list: 'Senarai'
+                    },
 
-                        weekends: false,
+                    weekends: false,
 
-                        dayNamesShort: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
+                    dayNamesShort: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
 
-                        dayNames: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
+                    dayNames: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
 
-                        header: {
-                            left: "prev,next today",
-                            center: "title",
-                            right: "month,agendaWeek,agendaDay,listWeek"
-                        },
-                        editable: !0,
-                        eventLimit: !0,
-                        navLinks: !0,
-                        businessHours: !0,
-                        eventSources: [
+                    header: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "month,agendaWeek,agendaDay,listWeek"
+                    },
+                    editable: !0,
+                    eventLimit: !0,
+                    navLinks: !0,
+                    businessHours: !0,
+                    eventSources: [
 
 
-                            {
-                                url: environment.hostname+"/api/coachingActivities/all/"+localStorage.getItem('tokenId')+"/"+localStorage.getItem('userIdAttendance'),
-                                headers: {
-                                    "Authorization": "Bearer "+localStorage.getItem('jwtToken')
-                                },
-                                type: 'GET'
+                        {
+                            url: environment.hostname + "/api/coachingActivities/all/" + localStorage.getItem('tokenId') + "/" + localStorage.getItem('userIdAttendance'),
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem('jwtToken')
                             },
-                            {
-                                url: environment.hostname+"/api/coachingActivities/all2/"+localStorage.getItem('tokenId')+"/"+localStorage.getItem('userIdAttendance'),
-                                headers: {
-                                    "Authorization": "Bearer "+localStorage.getItem('jwtToken')
-                                },
-                                type: 'GET'
-                            }
-
-
-
-                        ],
-
-                        eventRender: function (event, element) {
-
-                            if(moment(event.start).isoWeekday() == 7||moment(event.start).isoWeekday() == 6)
-                            {
-                                return false;
-                            }
-
-                            element.attr('href', 'javascript:void(0);');
-
-                                element.click(function() {
-                                    if(event.isExist){
-
-                                        $("#m_modal_hadir").modal("show");
-
-                                    }else{
-                                        $("#eventTitle").attr('placeholder', event.title);
-                                        $("#eventTitle").attr('value', event.id);
-                                        $("#eventVenue").attr('placeholder', event.description);
-                                        $("#eventDate").attr('placeholder', moment(event.start).format('DD/MM/YYYY'));
-                                        $("#eventDate").attr('value', event.start);
-
-                                        if(event.attendance == "Tiada") {
-                                            $("#kodKehadiran").attr('style', "display: none;");
-                                            $("#eventSah").attr('style', "display: none;");
-                                            $("#eventSah1").attr('required', "false");
-                                            $("#eventSah2").attr('required', "false");
-                                        }
-                                        else{
-                                            $("#kodKehadiran").attr('style', "display: flex;");
-                                            $("#eventSah").attr('style', "display: flex;");
-                                            $("#eventSah1").attr('required', "true");
-                                            $("#eventSah2").attr('required', "true");
-                                        }
-                                        $("#m_modal_1").modal("show");
-                                    }
-                                }
-                            );
+                            type: 'GET'
+                        },
+                        {
+                            url: environment.hostname + "/api/coachingActivities/all2/" + localStorage.getItem('tokenId') + "/" + localStorage.getItem('userIdAttendance'),
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem('jwtToken')
+                            },
+                            type: 'GET'
                         }
-                        /*eventRender: function (e, t) {
-                            t.hasClass("fc-day-grid-event") ? (t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)) : t.hasClass(
-                                    "fc-time-grid-event") ? t.find(".fc-title")
-                                .append('<div class="fc-description">' + e.description + "</div>") : 0 !== t.find(".fc-list-item-title")
-                                .lenght && t.find(".fc-list-item-title")
-                                .append('<div class="fc-description">' + e.description + "</div>")
-                        }*/
-                    })
+
+
+
+                    ],
+
+                    eventRender: function(event, element) {
+
+                        if (moment(event.start).isoWeekday() == 7 || moment(event.start).isoWeekday() == 6) {
+                            return false;
+                        }
+
+                        element.attr('href', 'javascript:void(0);');
+
+                        element.click(function() {
+                            if (event.isExist) {
+
+                                $("#m_modal_hadir").modal("show");
+
+                            } else {
+                                $("#eventTitle").attr('placeholder', event.title);
+                                $("#eventTitle").attr('value', event.id);
+                                $("#eventVenue").attr('placeholder', event.description);
+                                $("#eventDate").attr('placeholder', moment(event.start).format('DD/MM/YYYY'));
+                                $("#eventDate").attr('value', event.start);
+
+                                if (event.attendance == "Tiada") {
+                                    $("#kodKehadiran").attr('style', "display: none;");
+                                    $("#eventSah").attr('style', "display: none;");
+                                    $("#eventSah1").attr('required', "false");
+                                    $("#eventSah2").attr('required', "false");
+                                }
+                                else {
+                                    $("#kodKehadiran").attr('style', "display: flex;");
+                                    $("#eventSah").attr('style', "display: flex;");
+                                    $("#eventSah1").attr('required', "true");
+                                    $("#eventSah2").attr('required', "true");
+                                }
+                                $("#m_modal_1").modal("show");
+                            }
+                        }
+                        );
+                    }
+                    /*eventRender: function (e, t) {
+                        t.hasClass("fc-day-grid-event") ? (t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)) : t.hasClass(
+                                "fc-time-grid-event") ? t.find(".fc-title")
+                            .append('<div class="fc-description">' + e.description + "</div>") : 0 !== t.find(".fc-list-item-title")
+                            .lenght && t.find(".fc-list-item-title")
+                            .append('<div class="fc-description">' + e.description + "</div>")
+                    }*/
+                })
             }
         };
 
-        jQuery(document).ready(function () {
-                CalendarBackgroundEvents.init()
-            });
+        jQuery(document).ready(function() {
+            CalendarBackgroundEvents.init()
+        });
     }
 
-    open(){
-        this.kehadiran=true;
+    open() {
+        this.kehadiran = true;
     }
 
-    close(){
-        this.kehadiran=false;
+    close() {
+        this.kehadiran = false;
     }
 
-    closeModal(){
+    closeModal() {
         this.attForm.reset();
 
-        this.kehadiran=false;
+        this.kehadiran = false;
         $("#m_modal_1").modal("hide");
     }
-    onSubmit(){
+    onSubmit() {
         var form = $('#attForm');
 
-         form.validate({
-           rules:{
-             remarks: "required"
-           }
+        form.validate({
+            rules: {
+                remarks: "required"
+            }
         });
 
-        if(!form.valid){
+        if (!form.valid) {
             return false;
-        }else{
-            if(this.attForm.valid){
+        } else {
+            if (this.attForm.valid) {
                 var dateEvent = $('#eventDate').attr('value');
                 var idEvent = $('#eventTitle').attr('value');
                 var idTitle = $('#eventTitle').attr('placeholder');
 
-                let attendance : Attendance = new Attendance (
+                let attendance: Attendance = new Attendance(
                     this.user,
                     null,
                     null,
@@ -233,16 +232,16 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                     dateEvent,
                     null
                 )
-                if(this.kehadiran==true){
+                if (this.kehadiran == true) {
                     this.coachingService.getCoachingActivityById(idEvent).subscribe(
-                        data=>{
+                        data => {
 
                             this.keygenService.getKeygenByInstanceId(this.id).subscribe(
-                                data=>{
+                                data => {
                                     var keygen = data.keygen;
-                                    if(this.attForm.controls['kodKehadiran'].value===keygen){
-                                        
-                                        let attendance: Attendance = new Attendance (
+                                    if (this.attForm.controls['kodKehadiran'].value === keygen) {
+
+                                        let attendance: Attendance = new Attendance(
                                             this.userObj,
                                             this.attForm.controls['attendance'].value,
                                             this.attForm.controls['remarks'].value,
@@ -252,7 +251,7 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                                             null
                                         )
                                         this.attendanceService.createAttendance(attendance).subscribe(
-                                            success=>{
+                                            success => {
                                                 this.isEditable = true;
                                                 this.loading = false;
                                                 toastr.success(this.message.success);
@@ -264,14 +263,14 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                                                 $("m_calendar").fullCalendar('rerenderEvents');
                                             }
                                         );
-                                    }else{
+                                    } else {
                                         this.attForm.reset();
                                         this.kehadiran = false;
                                         $("#m_modal_1").modal("hide");
                                         $("#m_modal_code").modal("show");
                                     }
                                 },
-                                errorCode=>{
+                                errorCode => {
                                     this.attForm.reset();
                                     this.kehadiran = false;
                                     $("#m_modal_1").modal("hide");
@@ -279,13 +278,13 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                                 }
                             )
 
-                            
+
                         }
                     );
-                    
-                }else{
-                    
-                    let attendance: Attendance = new Attendance (
+
+                } else {
+
+                    let attendance: Attendance = new Attendance(
                         this.userObj,
                         this.attForm.controls['attendance'].value,
                         this.attForm.controls['remarks'].value,
@@ -295,7 +294,7 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                         null
                     )
                     this.attendanceService.createAttendance(attendance).subscribe(
-                        success=>{
+                        success => {
                             this.isEditable = true;
                             this.loading = false;
                             toastr.success(this.message.success);
@@ -306,19 +305,19 @@ export class CoachingAttendanceComponent implements OnInit, AfterViewInit {
                             $("m_calendar").fullCalendar('refetchEvents');
                             $("m_calendar").fullCalendar('rerenderEvents');
                         }
-                    );                    
+                    );
                 }
-                    
+
             }
         }
     }
 
-    redirectInfo(){
-      this.router.navigate(['/coaching/info', this.id]);
+    redirectInfo() {
+        this.router.navigate(['/coaching/info', this.id]);
     }
 
-    redirectFeedback(){
-      this.router.navigate(['/coaching/feedback', this.id]);
+    redirectFeedback() {
+        this.router.navigate(['/coaching/feedback', this.id]);
     }
 
 }

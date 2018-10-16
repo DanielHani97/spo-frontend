@@ -10,7 +10,7 @@ import { CapabilityService } from '../../../../../services/capability/capability
 import { UserService } from '../../../../../services/user.service';
 
 declare var $: any;
-declare let toastr:any;
+declare let toastr: any;
 declare var moment: any;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -26,11 +26,11 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
     userid: string;
     idUser: string;
     userobj: any;
-    private sub :any;
+    private sub: any;
     coachLs: any[];
     currentCoach: any;
     tempCapid: string;
-    aktivitiLs : any[];
+    aktivitiLs: any[];
     private aktiviti = [];
     private activities = [];
     mark: any;
@@ -38,12 +38,12 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
     loading: boolean = false;
     isEditable = false;
     message: any = {
-      success: "Kepakaran Telah Berjaya Diterima",
-      danger: "Kepakaran Telah Berjaya Ditolak"
+        success: "Kepakaran Telah Berjaya Diterima",
+        danger: "Kepakaran Telah Berjaya Ditolak"
     }
 
-    constructor(private _script: ScriptLoaderService, private capabilityService:CapabilityService, private userService: UserService, private router:Router, private route: ActivatedRoute) { }
-    
+    constructor(private _script: ScriptLoaderService, private capabilityService: CapabilityService, private userService: UserService, private router: Router, private route: ActivatedRoute) { }
+
     ngOnInit() {
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.userid = currentUser.id;
@@ -51,52 +51,52 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
 
 
         this.capForm = new FormGroup({
-            agency: new FormControl({value: '', disabled: true}, Validators.required),
-            pemohon: new FormControl({value: '', disabled: true}, Validators.required),
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-            kepakaran: new FormControl({value: '', disabled: true}, Validators.required),
-            duration: new FormControl({value: '', disabled: true}, Validators.required),
-            start_date: new FormControl({value: '', disabled: true}, Validators.required),
-            end_date: new FormControl({value: '', disabled: true}, Validators.required),
-            remarks: new FormControl({value: '', disabled: true}, Validators.required),
-            coach_remarks: new FormControl({value: '', disabled: true}, Validators.required),
+            agency: new FormControl({ value: '', disabled: true }, Validators.required),
+            pemohon: new FormControl({ value: '', disabled: true }, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+            kepakaran: new FormControl({ value: '', disabled: true }, Validators.required),
+            duration: new FormControl({ value: '', disabled: true }, Validators.required),
+            start_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            end_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            remarks: new FormControl({ value: '', disabled: true }, Validators.required),
+            coach_remarks: new FormControl({ value: '', disabled: true }, Validators.required),
             admin_remarks: new FormControl('', Validators.required)
         })
 
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
 
-            if(this.id){
+            if (this.id) {
                 this.userService.getUserById(this.userid).subscribe(
-                    data=>{
+                    data => {
                         this.userobj = data;
                     }
                 )
                 this.capabilityService.getCapUserById(this.id).subscribe(
-                    data=>{
+                    data => {
                         this.idUser = data.user.id;
                         this.tempCapid = data.capability.id;
                         let agency;
 
-                        if(data.user.type=="GOV"){
-                            if(data.user.agency!=null){
+                        if (data.user.type == "GOV") {
+                            if (data.user.agency != null) {
                                 agency = data.user.agency.name;
-                            }else{
+                            } else {
                                 agency = "";
                             }
-                        }else if(data.user.type=="PRIVATE"){
-                            if(data.user.company!=null){
+                        } else if (data.user.type == "PRIVATE") {
+                            if (data.user.company != null) {
                                 agency = data.user.company.name;
-                            }else{
+                            } else {
                                 agency = "";
                             }
-                        }else{
+                        } else {
                             agency = "";
                         }
 
-                        for(let obj of data.user.skill){
+                        for (let obj of data.user.skill) {
                             var objId = obj.technology.id;
-                            if(objId === data.capability.kepakaran.id){
+                            if (objId === data.capability.kepakaran.id) {
                                 this.mark = obj.mark;
                             }
                         }
@@ -118,7 +118,7 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
                         )
                         this.capabilityService.getCapabilityAct(this.tempCapid).subscribe(
                             data => {
-                                
+
                                 this.aktiviti = data;
                                 for (var i = 0; i < this.aktiviti.length; ++i) {
 
@@ -131,25 +131,25 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
                                     var enddate = this.formatDate(this.aktiviti[i].end_date);
 
                                     this.activities.push({
-                                            name: this.aktiviti[i].name,
-                                            venue: this.aktiviti[i].venue,
-                                            start: startdate,
-                                            endo: enddate,
-                                            attendance: this.aktiviti[i].attendance,
-                                            duration: this.aktiviti[i].duration
+                                        name: this.aktiviti[i].name,
+                                        venue: this.aktiviti[i].venue,
+                                        start: startdate,
+                                        endo: enddate,
+                                        attendance: this.aktiviti[i].attendance,
+                                        duration: this.aktiviti[i].duration
 
                                     })
                                 }
                             }
                         )
-                    }  
+                    }
                 )
             }
         })
 
-        
 
-        
+
+
     }
 
     ngAfterViewInit() {
@@ -158,21 +158,21 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
 
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
     redirectListPage() {
-      this.router.navigate(['/cap/list/admin']);
+        this.router.navigate(['/cap/list/admin']);
     }
 
-    onSubmit(){
-        if(this.capForm.valid){
-            if(this.id){
+    onSubmit() {
+        if (this.capForm.valid) {
+            if (this.id) {
                 let capUser: CapabilityUser = new CapabilityUser(
                     null,
                     null,
@@ -185,20 +185,20 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
                     this.id
                 )
                 this.capabilityService.updateCapabilityUser(capUser).subscribe(
-                    success=>{
+                    success => {
                         this.isEditable = true;
                         this.loading = false;
                         toastr.success(this.message.success);
                         this.redirectListPage();
                     });
-                
+
             }
         }
     }
 
-    directTolak(){
-        if(this.capForm.valid){
-            if(this.id){
+    directTolak() {
+        if (this.capForm.valid) {
+            if (this.id) {
                 let capUser: CapabilityUser = new CapabilityUser(
                     null,
                     null,
@@ -211,19 +211,19 @@ export class CapApprovalComponent implements OnInit, AfterViewInit {
                     this.id
                 )
                 this.capabilityService.updateCapabilityUser(capUser).subscribe(
-                    success=>{
+                    success => {
                         this.isEditable = true;
                         this.loading = false;
                         toastr.success(this.message.danger);
                         this.redirectListPage();
                     });
-                
+
             }
         }
     }
 
     LihatProfilPage() {
-      this.router.navigate(['/header/profile/view/', this.idUser]);
+        this.router.navigate(['/header/profile/view/', this.idUser]);
     }
 
 }

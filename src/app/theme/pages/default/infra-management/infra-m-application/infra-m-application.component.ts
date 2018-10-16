@@ -12,7 +12,7 @@ import { UserService } from '../../../../../services/user.service';
 import { TechnologyService } from '../../../../../services/setup/technology.service';
 
 declare var $: any;
-declare let toastr:any;
+declare let toastr: any;
 declare var moment: any;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -23,7 +23,7 @@ declare var moment: any;
 export class InfraMApplicationComponent implements OnInit, AfterViewInit {
 
     id: string;
-    bearToken : string;
+    bearToken: string;
     userid: string;
     agencyObj: any;
     userObj: any;
@@ -43,43 +43,43 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
     loading: boolean = false;
     isEditable = false;
     message: any = {
-      success: "Permohonan Telah Berjaya Disimpan"
+        success: "Permohonan Telah Berjaya Disimpan"
     }
 
     constructor(
-      private _script: ScriptLoaderService,
-      private infrastructureService:InfrastructureService,
-      private userService:UserService,
-      private technologyService:TechnologyService,
-      private router:Router,
-      private route: ActivatedRoute
+        private _script: ScriptLoaderService,
+        private infrastructureService: InfrastructureService,
+        private userService: UserService,
+        private technologyService: TechnologyService,
+        private router: Router,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-          this.id = params['id'];
-          });
+            this.id = params['id'];
+        });
 
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.userid = currentUser.id;
 
 
-          this.infrastructureService.getFrontend().subscribe(
-              data => {
+        this.infrastructureService.getFrontend().subscribe(
+            data => {
                 this.frameworkLs = data;
-             }
-          );
-
-          this.infrastructureService.getDatabase().subscribe(
-            data =>{
-              this.databaseLs = data;
             }
-          );
+        );
 
-        this.infraForm = new FormGroup ({
-            pemohon: new FormControl({value: '', disabled: true}, Validators.required),
-            agency: new FormControl({value: '', disabled: true}, Validators.required),
+        this.infrastructureService.getDatabase().subscribe(
+            data => {
+                this.databaseLs = data;
+            }
+        );
+
+        this.infraForm = new FormGroup({
+            pemohon: new FormControl({ value: '', disabled: true }, Validators.required),
+            agency: new FormControl({ value: '', disabled: true }, Validators.required),
             type: new FormControl('', Validators.required),
             remarks: new FormControl('', Validators.required),
             os: new FormControl('', Validators.required),
@@ -100,35 +100,35 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
                 this.userObj = user;
                 let agensi = "";
 
-              if(user.type=="GOV"){
-                if(user.agency!=null){
-                  agensi = user.agency.name;
-                }else{
-                  agensi = "";
+                if (user.type == "GOV") {
+                    if (user.agency != null) {
+                        agensi = user.agency.name;
+                    } else {
+                        agensi = "";
+                    }
+                } else if (user.type == "PRIVATE") {
+                    if (user.company != null) {
+                        agensi = user.company.name;
+                    } else {
+                        agensi = "";
+                    }
+                } else {
+                    agensi = "";
                 }
-              }else if(user.type=="PRIVATE"){
-                if(user.company!=null){
-                  agensi = user.company.name;
-                }else{
-                  agensi = "";
-                }
-              }else{
-                agensi = "";
-              }
 
-             this.infraForm.patchValue({
-               agency: agensi,
-               pemohon: user.name
+                this.infraForm.patchValue({
+                    agency: agensi,
+                    pemohon: user.name
 
-             })
-             
-             
-           }
+                })
+
+
+            }
         )
 
-        if(this.id){
+        if (this.id) {
             this.infrastructureService.getInfrastructureById(this.id).subscribe(
-                data=>{
+                data => {
                     this.framework = data.framework;
                     this.database = data.database;
                     this.infraForm.patchValue({
@@ -151,12 +151,12 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onSubmit(){
+    onSubmit() {
 
-        if($("#setuju").is(':checked')){
-            if(this.infraForm.valid){
+        if ($("#setuju").is(':checked')) {
+            if (this.infraForm.valid) {
 
-                if(this.id){
+                if (this.id) {
                     let infrastructure: Infrastructure = new Infrastructure(
 
                         null,
@@ -184,14 +184,14 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
                     )
 
                     this.infrastructureService.updateInfra(infrastructure).subscribe(
-                        success=>{
+                        success => {
                             this.isEditable = true;
                             this.loading = false;
                             toastr.success(this.message.success);
                             this.redirectPage();
                         }
                     );
-                }else{
+                } else {
                     let infrastructure: Infrastructure = new Infrastructure(
 
                         this.userObj,
@@ -219,7 +219,7 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
                     )
 
                     this.infrastructureService.createInfrastructure(infrastructure).subscribe(
-                        success=>{
+                        success => {
                             this.isEditable = true;
                             this.loading = false;
                             toastr.success(this.message.success);
@@ -229,7 +229,7 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
                 }
             }
         }
-        else{
+        else {
             $("#m_modal_setuju").modal("show");
         }
     }
@@ -242,21 +242,21 @@ export class InfraMApplicationComponent implements OnInit, AfterViewInit {
 
     }
 
-    redirectPage(){
+    redirectPage() {
         this.router.navigate(['/infra/list']);
     }
 
     setFramework(id: any): void {
-      // Match the selected ID with the ID's in array
-      this.currentFramework = this.frameworkLs.filter(value => value.id === id);
-      this.framework = this.currentFramework[0];
+        // Match the selected ID with the ID's in array
+        this.currentFramework = this.frameworkLs.filter(value => value.id === id);
+        this.framework = this.currentFramework[0];
 
     }
 
     setDatabase(id: any): void {
-      // Match the selected ID with the ID's in array
-      this.currentDatabase = this.databaseLs.filter(value => value.id === id);
-      this.database = this.currentDatabase[0];
+        // Match the selected ID with the ID's in array
+        this.currentDatabase = this.databaseLs.filter(value => value.id === id);
+        this.database = this.currentDatabase[0];
 
     }
 

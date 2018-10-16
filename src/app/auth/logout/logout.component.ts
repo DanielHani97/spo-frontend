@@ -19,6 +19,6 @@ export class LogoutComponent implements OnInit {
         Helpers.setLoading(true);
         // reset login status
         this._authService.logout();
-        this._router.navigate(['/login']).then(()=>{window.location.reload()});
+        this._router.navigate(['/login']).then(() => { window.location.reload() });
     }
 }

@@ -30,7 +30,7 @@ import { CoachingService } from '../../../../../services/coaching/coaching.servi
 
 import { Company } from '../../../../../model/setup/company';
 
-import{ PasswordValidation } from '../../../../../../assets/osdec/validation/password-val';
+import { PasswordValidation } from '../../../../../../assets/osdec/validation/password-val';
 import { AuthenticationService } from "../../../../../auth/_services/authentication.service";
 
 @Component({
@@ -38,27 +38,27 @@ import { AuthenticationService } from "../../../../../auth/_services/authenticat
     templateUrl: "./header-profile-view.component.html",
     encapsulation: ViewEncapsulation.None,
     providers: [
-                  UserService,
-                  ProjectService,
-                  CountryService,
-                  AgencyService,
-                  GradeService,
-                  SchemaService,
-                  SkillService,
-                  CertificateService,
-                  TechnologyService,
-                  AuthenticationService,
-                  TrainingService,
-                  CoachingService
-               ]
+        UserService,
+        ProjectService,
+        CountryService,
+        AgencyService,
+        GradeService,
+        SchemaService,
+        SkillService,
+        CertificateService,
+        TechnologyService,
+        AuthenticationService,
+        TrainingService,
+        CoachingService
+    ]
 
 })
-export class HeaderProfileViewComponent implements OnInit, AfterViewInit{
-    
-    token : string;
-    bearToken : string;
+export class HeaderProfileViewComponent implements OnInit, AfterViewInit {
+
+    token: string;
+    bearToken: string;
     user: User;
-    
+
     agencyForm: FormGroup;
     agency: Agency;
     skill: any[];
@@ -88,39 +88,39 @@ export class HeaderProfileViewComponent implements OnInit, AfterViewInit{
     userObj: any;
     private sub: any;
 
-    ccities : any[];
+    ccities: any[];
 
     city: City;
     state: State;
 
-    grade : Grade;
+    grade: Grade;
 
-    schema : Schema;
+    schema: Schema;
     form: FormGroup;
 
-    name : String;
-    email : String;
-    username : String;
-    phoneNo : any;
-    address : any;
-    position : String;
-    type : String;
-    agency2 : String;
-    postcode : any;
-    state2 : any;
-    city2 : any;
+    name: String;
+    email: String;
+    username: String;
+    phoneNo: any;
+    address: any;
+    position: String;
+    type: String;
+    agency2: String;
+    postcode: any;
+    state2: any;
+    city2: any;
     ccity: any;
     cstate: any;
     caddress: any;
     cpostcode: any;
-    cphoneNo : any;
+    cphoneNo: any;
 
     @ViewChild('fileInput') fileInput;
     imageSrc: string = '';
     imageLoaded: boolean = true;
     loaded: boolean = true;
 
-    technologyLs : any[];
+    technologyLs: any[];
 
     isGov: boolean = true;
 
@@ -130,203 +130,203 @@ export class HeaderProfileViewComponent implements OnInit, AfterViewInit{
     @ViewChild('fileCert') fileCert;
 
     constructor(
-      fb: FormBuilder,
-      private _script: ScriptLoaderService,
-      private userService:UserService,
-      private projectService:ProjectService,
-      private agencyService:AgencyService,
-      private countryService:CountryService,
-      private gradeService:GradeService,
-      private schemaService:SchemaService,
-      private router:Router,
-      private route: ActivatedRoute,
-      private technologyService: TechnologyService,
-      private skillService: SkillService,
-      private trainingService: TrainingService,
-      private coachingService: CoachingService
+        fb: FormBuilder,
+        private _script: ScriptLoaderService,
+        private userService: UserService,
+        private projectService: ProjectService,
+        private agencyService: AgencyService,
+        private countryService: CountryService,
+        private gradeService: GradeService,
+        private schemaService: SchemaService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private technologyService: TechnologyService,
+        private skillService: SkillService,
+        private trainingService: TrainingService,
+        private coachingService: CoachingService
 
-    ){
-        
+    ) {
+
     }
     ngOnInit() {
-      
-       this.sub = this.route.params.subscribe(params => {
+
+        this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
 
-      this.trainingService.getTrainingTx().subscribe(
-        data => {
-                this.latihan = data;
-                this.latihanP= this.latihan.filter(value =>value.user.id===this.id);
-                console.log(this.latihanP)
+            this.trainingService.getTrainingTx().subscribe(
+                data => {
+                    this.latihan = data;
+                    this.latihanP = this.latihan.filter(value => value.user.id === this.id);
+                    console.log(this.latihanP)
 
-                let ngbDate = this.latihan.startDate;
-                var dateA = new Date(ngbDate)
-                
-                let ngbDate2 = this.latihan.endDate;
-                var dateB = new Date(ngbDate2);
-          }
-      ) 
+                    let ngbDate = this.latihan.startDate;
+                    var dateA = new Date(ngbDate)
 
-      this.coachingService.getCoachingUserByUserId(this.id).subscribe(
-         data => {
-           this.coachingP = data;
-           console.log(data)
-
-            let ngbDate = this.coachingP.starting_date;
-            var dateA = new Date(ngbDate)
-            
-            let ngbDate2 = this.coachingP.ending_date;
-            var dateB = new Date(ngbDate2);
-         }
-      )
-     });
-
-       this.projectService.getProject().subscribe(
-               data =>{
-                 this.projectLs = data;
-                 this.osdecPro = this.projectLs.filter(value=> value.user.id === this.id);
-                 for(var i = 0; i<this.osdecPro.length; ++i){
-
-                   let ngbDate = this.osdecPro[i].starting_date;
-                   var date = new Date(ngbDate)
-                   let ngbDate2 = this.osdecPro[i].ending_date;
-                   var date2 = new Date(ngbDate2)
-
-                   this.osdecProject.push({
-
-                   name: this.osdecPro[i].name,
-                   technology: this.osdecPro[i].technology,
-                   role: this.osdecPro[i].role,
-                   description: this.osdecPro[i].description,
-                   type: this.osdecPro[i].type,
-                   starting_date: date,
-                   ending_date: date2,
-                   agency: this.osdecPro[i].agency,
-                   user: this.userObj
-
-             })
-           }
-         })
-      
-      //Load user by id to edit
-      if (this.id) { //edit form
-         this.userService.getUserById(this.id).subscribe(
-           user => {
-               this.id = user.id;
-               this.userObj = user;
-               this.userimg = user.image;
-               this.skill = user.skill;
-
-               var stateId = "0";
-               var cityId = "0";
-
-               var state = user.state;
-               var city = user.city;
-               var grade = user.grade;
-               var schema = user.schema;
-
-               var gradeId = "0";
-               var schemaId = "0";
-
-              if(state){
-                stateId = user.state.id;
-              }
-              if(city){
-                cityId = user.city.id;
-              }
-
-               if(grade){
-                 gradeId = user.grade.id;
-               }
-               if(schema){
-                 schemaId = user.schema.id;
-               }
-
-               if(user.type=="GOV"){
-                 this.type = "KERAJAAN"
-               }else if (user.type == "PRIVATE"){
-                 this.type = "SWASTA"
-               }
-
-               this.name = user.name;
-               this.email = user.email;
-               this.phoneNo = user.phoneNo;
-               this.username = user.username;
-               this.position = user.position;
-               this.address = user.address;
-               this.agency2 = user.agency.name;
-               this.postcode = user.postcode;
-               this.state2 = user.state.name;
-               this.city2 = user.city.name;
-               this.caddress = user.agency.address;
-               this.cstate = user.agency.state.name;
-               this.ccity = user.agency.city.name;
-               this.cpostcode = user.agency.postcode;
-               this.cphoneNo = user.agency.phoneNo;
-
-               //agency loading
-               this.agencyGlobal = user.agency;
-
-               //company loading
-               this.companyGlobal = user.company;
-
-               if(this.companyGlobal){
-                 this.companyId = user.company.id;
-
-                 state = this.companyGlobal.state;
-                 var loadState = "0";
-                 var loadCity = "0";
-
-                 if(state){
-                   loadState = state.id;
-                   if(loadState){
-                     this.countryService.getCity(loadState).subscribe(
-                       data => {
-                         this.ccities = data;
-                       }
-                     );
-                   }
-                 }
+                    let ngbDate2 = this.latihan.endDate;
+                    var dateB = new Date(ngbDate2);
                 }
+            )
 
-               //load skill
-               let skills = user.skill;
-               if(skills){
-                 var optionHtml;
-                 var optLvl = '<option value="0"</option>';
+            this.coachingService.getCoachingUserByUserId(this.id).subscribe(
+                data => {
+                    this.coachingP = data;
+                    console.log(data)
 
-                 for(let skill of skills){
+                    let ngbDate = this.coachingP.starting_date;
+                    var dateA = new Date(ngbDate)
 
-                   var id = skill.id;
-                   var tech = skill.technology;
-                   var level = skill.level;
-                   var mark = skill.mark;
+                    let ngbDate2 = this.coachingP.ending_date;
+                    var dateB = new Date(ngbDate2);
+                }
+            )
+        });
 
-                   for(let obj of this.technologyLs){
-                     if(obj.id == tech.id){
-                       optionHtml += '<option value="'+obj.id+'" selected>'+obj.name+'</option>';
-                     }else{
-                       optionHtml += '<option value="'+obj.id+'">'+obj.name+'</option>';
-                     }
-                   }
-                 }
-               }
+        this.projectService.getProject().subscribe(
+            data => {
+                this.projectLs = data;
+                this.osdecPro = this.projectLs.filter(value => value.user.id === this.id);
+                for (var i = 0; i < this.osdecPro.length; ++i) {
 
-            },error => {
-             console.log(error);
-            }
-         );
-       }
+                    let ngbDate = this.osdecPro[i].starting_date;
+                    var date = new Date(ngbDate)
+                    let ngbDate2 = this.osdecPro[i].ending_date;
+                    var date2 = new Date(ngbDate2)
+
+                    this.osdecProject.push({
+
+                        name: this.osdecPro[i].name,
+                        technology: this.osdecPro[i].technology,
+                        role: this.osdecPro[i].role,
+                        description: this.osdecPro[i].description,
+                        type: this.osdecPro[i].type,
+                        starting_date: date,
+                        ending_date: date2,
+                        agency: this.osdecPro[i].agency,
+                        user: this.userObj
+
+                    })
+                }
+            })
+
+        //Load user by id to edit
+        if (this.id) { //edit form
+            this.userService.getUserById(this.id).subscribe(
+                user => {
+                    this.id = user.id;
+                    this.userObj = user;
+                    this.userimg = user.image;
+                    this.skill = user.skill;
+
+                    var stateId = "0";
+                    var cityId = "0";
+
+                    var state = user.state;
+                    var city = user.city;
+                    var grade = user.grade;
+                    var schema = user.schema;
+
+                    var gradeId = "0";
+                    var schemaId = "0";
+
+                    if (state) {
+                        stateId = user.state.id;
+                    }
+                    if (city) {
+                        cityId = user.city.id;
+                    }
+
+                    if (grade) {
+                        gradeId = user.grade.id;
+                    }
+                    if (schema) {
+                        schemaId = user.schema.id;
+                    }
+
+                    if (user.type == "GOV") {
+                        this.type = "KERAJAAN"
+                    } else if (user.type == "PRIVATE") {
+                        this.type = "SWASTA"
+                    }
+
+                    this.name = user.name;
+                    this.email = user.email;
+                    this.phoneNo = user.phoneNo;
+                    this.username = user.username;
+                    this.position = user.position;
+                    this.address = user.address;
+                    this.agency2 = user.agency.name;
+                    this.postcode = user.postcode;
+                    this.state2 = user.state.name;
+                    this.city2 = user.city.name;
+                    this.caddress = user.agency.address;
+                    this.cstate = user.agency.state.name;
+                    this.ccity = user.agency.city.name;
+                    this.cpostcode = user.agency.postcode;
+                    this.cphoneNo = user.agency.phoneNo;
+
+                    //agency loading
+                    this.agencyGlobal = user.agency;
+
+                    //company loading
+                    this.companyGlobal = user.company;
+
+                    if (this.companyGlobal) {
+                        this.companyId = user.company.id;
+
+                        state = this.companyGlobal.state;
+                        var loadState = "0";
+                        var loadCity = "0";
+
+                        if (state) {
+                            loadState = state.id;
+                            if (loadState) {
+                                this.countryService.getCity(loadState).subscribe(
+                                    data => {
+                                        this.ccities = data;
+                                    }
+                                );
+                            }
+                        }
+                    }
+
+                    //load skill
+                    let skills = user.skill;
+                    if (skills) {
+                        var optionHtml;
+                        var optLvl = '<option value="0"</option>';
+
+                        for (let skill of skills) {
+
+                            var id = skill.id;
+                            var tech = skill.technology;
+                            var level = skill.level;
+                            var mark = skill.mark;
+
+                            for (let obj of this.technologyLs) {
+                                if (obj.id == tech.id) {
+                                    optionHtml += '<option value="' + obj.id + '" selected>' + obj.name + '</option>';
+                                } else {
+                                    optionHtml += '<option value="' + obj.id + '">' + obj.name + '</option>';
+                                }
+                            }
+                        }
+                    }
+
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
     }
 
     ngAfterViewInit() {
-       
+
     }
 
     onSubmit() {
     }
 
-    backPage(){
+    backPage() {
         window.history.back();
     }
 
@@ -339,7 +339,7 @@ export class HeaderProfileViewComponent implements OnInit, AfterViewInit{
         this.imageSrc = reader.result;
         this.loaded = true;
     }
-   
+
 }
 
-   
+

@@ -9,8 +9,8 @@ import { Capability } from '../../../../../model/capability/capability';
 import { CapabilityUser } from '../../../../../model/capability/capabilityUser';
 import { CapabilityService } from '../../../../../services/capability/capability.service';
 
-declare let toastr:any;
-declare var jQuery:any;
+declare let toastr: any;
+declare var jQuery: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -24,9 +24,9 @@ export class CapInfoComponent implements OnInit, AfterViewInit {
     id: string;
     bearToken: string;
     capObj = null;
-    start : string;
-    end : string;
-    aktivitiLs : any[];
+    start: string;
+    end: string;
+    aktivitiLs: any[];
     coachLs: any[];
     currentCoach: any;
     role: string;
@@ -34,12 +34,12 @@ export class CapInfoComponent implements OnInit, AfterViewInit {
     capForm: FormGroup;
     private activities = [];
     private aktiviti = [];
-    private sub : any;
+    private sub: any;
 
     constructor(private _script: ScriptLoaderService,
-      private capabilityService:CapabilityService,
-      private router:Router,
-      private route: ActivatedRoute
+        private capabilityService: CapabilityService,
+        private router: Router,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
@@ -52,29 +52,29 @@ export class CapInfoComponent implements OnInit, AfterViewInit {
         );
 
         this.capabilityService.getCapabilityById(this.id).subscribe(
-            data=>{
-                this.capObj =data;
+            data => {
+                this.capObj = data;
                 this.start = this.formatDate(this.capObj.starting_date),
-                this.end = this.formatDate(this.capObj.ending_date),
-                this.capForm.patchValue({
-                    name: this.capObj.name,
-                    kepakaran: this.capObj.kepakaran.name,
-                    duration: this.capObj.duration,
-                    start_date: this.start,
-                    end_date: this.end,
-                    remarks: this.capObj.remarks
-                })
+                    this.end = this.formatDate(this.capObj.ending_date),
+                    this.capForm.patchValue({
+                        name: this.capObj.name,
+                        kepakaran: this.capObj.kepakaran.name,
+                        duration: this.capObj.duration,
+                        start_date: this.start,
+                        end_date: this.end,
+                        remarks: this.capObj.remarks
+                    })
             }
         )
 
         this.capForm = new FormGroup({
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-            kepakaran: new FormControl({value: '', disabled: true}, Validators.required),
-            coach: new FormControl({value: '', disabled: true}, Validators.required),
-            duration: new FormControl({value: '', disabled: true}, Validators.required),
-            start_date: new FormControl({value: '', disabled: true}, Validators.required),
-            end_date: new FormControl({value: '', disabled: true}, Validators.required),
-            remarks: new FormControl({value: '', disabled: true}, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+            kepakaran: new FormControl({ value: '', disabled: true }, Validators.required),
+            coach: new FormControl({ value: '', disabled: true }, Validators.required),
+            duration: new FormControl({ value: '', disabled: true }, Validators.required),
+            start_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            end_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            remarks: new FormControl({ value: '', disabled: true }, Validators.required),
         })
 
         this.capabilityService.getCapabilityAct(this.id).subscribe(
@@ -92,12 +92,12 @@ export class CapInfoComponent implements OnInit, AfterViewInit {
                     var enddate = this.formatDate(this.aktiviti[i].end_date);
 
                     this.activities.push({
-                            name: this.aktiviti[i].name,
-                            venue: this.aktiviti[i].venue,
-                            start: startdate,
-                            endo: enddate,
-                            attendance: this.aktiviti[i].attendance,
-                            duration: this.aktiviti[i].duration
+                        name: this.aktiviti[i].name,
+                        venue: this.aktiviti[i].venue,
+                        start: startdate,
+                        endo: enddate,
+                        attendance: this.aktiviti[i].attendance,
+                        duration: this.aktiviti[i].duration
 
                     })
                 }
@@ -112,46 +112,46 @@ export class CapInfoComponent implements OnInit, AfterViewInit {
         )
     }
 
-    onSubmit(){
+    onSubmit() {
 
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
     ngAfterViewInit() {
-      this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/demo/default/custom/header/actions.js');
 
-            if(this.id){
-              let user = JSON.parse(localStorage.getItem('currentUser'));
-              this.capabilityService.getCapabilityRole(this.id, user.id).subscribe(
-                success =>{
-                  this.role = success;
+        if (this.id) {
+            let user = JSON.parse(localStorage.getItem('currentUser'));
+            this.capabilityService.getCapabilityRole(this.id, user.id).subscribe(
+                success => {
+                    this.role = success;
                 }
-              )
-            }
+            )
+        }
 
     }
-    redirecListPage(){
-      window.history.back();
+    redirecListPage() {
+        window.history.back();
     }
 
-    redirectAttend(){
-      if(this.role == "ROLE_USER"){
-        this.router.navigate(['/cap/attendance', this.id]);
-      }else if(this.role == "ROLE_COACH"){
-        this.router.navigate(['/cap/coachAttendance', this.id]);
-      }
+    redirectAttend() {
+        if (this.role == "ROLE_USER") {
+            this.router.navigate(['/cap/attendance', this.id]);
+        } else if (this.role == "ROLE_COACH") {
+            this.router.navigate(['/cap/coachAttendance', this.id]);
+        }
     }
 
-    redirectFeedback(){
-      this.router.navigate(['/cap/feedback', this.id]);
+    redirectFeedback() {
+        this.router.navigate(['/cap/feedback', this.id]);
     }
 
 }

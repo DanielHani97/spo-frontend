@@ -7,7 +7,7 @@ import { Location } from "@angular/common";
 
 import { CertificationUser } from '../../../../../model/certification/certificationUser';
 import { CertificationService } from '../../../../../services/certification/certification.service';
-declare let toastr:any;
+declare let toastr: any;
 
 import { message } from "../../../../../message/default";
 
@@ -24,14 +24,14 @@ export class CertAttendanceComponent implements OnInit, AfterViewInit, OnDestroy
     id: string;
     attendLs: any[];
     currentAttend: any;
-    userid : string;
-    instanceid : string;
+    userid: string;
+    instanceid: string;
     loading: boolean = false;
     isEditable = false;
 
     message: any = {
-          success: "Kehadiran telah berjaya disimpan"
-        }
+        success: "Kehadiran telah berjaya disimpan"
+    }
 
     userObj = null;
     certObj = null;
@@ -49,17 +49,17 @@ export class CertAttendanceComponent implements OnInit, AfterViewInit, OnDestroy
     certId: string;
     filestorage: any;
 
-    constructor(private _script: ScriptLoaderService, private certificationService:CertificationService,private router:Router, private route: ActivatedRoute) { }
+    constructor(private _script: ScriptLoaderService, private certificationService: CertificationService, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
 
         this.certForm = new FormGroup({
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-            title: new FormControl({value: '', disabled: true}, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+            title: new FormControl({ value: '', disabled: true }, Validators.required),
             statusResult: new FormControl('', Validators.required),
             remarks: new FormControl(),
             cert: new FormControl()
-       });
+        });
 
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -67,60 +67,60 @@ export class CertAttendanceComponent implements OnInit, AfterViewInit, OnDestroy
 
                 data => {
 
-                  this.certForm.patchValue({
-                      name: data.user.name,
-                      title: data.certification.title,
-                      statusResult: data.statusResult,
-                      remarks: data.remarks,
-                      cert: data.cert,
-                  })
+                    this.certForm.patchValue({
+                        name: data.user.name,
+                        title: data.certification.title,
+                        statusResult: data.statusResult,
+                        remarks: data.remarks,
+                        cert: data.cert,
+                    })
 
-                  this.userObj = data.user;
-                  this.certObj = data.certification;
-                  this.admin = data.admin_remarks;
-                  this.sts = data.status;
-                  this.create = data.createdBy;
-                  this.ev = data.evaluatedBy;
-                  this.apprv = data.approvedBy;
+                    this.userObj = data.user;
+                    this.certObj = data.certification;
+                    this.admin = data.admin_remarks;
+                    this.sts = data.status;
+                    this.create = data.createdBy;
+                    this.ev = data.evaluatedBy;
+                    this.apprv = data.approvedBy;
 
-                  //fileupload
-                  var file = data.cert;
-                  if(file){
-                    this.filestorage = file;
-                    this.certName = file.name;
-                  }
+                    //fileupload
+                    var file = data.cert;
+                    if (file) {
+                        this.filestorage = file;
+                        this.certName = file.name;
+                    }
                 },
 
-            error => {
-              console.log(error);
-            }
-          );
-      });
-     }
+                error => {
+                    console.log(error);
+                }
+            );
+        });
+    }
 
 
-    ngOnDestroy(): void{
-           this.sub.unsubscribe();
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     redirectListPage() {
-      this.router.navigate(['/cert/list']);
+        this.router.navigate(['/cert/list']);
     }
 
     ngAfterViewInit() {
 
-      this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-             'assets/osdec/validation/certification/certAttend-val.js', 'assets/osdec/validation/validation.js');
+        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/osdec/validation/certification/certAttend-val.js', 'assets/osdec/validation/validation.js');
     }
 
-    onSubmit(){
+    onSubmit() {
 
-      if (this.certForm.valid) {
+        if (this.certForm.valid) {
 
             if (this.id) {
-               this.isEditable = true;
+                this.isEditable = true;
 
-               let data: CertificationUser = new CertificationUser (
+                let data: CertificationUser = new CertificationUser(
                     this.userObj,
                     this.certObj,
                     this.admin,
@@ -132,7 +132,7 @@ export class CertAttendanceComponent implements OnInit, AfterViewInit, OnDestroy
                     this.certForm.controls['statusResult'].value,
                     this.certForm.controls['remarks'].value,
                     null
-                    );
+                );
 
                 let input = new FormData();
 
@@ -146,16 +146,16 @@ export class CertAttendanceComponent implements OnInit, AfterViewInit, OnDestroy
 
                 this.certificationService.updateCertificationUserFile(formModel).subscribe(
 
-                  success => {
-                     this.redirectListPage();
-                     this.isEditable = true;
-                     this.loading = false;
-                     toastr.success(this.message.success);
-                  }
+                    success => {
+                        this.redirectListPage();
+                        this.isEditable = true;
+                        this.loading = false;
+                        toastr.success(this.message.success);
+                    }
 
                 );
 
-               }
+            }
 
         }
 
@@ -170,29 +170,29 @@ export class CertAttendanceComponent implements OnInit, AfterViewInit, OnDestroy
         if (file.type != pattern) {
             toastr.error(message.global.invalidFormatPdf);
             return;
-        }else{
-          this.certName = file.name;
-          reader.readAsDataURL(file);
-          this.certForm.get('cert').setValue(file);
+        } else {
+            this.certName = file.name;
+            reader.readAsDataURL(file);
+            this.certForm.get('cert').setValue(file);
         }
     }
 
-    downloadCertificate(storageObj){
-      var data = this.base64ToArrayBuffer(storageObj.content);
+    downloadCertificate(storageObj) {
+        var data = this.base64ToArrayBuffer(storageObj.content);
 
-      var blob = new Blob([data]);
-      var url= window.URL.createObjectURL(blob);
-      window.open(url);
+        var blob = new Blob([data]);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
     }
 
     base64ToArrayBuffer(base64) {
-      var binaryString = window.atob(base64);
-      var binaryLen = binaryString.length;
-      var bytes = new Uint8Array(binaryLen);
-      for (var i = 0; i < binaryLen; i++) {
-         var ascii = binaryString.charCodeAt(i);
-         bytes[i] = ascii;
-      }
-      return bytes;
-   }
+        var binaryString = window.atob(base64);
+        var binaryLen = binaryString.length;
+        var bytes = new Uint8Array(binaryLen);
+        for (var i = 0; i < binaryLen; i++) {
+            var ascii = binaryString.charCodeAt(i);
+            bytes[i] = ascii;
+        }
+        return bytes;
+    }
 }

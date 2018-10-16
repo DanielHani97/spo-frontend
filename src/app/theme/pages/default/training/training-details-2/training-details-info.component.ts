@@ -24,11 +24,11 @@ export class TrainingDetailsInfoComponent implements OnInit, AfterViewInit {
     user: any;
     userid: string;
 
-    title : string;
-    endDate : string;
-    startDate : string;
-    level : string;
-    remark : string;
+    title: string;
+    endDate: string;
+    startDate: string;
+    level: string;
+    remark: string;
 
     objUser = null;
 
@@ -39,7 +39,7 @@ export class TrainingDetailsInfoComponent implements OnInit, AfterViewInit {
 
     currentUser: any;
 
-    constructor(private _script: ScriptLoaderService, private trainingService:TrainingService, private router:Router, private route: ActivatedRoute) { }
+    constructor(private _script: ScriptLoaderService, private trainingService: TrainingService, private router: Router, private route: ActivatedRoute) { }
 
 
     ngOnInit() {
@@ -51,66 +51,66 @@ export class TrainingDetailsInfoComponent implements OnInit, AfterViewInit {
                 this.id = params['id'];
             }
         );
-      }
+    }
 
     ngAfterViewInit() {
 
-      if(this.id){
+        if (this.id) {
 
-        this.trainingService.getCoachByTraining(this.id).subscribe(
-            data => {
-                this.user = data;
-            }
-        )
+            this.trainingService.getCoachByTraining(this.id).subscribe(
+                data => {
+                    this.user = data;
+                }
+            )
 
-        this.trainingService.getTrainingById(this.id).subscribe(
-          data => {
+            this.trainingService.getTrainingById(this.id).subscribe(
+                data => {
 
-              this.title = data.title,
-              this.endDate = this.formatDate(data.endDate),
-              this.startDate = this.formatDate(data.startDate),
-              this.level = data.level,
-              this.remark = data.remark
+                    this.title = data.title,
+                        this.endDate = this.formatDate(data.endDate),
+                        this.startDate = this.formatDate(data.startDate),
+                        this.level = data.level,
+                        this.remark = data.remark
 
-              this.imageStr=data.image;
+                    this.imageStr = data.image;
 
-          }
-        );
+                }
+            );
 
-        this.trainingService.getTrainingRole(this.id, this.currentUser.id).subscribe(
-          success =>{
-            this.role = success;
-          }
-        )
-      }
+            this.trainingService.getTrainingRole(this.id, this.currentUser.id).subscribe(
+                success => {
+                    this.role = success;
+                }
+            )
+        }
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
     redirectListPage() {
-      this.router.navigate(['/training/list']);
+        this.router.navigate(['/training/list']);
     }
 
-    redirectAttend(){
-      if(this.role === "ROLE_USER"){
-        var trainingTxId = localStorage.getItem("TRAINING_TX_ID");
-        this.router.navigate(['/training/current/attendance', trainingTxId]);
-      }else if(this.role === "ROLE_COACH"){
-        this.router.navigate(['/training/coachAttendance', this.id]);
-      }
-    }
-
-    redirectFeedback(){
-      this.router.navigate(['/training/feedback', this.id]);
-    }
-
-    onSubmit(){
-
+    redirectAttend() {
+        if (this.role === "ROLE_USER") {
+            var trainingTxId = localStorage.getItem("TRAINING_TX_ID");
+            this.router.navigate(['/training/current/attendance', trainingTxId]);
+        } else if (this.role === "ROLE_COACH") {
+            this.router.navigate(['/training/coachAttendance', this.id]);
         }
     }
+
+    redirectFeedback() {
+        this.router.navigate(['/training/feedback', this.id]);
+    }
+
+    onSubmit() {
+
+    }
+}

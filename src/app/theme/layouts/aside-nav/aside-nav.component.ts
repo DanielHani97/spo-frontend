@@ -10,12 +10,12 @@ declare let mLayout: any;
 })
 export class AsideNavComponent implements OnInit, AfterViewInit {
 
-    isAdmin : boolean;
-    isCoach : boolean;
-    isUser : boolean;
-    isSupervisor : boolean;
+    isAdmin: boolean;
+    isCoach: boolean;
+    isUser: boolean;
+    isSupervisor: boolean;
 
-    roles : any;
+    roles: any;
 
     mode: string;
 
@@ -23,37 +23,37 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
 
     }
     ngOnInit() {
-      let currentUser = JSON.parse(this._authService.getCurrentUser());
-      this.roles = currentUser.authorities;
+        let currentUser = JSON.parse(this._authService.getCurrentUser());
+        this.roles = currentUser.authorities;
 
-      for(let role of this.roles){
-        var authz = role.authority;
-        if(authz == 'ROLE_ADMIN'){
-          this.isAdmin = true;
-        }else if(authz == 'ROLE_SUPERVISOR'){
-          this.isSupervisor = true;
-        }else if(authz == 'ROLE_COACH'){
-          this.isCoach = true;
-        }else if(authz == 'ROLE_USER'){
-          this.isUser = true;
+        for (let role of this.roles) {
+            var authz = role.authority;
+            if (authz == 'ROLE_ADMIN') {
+                this.isAdmin = true;
+            } else if (authz == 'ROLE_SUPERVISOR') {
+                this.isSupervisor = true;
+            } else if (authz == 'ROLE_COACH') {
+                this.isCoach = true;
+            } else if (authz == 'ROLE_USER') {
+                this.isUser = true;
+            }
         }
-      }
 
-      var currRole = localStorage.getItem("CURRENT_ROLE");
+        var currRole = localStorage.getItem("CURRENT_ROLE");
 
-      if(currRole){
-        this.mode = localStorage.getItem("CURRENT_ROLE");
-      }else{
-        if(this.isAdmin == true){
-          this.mode = "ADMIN";
-        }else if(this.isSupervisor == true){
-          this.mode = "SUPERVISOR";
-        }else if(this.isCoach == true){
-          this.mode = "COACH";
-        }else if(this.isUser == true){
-          this.mode = "USER";
+        if (currRole) {
+            this.mode = localStorage.getItem("CURRENT_ROLE");
+        } else {
+            if (this.isAdmin == true) {
+                this.mode = "ADMIN";
+            } else if (this.isSupervisor == true) {
+                this.mode = "SUPERVISOR";
+            } else if (this.isCoach == true) {
+                this.mode = "COACH";
+            } else if (this.isUser == true) {
+                this.mode = "USER";
+            }
         }
-      }
     }
     ngAfterViewInit() {
 

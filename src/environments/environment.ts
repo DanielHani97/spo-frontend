@@ -9,3 +9,17 @@ export const environment = {
     // hostname: "http://139.162.53.218:8080/osdec-0.1"
     // hostname: "http://spo.osdec.gov.my:8080/osdec-0.1"
 };
+
+// export const environment = new Promise((resolve, reject) => {
+//     var xhr = new XMLHttpRequest();
+//     xhr.open('GET', './assets/environment.json');
+//     xhr.onload = function () {
+//       if (xhr.status === 200) {
+//         resolve(JSON.parse(xhr.responseText));
+//       }
+//       else {
+//         reject("Cannot load configuration...");
+//       }
+//     };
+//     xhr.send();
+//   });

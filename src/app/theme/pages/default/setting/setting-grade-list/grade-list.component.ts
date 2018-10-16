@@ -9,8 +9,8 @@ import { environment } from "../../../../../../environments/environment";
 
 import { message } from "../../../../../message/default";
 
-declare let toastr:any;
-declare let jQuery:any;
+declare let toastr: any;
+declare let jQuery: any;
 
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
@@ -20,16 +20,16 @@ declare let jQuery:any;
 })
 export class GradeListComponent implements OnInit, AfterViewInit {
 
-  token : string;
-  bearToken : string;
-  allId: any[];
-  id: string;
+    token: string;
+    bearToken: string;
+    allId: any[];
+    id: string;
 
-  confirmType: string;
-  confirmMsg: string;
-  btnAction: string;
+    confirmType: string;
+    confirmMsg: string;
+    btnAction: string;
 
-  datatable: any;
+    datatable: any;
 
 
     constructor(private elRef: ElementRef, private router: Router, private gradeService: GradeService) { }
@@ -123,23 +123,23 @@ export class GradeListComponent implements OnInit, AfterViewInit {
         })
 
         $(document).on('click', '#m_datatable_check_all', (e) => {
-          e.preventDefault();
+            e.preventDefault();
 
-          let cbArr: any[] = new Array();
+            let cbArr: any[] = new Array();
 
-          var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
-          $cbAnswer.each( function(i) {
-            var status = $(this).is(":checked");
-            if(status){
-              var id = $(this).val();
-              cbArr.push(id);
-            }
-           });
+            var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
+            $cbAnswer.each(function(i) {
+                var status = $(this).is(":checked");
+                if (status) {
+                    var id = $(this).val();
+                    cbArr.push(id);
+                }
+            });
 
-           this.allId = cbArr;
-           this.btnAction = "DELETE_ALL";
-           this.confirmMsg = message.global.confirmDelete;
-           jQuery('#m_modal_add').modal('show');
+            this.allId = cbArr;
+            this.btnAction = "DELETE_ALL";
+            this.confirmMsg = message.global.confirmDelete;
+            jQuery('#m_modal_add').modal('show');
         });
 
         $(".m_datatable").on("m-datatable--on-check", function(e, a) {
@@ -153,14 +153,14 @@ export class GradeListComponent implements OnInit, AfterViewInit {
 
 
         $(document).on('click', '.deleteFn', (e) => {
-          e.preventDefault();
-          var id = $(e.target).closest('.m-datatable__row').find('[data-field="id"]').find('.m-checkbox > input').val();
-          var newid = id.toString();
+            e.preventDefault();
+            var id = $(e.target).closest('.m-datatable__row').find('[data-field="id"]').find('.m-checkbox > input').val();
+            var newid = id.toString();
 
-          this.id = newid;
-          this.btnAction = "DELETE";
-          this.confirmMsg = message.global.confirmDelete;
-          jQuery('#m_modal_add').modal('show');
+            this.id = newid;
+            this.btnAction = "DELETE";
+            this.confirmMsg = message.global.confirmDelete;
+            jQuery('#m_modal_add').modal('show');
 
         });
 
@@ -179,37 +179,37 @@ export class GradeListComponent implements OnInit, AfterViewInit {
             });
     }
 
-    onConfirm($event){
-      $event.preventDefault();
+    onConfirm($event) {
+        $event.preventDefault();
 
-      let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-      if(this.btnAction === "DELETE"){
+        if (this.btnAction === "DELETE") {
 
-        if(this.id){
-          this.gradeService.deleteGradeById(this.id)
-            .subscribe(
-              successCode => {
-                toastr.success(message.global.successDelete);
-                jQuery('#m_modal_add').modal('hide');
-                 this.datatable.reload();
-              },
-              errorCode => {
-                toastr.success(message.global.successDelete);
-                jQuery('#m_modal_add').modal('hide');
-                this.datatable.reload();
-              }
-            );
+            if (this.id) {
+                this.gradeService.deleteGradeById(this.id)
+                    .subscribe(
+                    successCode => {
+                        toastr.success(message.global.successDelete);
+                        jQuery('#m_modal_add').modal('hide');
+                        this.datatable.reload();
+                    },
+                    errorCode => {
+                        toastr.success(message.global.successDelete);
+                        jQuery('#m_modal_add').modal('hide');
+                        this.datatable.reload();
+                    }
+                    );
+            }
+        } else if (this.btnAction == "DELETE_ALL") {
+            for (let id of this.allId) {
+                this.gradeService.deleteGradeById(id)
+                    .subscribe();
+            }
+            toastr.success(message.global.successDelete);
+            jQuery('#m_modal_add').modal('hide');
+            setTimeout(() => { this.datatable.reload(); }, 2000)
         }
-      }else if(this.btnAction == "DELETE_ALL"){
-        for(let id of this.allId){
-          this.gradeService.deleteGradeById(id)
-            .subscribe();
-        }
-        toastr.success(message.global.successDelete);
-        jQuery('#m_modal_add').modal('hide');
-        setTimeout(()=>{ this.datatable.reload(); }, 2000)
-      }
     }
 
 

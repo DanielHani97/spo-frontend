@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
 import { Helpers } from '../../../../../helpers';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -17,24 +17,24 @@ import { MandayService } from '../../../../../services/setup/manday.service';
 import { UserService } from '../../../../../services/user.service';
 
 declare var $: any;
-declare let toastr:any;
+declare let toastr: any;
 declare var moment: any;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./coaching-updateAct.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers: [CoachingService, MandayService, UserService, {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
+    providers: [CoachingService, MandayService, UserService, { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }]
 })
-export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDestroy  {
+export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDestroy {
     model;
-    minDate: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    maxDate: NgbDateStruct = {year: 2099, month: 12, day: 31};
-    minDate2: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    maxDate2: NgbDateStruct = {year: 2099, month: 12, day: 31};
+    minDate: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    maxDate: NgbDateStruct = { year: 2099, month: 12, day: 31 };
+    minDate2: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    maxDate2: NgbDateStruct = { year: 2099, month: 12, day: 31 };
 
-	coaching: Coaching;
+    coaching: Coaching;
     coach: User;
-	id: string;
+    id: string;
 
     superid: string;
     superObj: any;
@@ -46,24 +46,24 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
     manday: any;
     manday2: any;
     mandayObj: any;
-	user: any;
-    bearToken : string;
+    user: any;
+    bearToken: string;
     coachLs: any[];
     aktivitiLs: any[];
     aktivitiLs2: any[];
     currentCoach: any;
-	coachingForm: FormGroup;
+    coachingForm: FormGroup;
     belowForm: FormGroup;
     activityForm: FormGroup;
     noChanges: boolean = true;
     loading: boolean = false;
     isEditable = false;
     message: any = {
-      success: "Maklumat Telah Berjaya Dikemaskini"
+        success: "Maklumat Telah Berjaya Dikemaskini"
     }
     confirmMsg: string;
     mandayBalance: number;
-	private sub: any;
+    private sub: any;
     private activities = [];
     private newLs = [];
     private aktiviti = [];
@@ -74,10 +74,10 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
 
     constructor(
         private _script: ScriptLoaderService,
-        private coachingService:CoachingService,
-        private mandayService:MandayService,
+        private coachingService: CoachingService,
+        private mandayService: MandayService,
         private userService: UserService,
-        private router:Router,
+        private router: Router,
         private route: ActivatedRoute,
         private parserFormatter: NgbDateParserFormatter,
         config: NgbDatepickerConfig) {
@@ -86,59 +86,59 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
         config.firstDayOfWeek = 7;
 
         config.markDisabled = (date: NgbDateStruct) => {
-          const d = new Date(date.year, date.month - 1, date.day);
-          return d.getDay() === 0 || d.getDay() === 6;
+            const d = new Date(date.year, date.month - 1, date.day);
+            return d.getDay() === 0 || d.getDay() === 6;
         };
     }
 
     ngOnInit() {
 
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.superid = currentUser.id;
 
         this.coachingForm = new FormGroup({
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-            user: new FormControl({value: '', disabled: true}, Validators.required),
-            agency: new FormControl({value: '', disabled: true}, Validators.required),
-            status: new FormControl({value: '', disabled: true}, Validators.required),
-            frontend: new FormControl({value: '', disabled: true}, Validators.required),
-            backend: new FormControl({value: '', disabled: true}, Validators.required),
-            frontendlevel: new FormControl({value: '', disabled: true}, Validators.required),
-            backendlevel: new FormControl({value: '', disabled: true}, Validators.required),
-            databaselevel: new FormControl({value: '', disabled: true}, Validators.required),
-            database: new FormControl({value: '', disabled: true}, Validators.required),
-            remarks: new FormControl({value: '', disabled: true}, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+            user: new FormControl({ value: '', disabled: true }, Validators.required),
+            agency: new FormControl({ value: '', disabled: true }, Validators.required),
+            status: new FormControl({ value: '', disabled: true }, Validators.required),
+            frontend: new FormControl({ value: '', disabled: true }, Validators.required),
+            backend: new FormControl({ value: '', disabled: true }, Validators.required),
+            frontendlevel: new FormControl({ value: '', disabled: true }, Validators.required),
+            backendlevel: new FormControl({ value: '', disabled: true }, Validators.required),
+            databaselevel: new FormControl({ value: '', disabled: true }, Validators.required),
+            database: new FormControl({ value: '', disabled: true }, Validators.required),
+            remarks: new FormControl({ value: '', disabled: true }, Validators.required),
         });
 
-        this.belowForm =new FormGroup({
-            coach_remarks: new FormControl({value: '', disabled: true}, Validators.required),
-            admin_remarks: new FormControl({value: '', disabled: true}, Validators.required),
-            starting_date: new FormControl({value: '', disabled: true}, Validators.required),
-            ending_date: new FormControl({value: '', disabled: true}, Validators.required),
-            reservedManday: new FormControl({value: '', disabled: true}, Validators.required)
+        this.belowForm = new FormGroup({
+            coach_remarks: new FormControl({ value: '', disabled: true }, Validators.required),
+            admin_remarks: new FormControl({ value: '', disabled: true }, Validators.required),
+            starting_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            ending_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            reservedManday: new FormControl({ value: '', disabled: true }, Validators.required)
         });
 
-        this.activityForm = new FormGroup ({
-           name: new FormControl('', Validators.required),
+        this.activityForm = new FormGroup({
+            name: new FormControl('', Validators.required),
             place: new FormControl('', Validators.required),
             start: new FormControl('', Validators.required),
             endo: new FormControl('', Validators.required),
             attendance: new FormControl('', Validators.required)
         })
 
-    	this.sub = this.route.params.subscribe(
-    		params => {
-    			this.id = params['id'];
+        this.sub = this.route.params.subscribe(
+            params => {
+                this.id = params['id'];
 
 
-                if (this.id){
+                if (this.id) {
 
                     this.userService.getUserById(this.superid).subscribe(
-                        data=>{
-                          this.superObj = data;
+                        data => {
+                            this.superObj = data;
                         }
-                      )
+                    )
 
                     this.coachingService.getCoachingCoach(this.id).subscribe(
                         data => {
@@ -149,48 +149,48 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
                     this.coachingService.getCoachingById(this.id).subscribe(
                         coaching => {
 
-                          var frameName = "";
-                          var langName = "";
-                          var dbName = "";
+                            var frameName = "";
+                            var langName = "";
+                            var dbName = "";
 
-                          var frameLvl = "";
-                          var langLvl = "";
-                          var dbLvl = "";
+                            var frameLvl = "";
+                            var langLvl = "";
+                            var dbLvl = "";
 
-                          var frameId = "";
-                          var langId = "";
-                          var dbId = "";
+                            var frameId = "";
+                            var langId = "";
+                            var dbId = "";
 
-                          if(coaching.frontend){
-                            frameName = coaching.frontend.name;
-                            frameId = coaching.frontend.id;
-                            frameLvl= coaching.frontendlevel;
-                          }if(coaching.backend){
-                            langName = coaching.backend.name;
-                            langId = coaching.backend.id;
-                            langLvl= coaching.backendlevel;
-                          }if(coaching.database){
-                            dbName = coaching.database.name;
-                            dbId = coaching.database.id;
-                            dbLvl= coaching.databaselevel;
-                          }
+                            if (coaching.frontend) {
+                                frameName = coaching.frontend.name;
+                                frameId = coaching.frontend.id;
+                                frameLvl = coaching.frontendlevel;
+                            } if (coaching.backend) {
+                                langName = coaching.backend.name;
+                                langId = coaching.backend.id;
+                                langLvl = coaching.backendlevel;
+                            } if (coaching.database) {
+                                dbName = coaching.database.name;
+                                dbId = coaching.database.id;
+                                dbLvl = coaching.databaselevel;
+                            }
 
                             this.reservedManday = Number(coaching.mandayReserved);
                             let agensi = "";
 
-                            if(coaching.user.type=="GOV"){
-                                if(coaching.user.agency!=null){
+                            if (coaching.user.type == "GOV") {
+                                if (coaching.user.agency != null) {
                                     agensi = coaching.user.agency.name;
-                                }else{
+                                } else {
                                     agensi = "";
                                 }
-                            }else if(coaching.user.type=="PRIVATE"){
-                                if(coaching.user.company!=null){
+                            } else if (coaching.user.type == "PRIVATE") {
+                                if (coaching.user.company != null) {
                                     agensi = coaching.user.company.name;
-                                }else{
+                                } else {
                                     agensi = "";
                                 }
-                            }else{
+                            } else {
                                 agensi = "";
                             }
 
@@ -212,8 +212,8 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
                             this.coaching = coaching;
                             var startDate = new Date(coaching.starting_date);
                             var endDate = new Date(coaching.ending_date);
-                            this.minDate = {year: startDate.getFullYear(), month: startDate.getMonth()+1, day: startDate.getDate()};
-                            this.maxDate = {year: endDate.getFullYear(), month: endDate.getMonth()+1, day: endDate.getDate()};
+                            this.minDate = { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() };
+                            this.maxDate = { year: endDate.getFullYear(), month: endDate.getMonth() + 1, day: endDate.getDate() };
                             this.belowForm.patchValue({
                                 coach_remarks: coaching.coach_remarks,
                                 admin_remarks: coaching.admin_remarks,
@@ -226,37 +226,37 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
                                 data => {
                                     this.user = data;
 
-                                    for(let obj of this.user){
-                                      var skills = obj.user.skill;
+                                    for (let obj of this.user) {
+                                        var skills = obj.user.skill;
 
-                                      for(let skill of skills){
-                                        var skillTechId = skill.technology.id
-                                        var skillLvl = skill.level;
-                                        var skillMark = skill.mark;
+                                        for (let skill of skills) {
+                                            var skillTechId = skill.technology.id
+                                            var skillLvl = skill.level;
+                                            var skillMark = skill.mark;
 
-                                        if(frameId){
-                                          if((frameId == skillTechId) && (frameLvl == skillLvl) ){
-                                            obj.coaching.frontend.modifiedby = skillMark;
-                                          }else{
-                                            obj.coaching.frontend.modifiedby = 0;
-                                          }
-                                        }
-                                        if(langId){
-                                          if((langId == skillTechId) && (langLvl == skillLvl) ){
-                                            obj.coaching.backend.modifiedby = skillMark;
-                                          }else{
-                                            obj.coaching.backend.modifiedby = 0;
-                                          }
-                                        }
-                                        if(dbId){
-                                          if((dbId == skillTechId) && (dbLvl == skillLvl) ){
-                                            obj.coaching.database.modifiedby = skillMark;
-                                          }else{
-                                            obj.coaching.database.modifiedby = 0;
-                                          }
-                                        }
+                                            if (frameId) {
+                                                if ((frameId == skillTechId) && (frameLvl == skillLvl)) {
+                                                    obj.coaching.frontend.modifiedby = skillMark;
+                                                } else {
+                                                    obj.coaching.frontend.modifiedby = 0;
+                                                }
+                                            }
+                                            if (langId) {
+                                                if ((langId == skillTechId) && (langLvl == skillLvl)) {
+                                                    obj.coaching.backend.modifiedby = skillMark;
+                                                } else {
+                                                    obj.coaching.backend.modifiedby = 0;
+                                                }
+                                            }
+                                            if (dbId) {
+                                                if ((dbId == skillTechId) && (dbLvl == skillLvl)) {
+                                                    obj.coaching.database.modifiedby = skillMark;
+                                                } else {
+                                                    obj.coaching.database.modifiedby = 0;
+                                                }
+                                            }
 
-                                      }
+                                        }
                                     }
                                 }
                             )
@@ -279,19 +279,19 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
 
                                 let ngbDate2 = this.aktiviti[i].end_date;
                                 var dateB = new Date(ngbDate2);
-                                if(this.aktiviti[i].attendance=="Ada"){
+                                if (this.aktiviti[i].attendance == "Ada") {
                                     this.jumlahManday = this.jumlahManday + Number(this.aktiviti[i].duration)
                                 }
 
 
                                 this.activities.push({
-                                        name: this.aktiviti[i].name,
-                                        place: this.aktiviti[i].venue,
-                                        start: dateA,
-                                        endo: dateB,
-                                        attendance: this.aktiviti[i].attendance,
-                                        duration: this.aktiviti[i].duration,
-                                        kelulusan: this.aktiviti[i].kelulusan
+                                    name: this.aktiviti[i].name,
+                                    place: this.aktiviti[i].venue,
+                                    start: dateA,
+                                    endo: dateB,
+                                    attendance: this.aktiviti[i].attendance,
+                                    duration: this.aktiviti[i].duration,
+                                    kelulusan: this.aktiviti[i].kelulusan
 
                                 })
 
@@ -318,21 +318,21 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
                         }
                     )
                 }
-    		}
-    	);
+            }
+        );
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
 
-    deleteFn(index){
-        if(this.activities[index].attendance=="Ada"){
+    deleteFn(index) {
+        if (this.activities[index].attendance == "Ada") {
             this.jumlahManday = this.jumlahManday - Number(this.activities[index].duration);
         }
 
@@ -356,45 +356,45 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
         iWeeks = Math.floor((dDate2.getTime() - dDate1.getTime()) / 604800000)
 
         if (iWeekday1 <= iWeekday2) {
-          iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
+            iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
         } else {
-          iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
+            iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
         }
 
         iDateDiff -= iAdjust // take into account both days on weekend
 
         return (iDateDiff + 1); // add 1 because dates are inclusive
-      }
+    }
 
-    newAct(){
+    newAct() {
         var form = $('#activityForm');
 
-         form.validate({
-           rules:{
-             start: "required",
-             endo: "required"
-           }
+        form.validate({
+            rules: {
+                start: "required",
+                endo: "required"
+            }
         });
 
-        if(!form.valid()){
+        if (!form.valid()) {
             return false;
-        }else{
-                if(this.activityForm.valid){
+        } else {
+            if (this.activityForm.valid) {
 
                 //To Calculate Tempoh
 
                 let ngbDate = this.activityForm.controls['start'].value;
-                let date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+                let date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
                 let ngbDate2 = this.activityForm.controls['endo'].value;
-                let date2 = new Date(ngbDate2.year, ngbDate2.month-1, ngbDate2.day);
+                let date2 = new Date(ngbDate2.year, ngbDate2.month - 1, ngbDate2.day);
 
                 var dateone = new Date(date);
                 var datetwo = new Date(date2);
 
-                var tempohan = Math.round(this.calcBusinessDays(dateone,datetwo));
+                var tempohan = Math.round(this.calcBusinessDays(dateone, datetwo));
 
-                if(this.activityForm.controls['attendance'].value == "Ada"){
-                  this.jumlahManday = this.jumlahManday + Number(tempohan);
+                if (this.activityForm.controls['attendance'].value == "Ada") {
+                    this.jumlahManday = this.jumlahManday + Number(tempohan);
                 }
 
                 this.activities.push({
@@ -426,52 +426,52 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
 
     }
 
-    ngOnDestroy(): void{
-    	this.sub.unsubscribe();
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
-    tambah(){
+    tambah() {
         this.activityForm.reset();
         $("#m_modal_1").modal("show");
         var startDate = new Date(this.coaching.starting_date);
         var endDate = new Date(this.coaching.ending_date);
-        this.minDate = {year: startDate.getFullYear(), month: startDate.getMonth()+1, day: startDate.getDate()};
-        this.maxDate = {year: endDate.getFullYear(), month: endDate.getMonth()+1, day: endDate.getDate()};
-        this.minDate2 = {year: startDate.getFullYear(), month: startDate.getMonth()+1, day: startDate.getDate()};
-        this.maxDate2 = {year: endDate.getFullYear(), month: endDate.getMonth()+1, day: endDate.getDate()};
+        this.minDate = { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() };
+        this.maxDate = { year: endDate.getFullYear(), month: endDate.getMonth() + 1, day: endDate.getDate() };
+        this.minDate2 = { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() };
+        this.maxDate2 = { year: endDate.getFullYear(), month: endDate.getMonth() + 1, day: endDate.getDate() };
     }
 
-    onChange3(value){
-        if(value==null){
+    onChange3(value) {
+        if (value == null) {
             this.minDate2 = this.minDate2;
-        }else{
+        } else {
             this.minDate2 = value;
         }
     }
 
-    onChange4(value){
-        if(value==null){
+    onChange4(value) {
+        if (value == null) {
             this.maxDate2 = this.maxDate2;
-        }else{
+        } else {
             this.maxDate2 = value;
         }
     }
 
     ngAfterViewInit() {
-    	this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-             'assets/osdec/validation/coaching/coaching-approval.js',
-             'assets/osdec/validation/validation.js');
+        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/osdec/validation/coaching/coaching-approval.js',
+            'assets/osdec/validation/validation.js');
     }
 
-    simpan(){
+    simpan() {
 
-        if (this.id){
-            if(this.jumlahManday>this.reservedManday){
+        if (this.id) {
+            if (this.jumlahManday > this.reservedManday) {
                 $("#m_modal_used").modal("show");
             }
-            else{
+            else {
                 for (var i = 0; i < this.newLs.length; ++i) {
-                    if(this.newLs[i].id == null){
+                    if (this.newLs[i].id == null) {
                         let coachingActivity: CoachingActivity = new CoachingActivity(
                             this.newLs[i].name,
                             this.newLs[i].attendance,
@@ -484,13 +484,13 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
                             null,
                             null,
                             null, null
-                            )
-                            
+                        )
+
                         this.coachingService.createActivity(coachingActivity).subscribe();
                     }
-                    else{
+                    else {
                         for (var j = 0; j < this.oldLs.length; ++j) {
-                            if(this.newLs[i].id == this.oldLs[j].id){
+                            if (this.newLs[i].id == this.oldLs[j].id) {
                                 this.oldLs.splice(j, 1);
 
                             }
@@ -512,16 +512,16 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
 
 
 
-    simpanLulus(){
+    simpanLulus() {
 
-        if (this.id){
+        if (this.id) {
 
-            if(!this.noChanges){
+            if (!this.noChanges) {
                 $("#m_modal_simpan").modal("show");
-            }else{
+            } else {
 
                 this.coachingService.getNewCoachingAct(this.id).subscribe(
-                    data=>{
+                    data => {
                         this.aktiviti2 = data;
 
                         let coaching: Coaching = new Coaching(
@@ -548,11 +548,11 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
                             null,
                             null,
                             this.superObj,
-                            this.id,null,null,null
+                            this.id, null, null, null
                         )
 
                         this.coachingService.verifiedCoaching(coaching).subscribe(
-                            success=>{
+                            success => {
                                 for (var i = 0; i < this.aktiviti2.length; ++i) {
 
                                     let aktiviti: CoachingActivity = new CoachingActivity(
@@ -589,16 +589,16 @@ export class CoachingUpdateActComponent implements OnInit, AfterViewInit, OnDest
 
     }
 
-    onSubmit(){
+    onSubmit() {
 
     }
 
     redirectListPage() {
-      this.router.navigate(['/coaching/list/supervisor']);
+        this.router.navigate(['/coaching/list/supervisor']);
     }
 
-    redirectProfile(id){
-      this.router.navigate(['/header/profile/view/', id]);
+    redirectProfile(id) {
+        this.router.navigate(['/header/profile/view/', id]);
     }
 
 }

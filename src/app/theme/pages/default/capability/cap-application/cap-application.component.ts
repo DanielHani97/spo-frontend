@@ -15,8 +15,8 @@ import { Assesment } from '../../../../../model/assesment/assesment'
 import { AssesmentService } from '../../../../../services/assesment/assesment.service';
 import { message } from "../../../../../message/default";
 
-declare let toastr:any;
-declare var jQuery:any;
+declare let toastr: any;
+declare var jQuery: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -32,34 +32,34 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
     userid: string;
     userObj = null;
     capObj = null;
-    start : string;
-    end : string;
-    aktivitiLs : any[];
+    start: string;
+    end: string;
+    aktivitiLs: any[];
     coachLs: any[];
     currentCoach: any;
 
     capForm: FormGroup;
     private activities = [];
     private aktiviti = [];
-    private sub : any;
+    private sub: any;
     objUser = null
 
-    confirmType : string = "success";
-    confirmMsg : string;
-    action : string;
+    confirmType: string = "success";
+    confirmMsg: string;
+    action: string;
 
     constructor(private _script: ScriptLoaderService,
-      private userService:UserService,
-      private capabilityService:CapabilityService,
-      private router:Router,
-      private route: ActivatedRoute,
-      private assesmentService: AssesmentService
+        private userService: UserService,
+        private capabilityService: CapabilityService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private assesmentService: AssesmentService
     ) { }
 
     ngOnInit() {
 
         //user id get
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.userid = currentUser.id;
 
@@ -71,46 +71,46 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
         );
 
         this.userService.getUserById(this.userid).subscribe(
-                data => {
-                    this.objUser = data;
-                }
+            data => {
+                this.objUser = data;
+            }
 
-                )
+        )
 
         this.capabilityService.getCapabilityById(this.id).subscribe(
-            data=>{
-                this.capObj =data;
+            data => {
+                this.capObj = data;
                 this.start = this.formatDate(this.capObj.starting_date),
-                this.end = this.formatDate(this.capObj.ending_date),
-                this.capForm.patchValue({
-                    name: this.capObj.name,
-                    kepakaran: this.capObj.kepakaran.name,
-                    duration: this.capObj.duration,
-                    start_date: this.start,
-                    end_date: this.end,
-                    remarks: this.capObj.remarks
-                })
+                    this.end = this.formatDate(this.capObj.ending_date),
+                    this.capForm.patchValue({
+                        name: this.capObj.name,
+                        kepakaran: this.capObj.kepakaran.name,
+                        duration: this.capObj.duration,
+                        start_date: this.start,
+                        end_date: this.end,
+                        remarks: this.capObj.remarks
+                    })
             }
         )
 
         this.userService.getUserById(this.userid).subscribe(
-            data=>{
-                this.userObj =data;
+            data => {
+                this.userObj = data;
                 let agency;
 
-                if(data.type=="GOV"){
-                    if(data.agency!=null){
+                if (data.type == "GOV") {
+                    if (data.agency != null) {
                         agency = data.agency.name;
-                    }else{
+                    } else {
                         agency = "";
                     }
-                }else if(data.type=="PRIVATE"){
-                    if(data.company!=null){
+                } else if (data.type == "PRIVATE") {
+                    if (data.company != null) {
                         agency = data.company.name;
-                    }else{
+                    } else {
                         agency = "";
                     }
-                }else{
+                } else {
                     agency = "";
                 }
 
@@ -122,15 +122,15 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
         )
 
         this.capForm = new FormGroup({
-            pemohon: new FormControl({value: '', disabled: true}, Validators.required),
-            agensi: new FormControl({value: '', disabled: true}, Validators.required),
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-            kepakaran: new FormControl({value: '', disabled: true}, Validators.required),
-            coach: new FormControl({value: '', disabled: true}, Validators.required),
-            duration: new FormControl({value: '', disabled: true}, Validators.required),
-            start_date: new FormControl({value: '', disabled: true}, Validators.required),
-            end_date: new FormControl({value: '', disabled: true}, Validators.required),
-            remarks: new FormControl({value: '', disabled: true}, Validators.required),
+            pemohon: new FormControl({ value: '', disabled: true }, Validators.required),
+            agensi: new FormControl({ value: '', disabled: true }, Validators.required),
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+            kepakaran: new FormControl({ value: '', disabled: true }, Validators.required),
+            coach: new FormControl({ value: '', disabled: true }, Validators.required),
+            duration: new FormControl({ value: '', disabled: true }, Validators.required),
+            start_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            end_date: new FormControl({ value: '', disabled: true }, Validators.required),
+            remarks: new FormControl({ value: '', disabled: true }, Validators.required),
         })
 
         this.capabilityService.getCapabilityAct(this.id).subscribe(
@@ -147,12 +147,12 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
                     var enddate = this.formatDate(this.aktiviti[i].end_date);
 
                     this.activities.push({
-                            name: this.aktiviti[i].name,
-                            venue: this.aktiviti[i].venue,
-                            start: startdate,
-                            endo: enddate,
-                            attendance: this.aktiviti[i].attendance,
-                            duration: this.aktiviti[i].duration
+                        name: this.aktiviti[i].name,
+                        venue: this.aktiviti[i].venue,
+                        start: startdate,
+                        endo: enddate,
+                        attendance: this.aktiviti[i].attendance,
+                        duration: this.aktiviti[i].duration
 
                     })
                 }
@@ -167,68 +167,68 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
         )
     }
 
-    onSubmit(){
-        if(this.id){
+    onSubmit() {
+        if (this.id) {
             this.capabilityService.getCapabilityById(this.id).subscribe(
                 data => {
                     this.capability = data;
 
                     let assesArr: any[] = new Array();
-                    let assesObj : Assesment =  new Assesment (
-                      null,
-                      null,
-                      null,
-                      "Mahir",
-                      null,
-                      data.kepakaran,//tech
-                      null,
-                      null,
-                      null,
-                      null,
-                      this.objUser//user
+                    let assesObj: Assesment = new Assesment(
+                        null,
+                        null,
+                        null,
+                        "Mahir",
+                        null,
+                        data.kepakaran,//tech
+                        null,
+                        null,
+                        null,
+                        null,
+                        this.objUser//user
                     )
                     assesArr.push(assesObj);
 
-                    let capabilityUser: CapabilityUser = new CapabilityUser (
-                    this.objUser,
-                    this.capability,
-                    "1",
-                    null,
-                    null,
-                    this.objUser,
-                    null,
-                    null,
-                    null);
+                    let capabilityUser: CapabilityUser = new CapabilityUser(
+                        this.objUser,
+                        this.capability,
+                        "1",
+                        null,
+                        null,
+                        this.objUser,
+                        null,
+                        null,
+                        null);
 
                     this.capabilityService.isExistCapabilityUser(capabilityUser).subscribe(
-                        success=>{
+                        success => {
 
-                          this.assesmentService.generateQue(assesArr).subscribe(
-                            success => {
-                              this.action = "NEW";
-                              this.confirmMsg = message.cap.new;
-                              this.confirmType = "danger";
-                              jQuery('#m_modal_add').modal('show');
-                              localStorage.setItem("EXAMOBJ",JSON.stringify(success));
-                              localStorage.setItem("CAPOBJ",JSON.stringify(data));
-                              localStorage.setItem("ASSESMODE","CAP");
-                            },
-                            error => {
-                              var errorType = error;
+                            this.assesmentService.generateQue(assesArr).subscribe(
+                                success => {
+                                    this.action = "NEW";
+                                    this.confirmMsg = message.cap.new;
+                                    this.confirmType = "danger";
+                                    jQuery('#m_modal_add').modal('show');
+                                    localStorage.setItem("EXAMOBJ", JSON.stringify(success));
+                                    localStorage.setItem("CAPOBJ", JSON.stringify(data));
+                                    localStorage.setItem("ASSESMODE", "CAP");
+                                },
+                                error => {
+                                    var errorType = error;
 
-                              if(errorType == 404){
-                                toastr.error(message.cap.error404);
-                              }else if(errorType == 409){
-                                this.confirmMsg = message.cap.error409;
-                                this.confirmType = "success";
-                                this.action = "EXIST";
-                                jQuery('#m_modal_add').modal('show');
+                                    if (errorType == 404) {
+                                        toastr.error(message.cap.error404);
+                                    } else if (errorType == 409) {
+                                        this.confirmMsg = message.cap.error409;
+                                        this.confirmType = "success";
+                                        this.action = "EXIST";
+                                        jQuery('#m_modal_add').modal('show');
 
-                              }
-                            }
-                          );
+                                    }
+                                }
+                            );
                         },
-                        error=>{
+                        error => {
                             toastr.error(message.cap.danger);
                         }
                     );
@@ -238,10 +238,10 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
 
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
@@ -251,38 +251,38 @@ export class CapApplicationComponent implements OnInit, AfterViewInit {
             'assets/demo/default/custom/header/actions.js');
 
     }
-    redirecListPage(){
+    redirecListPage() {
         this.router.navigate(['cap/register/']);
     }
 
-    onConfirm($event){
-      $event.preventDefault();
+    onConfirm($event) {
+        $event.preventDefault();
 
-      if(this.action === "NEW"){
+        if (this.action === "NEW") {
 
-        jQuery('#m_modal_add').modal('hide');
-        this.router.navigate(['assesment/user']);
-      }else if(this.action === "EXIST"){
+            jQuery('#m_modal_add').modal('hide');
+            this.router.navigate(['assesment/user']);
+        } else if (this.action === "EXIST") {
 
-        let capabilityUser: CapabilityUser = new CapabilityUser (
-        this.objUser,
-        this.capability,
-        "1",
-        null,
-        null,
-        this.objUser,
-        null,
-        null,
-        null);
+            let capabilityUser: CapabilityUser = new CapabilityUser(
+                this.objUser,
+                this.capability,
+                "1",
+                null,
+                null,
+                this.objUser,
+                null,
+                null,
+                null);
 
-        this.capabilityService.createUser(capabilityUser).subscribe(
-          success=>{
-              toastr.success(message.cap.success);
-              jQuery('#m_modal_add').modal('hide');
-              this.router.navigate(['cap/list/']);
-          }
-        );
-      }
+            this.capabilityService.createUser(capabilityUser).subscribe(
+                success => {
+                    toastr.success(message.cap.success);
+                    jQuery('#m_modal_add').modal('hide');
+                    this.router.navigate(['cap/list/']);
+                }
+            );
+        }
     }
 
 }

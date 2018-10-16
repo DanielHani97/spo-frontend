@@ -19,7 +19,7 @@ export class CertLsPesertaComponent implements OnInit, AfterViewInit, OnDestroy 
 
     certification: Certification;
     id: string;
-    
+
     user: any;
     peserta: any;
 
@@ -27,8 +27,8 @@ export class CertLsPesertaComponent implements OnInit, AfterViewInit, OnDestroy 
     private sub: any;
 
 
-    constructor(private _script: ScriptLoaderService, private certificationService:CertificationService, private router:Router, private route: ActivatedRoute) { }
-    
+    constructor(private _script: ScriptLoaderService, private certificationService: CertificationService, private router: Router, private route: ActivatedRoute) { }
+
     ngOnInit() {
 
 
@@ -40,31 +40,31 @@ export class CertLsPesertaComponent implements OnInit, AfterViewInit, OnDestroy 
 
             this.certificationService.getUserByCertification(this.id).subscribe(
                 data => {
-                  this.user = data;
-                  this.peserta= this.user.filter(value =>value.status==='1');
-        }
-      );
+                    this.user = data;
+                    this.peserta = this.user.filter(value => value.status === '1');
+                }
+            );
         });
 
         this.certForm = new FormGroup({
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-        
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+
         })
-    
-    
+
+
     }
 
-    redirectValuation(id){
-        this.router.navigate(['/cert/valuation/'+id]);
+    redirectValuation(id) {
+        this.router.navigate(['/cert/valuation/' + id]);
     }
 
-    ngOnDestroy(): void{
-       this.sub.unsubscribe();
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     ngAfterViewInit() {
     }
 
-    onSubmit(){
+    onSubmit() {
     }
 }

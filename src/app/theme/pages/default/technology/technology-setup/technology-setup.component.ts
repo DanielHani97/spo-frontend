@@ -8,7 +8,7 @@ import { Location } from "@angular/common";
 import { Technology } from '../../../../../model/setup/technology';
 import { TechnologyService } from '../../../../../services/setup/technology.service';
 
-declare let toastr:any;
+declare let toastr: any;
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
     templateUrl: "./technology-setup.component.html",
@@ -23,107 +23,107 @@ export class TechnologySetupComponent implements OnInit, AfterViewInit, OnDestro
     loading: boolean = false;
     isEditable = false;
     message: any = {
-      success: "Maklumat Telah Berjaya Dikemaskini",
-      baru: "Maklumat Telah Berjaya Disimpan"
+        success: "Maklumat Telah Berjaya Dikemaskini",
+        baru: "Maklumat Telah Berjaya Disimpan"
     }
 
     technologyForm: FormGroup;
     private sub: any;
 
-    constructor(private _script: ScriptLoaderService, private technologyService:TechnologyService, private router:Router, private route: ActivatedRoute) { }
+    constructor(private _script: ScriptLoaderService, private technologyService: TechnologyService, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
-      this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
-      });
+        this.sub = this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
 
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.currentUser = currentUser.id;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = currentUser.id;
 
-      this.technologyForm = new FormGroup({
-        name: new FormControl('', Validators.required),
-        type: new FormControl('', Validators.required),
-        //language: new FormControl('', Validators.required),
-        status: new FormControl('', Validators.required)
-      });
+        this.technologyForm = new FormGroup({
+            name: new FormControl('', Validators.required),
+            type: new FormControl('', Validators.required),
+            //language: new FormControl('', Validators.required),
+            status: new FormControl('', Validators.required)
+        });
 
-      if (this.id) { //edit form
-         this.technologyService.getTechnologyById(this.id).subscribe(
-           technology => {
-               this.id = technology.id;
-               this.technologyForm.patchValue({
-               name: technology.name,
-               type: technology.type,
-               //language: technology.language,
-               status: technology.status
-               
-             });
-            },error => {
-             console.log(error);
-            }
-         );
-       }
+        if (this.id) { //edit form
+            this.technologyService.getTechnologyById(this.id).subscribe(
+                technology => {
+                    this.id = technology.id;
+                    this.technologyForm.patchValue({
+                        name: technology.name,
+                        type: technology.type,
+                        //language: technology.language,
+                        status: technology.status
+
+                    });
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
     }
 
 
 
-    ngOnDestroy(): void{
-       this.sub.unsubscribe();
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     ngAfterViewInit() {
-         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-             'assets/osdec/validation/setup/technology-val.js',
-             'assets/osdec/validation/validation.js');
+        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/osdec/validation/setup/technology-val.js',
+            'assets/osdec/validation/validation.js');
 
     }
 
     onSubmit() {
-      if (this.technologyForm.valid) {
-          if (this.id){
-            let technology: Technology = new Technology(
-            this.technologyForm.controls['name'].value,
-            this.technologyForm.controls['type'].value,
-            null,
-            this.technologyForm.controls['status'].value,
-            null,
-            this.currentUser,
-            this.id);
+        if (this.technologyForm.valid) {
+            if (this.id) {
+                let technology: Technology = new Technology(
+                    this.technologyForm.controls['name'].value,
+                    this.technologyForm.controls['type'].value,
+                    null,
+                    this.technologyForm.controls['status'].value,
+                    null,
+                    this.currentUser,
+                    this.id);
 
-            this.technologyService.updateTechnology(technology).subscribe(
-              success=>{
-                this.isEditable = true;
-                this.loading = false;
-                toastr.success(this.message.success);
-                this.redirectTechnologyPage();
-              }
-            );
-          }else{
-            let technology: Technology = new Technology(
-            this.technologyForm.controls['name'].value,
-            this.technologyForm.controls['type'].value,
-            null,
-            this.technologyForm.controls['status'].value,
-            this.currentUser,
-            null,
-            null);
+                this.technologyService.updateTechnology(technology).subscribe(
+                    success => {
+                        this.isEditable = true;
+                        this.loading = false;
+                        toastr.success(this.message.success);
+                        this.redirectTechnologyPage();
+                    }
+                );
+            } else {
+                let technology: Technology = new Technology(
+                    this.technologyForm.controls['name'].value,
+                    this.technologyForm.controls['type'].value,
+                    null,
+                    this.technologyForm.controls['status'].value,
+                    this.currentUser,
+                    null,
+                    null);
 
-            this.technologyService.createTechnology(technology).subscribe(
-              success=>{
-                this.isEditable = true;
-                this.loading = false;
-                toastr.success(this.message.baru);
-                this.redirectTechnologyPage();
-              }
-            );
-          }
-          
-       }
+                this.technologyService.createTechnology(technology).subscribe(
+                    success => {
+                        this.isEditable = true;
+                        this.loading = false;
+                        toastr.success(this.message.baru);
+                        this.redirectTechnologyPage();
+                    }
+                );
+            }
+
+        }
     }
 
 
 
     redirectTechnologyPage() {
-      this.router.navigate(['/technology/list']);
+        this.router.navigate(['/technology/list']);
     }
 }

@@ -21,60 +21,60 @@ import { MandayTransaction } from '../../../../../model/setup/mandayTransaction'
 import { MandayService } from '../../../../../services/setup/manday.service';
 
 declare var $: any;
-declare let toastr:any;
+declare let toastr: any;
 declare var moment: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./setting-cap.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers: [CapabilityService, MandayService, TechnologyService, UserService, {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
+    providers: [CapabilityService, MandayService, TechnologyService, UserService, { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }]
 })
 
 export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
     model;
-    minDate: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    maxDate: NgbDateStruct = {year: 2099, month: 12, day: 31};
+    minDate: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    maxDate: NgbDateStruct = { year: 2099, month: 12, day: 31 };
 
-    endMin: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    startMax: NgbDateStruct = {year: 2099, month: 12, day: 31};
+    endMin: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    startMax: NgbDateStruct = { year: 2099, month: 12, day: 31 };
 
 
-    minDate2: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    maxDate2: NgbDateStruct = {year: 2099, month: 12, day: 31};
+    minDate2: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    maxDate2: NgbDateStruct = { year: 2099, month: 12, day: 31 };
     datatable: any;
     mandayObj: any;
     manday: any;
-    manday2:any;
+    manday2: any;
     currentUser: any;
 
     usedManday: number;
     id: string;
-    bearToken : string;
-    technologies : any[];
-    technologies2 : any[];
-    currentTechnology : any;
+    bearToken: string;
+    technologies: any[];
+    technologies2: any[];
+    currentTechnology: any;
     coachLs: any[];
     currentCoach: any;
     actLs: any[];
     currentAct: any;
     durationCap: any;
 
-    capObj : Capability;
-    capTemp : Capability;
-    kepakaran : Technology;
-    capForm : FormGroup;
-    activityForm : FormGroup;
+    capObj: Capability;
+    capTemp: Capability;
+    kepakaran: Technology;
+    capForm: FormGroup;
+    activityForm: FormGroup;
     coachList: String[] = [];
 
     loading: boolean = false;
     isEditable = false;
 
     message: any = {
-      success: "Maklumat telah berjaya disimpan"
+        success: "Maklumat telah berjaya disimpan"
     }
 
-    private sub : any;
+    private sub: any;
     private coachers = [];
     private coachersOld = [];
     private activities = [];
@@ -82,11 +82,11 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
     private newLs = [];
 
     constructor(private _script: ScriptLoaderService,
-        private userService:UserService,
+        private userService: UserService,
         private mandayService: MandayService,
-        private capabilityService:CapabilityService,
-        private technologyService:TechnologyService,
-        private router:Router,
+        private capabilityService: CapabilityService,
+        private technologyService: TechnologyService,
+        private router: Router,
         private route: ActivatedRoute,
         private parserFormatter: NgbDateParserFormatter,
         config: NgbDatepickerConfig) {
@@ -101,39 +101,39 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         config.firstDayOfWeek = 7;
         // weekends are disabled
         config.markDisabled = (date: NgbDateStruct) => {
-          const d = new Date(date.year, date.month - 1, date.day);
-          return d.getDay() === 0 || d.getDay() === 6;
+            const d = new Date(date.year, date.month - 1, date.day);
+            return d.getDay() === 0 || d.getDay() === 6;
         };
     }
 
-    onChange(value){
-        if(value==null){
+    onChange(value) {
+        if (value == null) {
             this.endMin = this.endMin;
-        }else{
+        } else {
             this.endMin = value;
         }
     }
 
-    onChange2(value){
-        if(value==null){
+    onChange2(value) {
+        if (value == null) {
             this.startMax = this.startMax;
-        }else{
+        } else {
             this.startMax = value;
         }
     }
 
-    onChange3(value){
-        if(value==null){
+    onChange3(value) {
+        if (value == null) {
             this.minDate2 = this.minDate2;
-        }else{
+        } else {
             this.minDate2 = value;
         }
     }
 
-    onChange4(value){
-        if(value==null){
+    onChange4(value) {
+        if (value == null) {
             this.maxDate2 = this.maxDate2;
-        }else{
+        } else {
             this.maxDate2 = value;
         }
     }
@@ -143,7 +143,7 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentUser = currentUser.id;
 
         //capability form
-        this.capForm = new FormGroup (
+        this.capForm = new FormGroup(
             {
                 name: new FormControl('', Validators.required),
                 kepakaran: new FormControl('', Validators.required),
@@ -156,7 +156,7 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         )
         //activity form
-        this.activityForm = new FormGroup (
+        this.activityForm = new FormGroup(
             {
                 name: new FormControl('', Validators.required),
                 venue: new FormControl('', Validators.required),
@@ -167,18 +167,18 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         )
 
         this.mandayService.getManday().subscribe(
-           data => {
+            data => {
                 this.manday = data;
-                this.manday2= this.manday.filter(value =>value.category==='capability');
+                this.manday2 = this.manday.filter(value => value.category === 'capability');
                 this.mandayObj = this.manday2[0];
-          }
+            }
         );
         //id for update
         this.sub = this.route.params.subscribe(
             params => {
                 this.id = params['id'];
                 //patch/edit capForm value
-                if (this.id){
+                if (this.id) {
                     this.capabilityService.getCapabilityById(this.id).subscribe(
                         capability => {
                             this.capObj = capability;
@@ -192,20 +192,20 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                                     kepakaran: capability.kepakaran.id,
                                     remarks: capability.remarks,
                                     //limitation: capability.limitation,
-                                    starting_date: {year: startDate.getFullYear(), month: startDate.getMonth()+1, day: startDate.getDate()},
-                                    ending_date: {year: endDate.getFullYear(), month: endDate.getMonth()+1, day: endDate.getDate()},
+                                    starting_date: { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() },
+                                    ending_date: { year: endDate.getFullYear(), month: endDate.getMonth() + 1, day: endDate.getDate() },
                                     status: capability.status
                                 }
                             )
                         }
                     )
                     this.capabilityService.getCapabilityCoach(this.id).subscribe(
-                        data=>{
+                        data => {
                             this.currentCoach = data;
                             for (var i = 0; i < this.currentCoach.length; ++i) {
                                 this.coachersOld.push({
-                                            id: this.currentCoach[i].id
-                                        })
+                                    id: this.currentCoach[i].id
+                                })
                                 this.userService.getUserById(this.currentCoach[i].coach.id).subscribe(
                                     data => {
                                         this.coachList.push(data.id)
@@ -271,13 +271,13 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         );
 
         //for coach list
-        this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
 
         //for technology(kemahiran) list
         this.technologyService.getTechnology().subscribe(
             data => {
                 this.technologies2 = data;
-                this.technologies = this.technologies2.filter(value=> value.status === '1');
+                this.technologies = this.technologies2.filter(value => value.status === '1');
             }
         );
 
@@ -286,9 +286,9 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
             let cbArr: any[] = new Array();
             var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
 
-            $cbAnswer.each( function(i) {
+            $cbAnswer.each(function(i) {
                 var status = $(this).is(":checked");
-                if(status){
+                if (status) {
                     var id = $(this).val();
 
                     cbArr.push(id);
@@ -303,10 +303,10 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return year + '-' + month + '-' + day;
     }
@@ -325,9 +325,9 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         iWeeks = Math.floor((dDate2.getTime() - dDate1.getTime()) / 604800000)
 
         if (iWeekday1 <= iWeekday2) {
-          iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
+            iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
         } else {
-          iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
+            iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
         }
 
         iDateDiff -= iAdjust
@@ -342,46 +342,46 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
             'assets/osdec/validation/validation.js');
     }
 
-    ngOnDestroy(): void{
+    ngOnDestroy(): void {
     }
 
     //set technology from list
-    setTechnology(id: string){
+    setTechnology(id: string) {
         this.currentTechnology = this.technologies.filter(value => value.id === id);
         this.kepakaran = this.currentTechnology[0];
     }
 
-    onSubmit(){
+    onSubmit() {
         var form = $('#capForm');
 
-         form.validate({
-           rules:{
-             starting_date: "required",
-             ending_date: "required"
-           }
+        form.validate({
+            rules: {
+                starting_date: "required",
+                ending_date: "required"
+            }
         });
 
-        if(!form.valid){
+        if (!form.valid) {
             return false;
-        }else{
-            if(this.capForm.valid){
+        } else {
+            if (this.capForm.valid) {
 
-                if(this.id){
+                if (this.id) {
 
                     let ngbDate = this.capForm.controls['starting_date'].value;
-                    let date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+                    let date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
                     let ngbDate2 = this.capForm.controls['ending_date'].value;
-                    let date2 = new Date(ngbDate2.year, ngbDate2.month-1, ngbDate2.day);
+                    let date2 = new Date(ngbDate2.year, ngbDate2.month - 1, ngbDate2.day);
 
                     var dateone = new Date(date);
                     var datetwo = new Date(date2);
 
-                    var tempohan = Math.round(this.calcBusinessDays(dateone,datetwo));
+                    var tempohan = Math.round(this.calcBusinessDays(dateone, datetwo));
 
                     this.durationCap = tempohan;
 
 
-                    let capability : Capability = new Capability (
+                    let capability: Capability = new Capability(
                         this.capForm.controls['name'].value,
                         this.kepakaran,
                         this.capForm.controls['status'].value,
@@ -397,9 +397,9 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                     )
 
                     this.capabilityService.updateCapability(capability).subscribe(
-                        success=>{
+                        success => {
                             for (var i = 0; i < this.newLs.length; ++i) {
-                                if(this.newLs[i].id == null){
+                                if (this.newLs[i].id == null) {
                                     console.log("create new instance:", this.newLs[i].name)
                                     let capabilityActivity: CapabilityActivity = new CapabilityActivity(
                                         this.newLs[i].name,
@@ -410,14 +410,14 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                                         this.newLs[i].endo,
                                         this.capObj,
                                         null,
-                                        null,null,null
-                                        )
+                                        null, null, null
+                                    )
                                     console.log("created instance:", capabilityActivity)
                                     this.capabilityService.createAct(capabilityActivity).subscribe();
                                 }
-                                else{
+                                else {
                                     for (var j = 0; j < this.oldLs.length; ++j) {
-                                        if(this.newLs[i].id == this.oldLs[j].id){
+                                        if (this.newLs[i].id == this.oldLs[j].id) {
                                             console.log("no change on instance", this.oldLs[j].name)
                                             this.oldLs.splice(j, 1);
 
@@ -431,18 +431,18 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                                 this.capabilityService.deleteCapabilityAct(this.oldLs[i].id).subscribe();
                             }
                             for (var j = 0; j < this.coachersOld.length; ++j) {
-                               this.capabilityService.deleteCapabilityCoach(this.coachersOld[j].id).subscribe();
+                                this.capabilityService.deleteCapabilityCoach(this.coachersOld[j].id).subscribe();
                             }
                             for (var i = 0; i < this.coachers.length; ++i) {
                                 this.userService.getUserById(this.coachers[i].id).subscribe(
-                                  data => {
-                                    let capabilityCoach: CapabilityCoach = new CapabilityCoach(
-                                      data,
-                                      this.capObj,
-                                      null)
+                                    data => {
+                                        let capabilityCoach: CapabilityCoach = new CapabilityCoach(
+                                            data,
+                                            this.capObj,
+                                            null)
 
-                                      this.capabilityService.createCoach(capabilityCoach).subscribe();
-                                  }
+                                        this.capabilityService.createCoach(capabilityCoach).subscribe();
+                                    }
                                 );
                             }
                             this.redirectCapPage()
@@ -457,19 +457,19 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-                }else{
+                } else {
                     let ngbDate = this.capForm.controls['starting_date'].value;
-                    let date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+                    let date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
                     let ngbDate2 = this.capForm.controls['ending_date'].value;
-                    let date2 = new Date(ngbDate2.year, ngbDate2.month-1, ngbDate2.day);
+                    let date2 = new Date(ngbDate2.year, ngbDate2.month - 1, ngbDate2.day);
 
                     var dateone = new Date(date);
                     var datetwo = new Date(date2);
 
-                    var tempohan = Math.round(this.calcBusinessDays(dateone,datetwo));
+                    var tempohan = Math.round(this.calcBusinessDays(dateone, datetwo));
                     this.durationCap = tempohan;
 
-                    let capability : Capability = new Capability (
+                    let capability: Capability = new Capability(
                         this.capForm.controls['name'].value,
                         this.kepakaran,
                         this.capForm.controls['status'].value,
@@ -485,10 +485,10 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                     )
 
                     this.capabilityService.createCapability(capability).subscribe(
-                        data =>{
+                        data => {
                             this.capTemp = data;
 
-                            let manday: MandayTransaction = new MandayTransaction (
+                            let manday: MandayTransaction = new MandayTransaction(
                                 'Capability',
                                 this.capTemp.id,
                                 1,
@@ -497,11 +497,11 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                             );
 
                             this.mandayService.createMandayTrans(manday).subscribe(
-                                success=>{
+                                success => {
                                     this.usedManday = this.mandayObj.mandayUsed;
-                                    this.usedManday = this.usedManday +1;
+                                    this.usedManday = this.usedManday + 1;
 
-                                    let manday2: Manday = new Manday (
+                                    let manday2: Manday = new Manday(
                                         null,
                                         null,
                                         this.usedManday,
@@ -522,14 +522,14 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
                                     this.activities[i].endo,
                                     this.capTemp,
                                     null,
-                                    null,null,null
+                                    null, null, null
                                 )
                                 this.capabilityService.createAct(capabilityActivity).subscribe();
                             }
                             for (var i = 0; i < this.coachers.length; ++i) {
                                 this.userService.getUserById(this.coachers[i].id).subscribe(
-                                    data =>{
-                                        let capCoach : CapabilityCoach = new CapabilityCoach(
+                                    data => {
+                                        let capCoach: CapabilityCoach = new CapabilityCoach(
                                             data,
                                             this.capTemp,
                                             null
@@ -552,106 +552,106 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    redirectCapPage(){
+    redirectCapPage() {
         this.router.navigate(['/capability/listing']);
     }
 
     //coachers list /api/usergetcoach
-    modalCoach(){
-        if(this.datatable!=null){
+    modalCoach() {
+        if (this.datatable != null) {
             this.datatable.destroy();
         }
-             var options = {
-                data: {
-                        type: "remote",
-                        source: {
-                            read: {
+        var options = {
+            data: {
+                type: "remote",
+                source: {
+                    read: {
 
-                                url: environment.hostname+"/api/usergetcoach",
-                                headers: {
-                                    "Authorization": this.bearToken
-                                },
-                                params:{
-                                    coachLs: this.coachList
-                                }
-
-                            }
+                        url: environment.hostname + "/api/usergetcoach",
+                        headers: {
+                            "Authorization": this.bearToken
                         },
-                        pageSize: 10,
-                        saveState: {
-                            cookie: false,
-                            webstorage: false
-                        },
-                        serverPaging: !0,
-                        serverFiltering: !0,
-                        serverSorting: !0
-                    },
-                    layout: {
-                        theme: "default",
-                        class: "",
-                        scroll: !1,
-                        height: 550,
-                        footer: !1
-                    },
-                    sortable: !0,
-                    pagination: !0,
-                    columns: [{
-                        field: "id",
-                        title: "#",
-                        sortable: !1,
-                        width: 40,
-                        textAlign: "center",
-                        template: function(row){
-                            return row.user.id;
-                           },
-                        selector: {
-                            class: "m-checkbox--solid m-checkbox--brand checkFn"
+                        params: {
+                            coachLs: this.coachList
                         }
-                    }, {
-                        field: "name",
-                        title: "Nama",
-                        sortable: "asc",
-                        filterable: !1,
-                        width: 150,
-                        template: function(row){
-                            return row.user.name;
-                           }
-                    }, {
-                        field: "email",
-                        title: "Email",
-                        width: 150,
-                        template: function(row){
-                            return row.user.email;
-                           }
-                    }]
-                  }
 
-                let datatable = (<any>$('#api_methods')).mDatatable(options);
+                    }
+                },
+                pageSize: 10,
+                saveState: {
+                    cookie: false,
+                    webstorage: false
+                },
+                serverPaging: !0,
+                serverFiltering: !0,
+                serverSorting: !0
+            },
+            layout: {
+                theme: "default",
+                class: "",
+                scroll: !1,
+                height: 550,
+                footer: !1
+            },
+            sortable: !0,
+            pagination: !0,
+            columns: [{
+                field: "id",
+                title: "#",
+                sortable: !1,
+                width: 40,
+                textAlign: "center",
+                template: function(row) {
+                    return row.user.id;
+                },
+                selector: {
+                    class: "m-checkbox--solid m-checkbox--brand checkFn"
+                }
+            }, {
+                field: "name",
+                title: "Nama",
+                sortable: "asc",
+                filterable: !1,
+                width: 150,
+                template: function(row) {
+                    return row.user.name;
+                }
+            }, {
+                field: "email",
+                title: "Email",
+                width: 150,
+                template: function(row) {
+                    return row.user.email;
+                }
+            }]
+        }
 
-                this.datatable = datatable;
-                this.datatable.load();
+        let datatable = (<any>$('#api_methods')).mDatatable(options);
 
-                $("#m_form_search").on("keyup", function(e) {
-                    this.datatable.setDataSourceParam("search", $(this).val());
-                    this.datatable.load();
-                })
+        this.datatable = datatable;
+        this.datatable.load();
 
-               
+        $("#m_form_search").on("keyup", function(e) {
+            this.datatable.setDataSourceParam("search", $(this).val());
+            this.datatable.load();
+        })
 
-              $(".m_datatable").on("m-datatable--on-check", function(e, a) {
-                  var l = datatable.setSelectedRecords().getSelectedRecords().length;
-                  $("#m_datatable_selected_number").html(l), l > 0 && $("#m_datatable_group_action_form").slideDown()
-              }).on("m-datatable--on-uncheck m-datatable--on-layout-updated", function(e, a) {
-                  var l = datatable.setSelectedRecords().getSelectedRecords().length;
-                  $("#m_datatable_selected_number").html(l), 0 === l && $("#m_datatable_group_action_form").slideUp()
-              })
+
+
+        $(".m_datatable").on("m-datatable--on-check", function(e, a) {
+            var l = datatable.setSelectedRecords().getSelectedRecords().length;
+            $("#m_datatable_selected_number").html(l), l > 0 && $("#m_datatable_group_action_form").slideDown()
+        }).on("m-datatable--on-uncheck m-datatable--on-layout-updated", function(e, a) {
+            var l = datatable.setSelectedRecords().getSelectedRecords().length;
+            $("#m_datatable_selected_number").html(l), 0 === l && $("#m_datatable_group_action_form").slideUp()
+        })
     }
 
     //on add coach button
-    onCheckOn(id: string){
+    onCheckOn(id: string) {
 
         for (var i = 0; i < this.coachers.length; ++i) {
-            if(this.coachers[i].id == id){
+            if (this.coachers[i].id == id) {
                 this.coachList.splice(i, 1)
                 this.coachers.splice(i, 1)
                 break;
@@ -670,43 +670,43 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
         )
     }
 
-    onCheckOff(index){
-      this.coachList.splice(index, 1);
-      this.coachers.splice(index, 1);
+    onCheckOff(index) {
+        this.coachList.splice(index, 1);
+        this.coachers.splice(index, 1);
     }
 
-    deleteAktiviti(index){
+    deleteAktiviti(index) {
         this.activities.splice(index, 1);
         this.newLs.splice(index, 1);
     }
 
-    newAct(){
+    newAct() {
 
         var form = $('#activityForm');
 
-         form.validate({
-           rules:{
-             start: "required",
-             endo: "required"
-           }
+        form.validate({
+            rules: {
+                start: "required",
+                endo: "required"
+            }
         });
 
 
-        if(!form.valid()){
+        if (!form.valid()) {
             return false;
-        }else{
-            if(this.activityForm.valid){
+        } else {
+            if (this.activityForm.valid) {
 
                 //To Calculate Tempoh
                 let ngbDate = this.activityForm.controls['start'].value;
-                let date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+                let date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
                 let ngbDate2 = this.activityForm.controls['endo'].value;
-                let date2 = new Date(ngbDate2.year, ngbDate2.month-1, ngbDate2.day);
+                let date2 = new Date(ngbDate2.year, ngbDate2.month - 1, ngbDate2.day);
 
                 var dateone = new Date(date);
                 var datetwo = new Date(date2);
 
-                var tempohan = Math.round(this.calcBusinessDays(dateone,datetwo));
+                var tempohan = Math.round(this.calcBusinessDays(dateone, datetwo));
 
                 this.activities.push({
                     name: this.activityForm.controls['name'].value,
@@ -735,23 +735,23 @@ export class SettingCapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    tambah(){
-        if(this.capForm.controls['starting_date'].value==null||this.capForm.controls['ending_date'].value==null){
+    tambah() {
+        if (this.capForm.controls['starting_date'].value == null || this.capForm.controls['ending_date'].value == null) {
             $("#m_modal_date").modal("show");
-        }else{
+        } else {
             let ngbDate = this.capForm.controls['starting_date'].value;
-            let date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+            let date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
             let dateA = moment(date, 'YYYY-MM-DD')
             let ngbDate2 = this.capForm.controls['ending_date'].value;
-            let date2 = new Date(ngbDate2.year, ngbDate2.month-1, ngbDate2.day);
+            let date2 = new Date(ngbDate2.year, ngbDate2.month - 1, ngbDate2.day);
             let dateB = moment(date2, 'YYYY-MM-DD')
-            if((dateA.isValid() && dateB.isValid())&&(ngbDate!=null && ngbDate2!=null)) {
-                this.minDate = {year: ngbDate.year, month: ngbDate.month, day: ngbDate.day};
-                this.minDate2 = {year: ngbDate.year, month: ngbDate.month, day: ngbDate.day};
-                this.maxDate = {year: ngbDate2.year, month: ngbDate2.month, day: ngbDate2.day};
-                this.maxDate2 = {year: ngbDate2.year, month: ngbDate2.month, day: ngbDate2.day};
+            if ((dateA.isValid() && dateB.isValid()) && (ngbDate != null && ngbDate2 != null)) {
+                this.minDate = { year: ngbDate.year, month: ngbDate.month, day: ngbDate.day };
+                this.minDate2 = { year: ngbDate.year, month: ngbDate.month, day: ngbDate.day };
+                this.maxDate = { year: ngbDate2.year, month: ngbDate2.month, day: ngbDate2.day };
+                this.maxDate2 = { year: ngbDate2.year, month: ngbDate2.month, day: ngbDate2.day };
                 $("#m_modal_2").modal("show");
-            }else{
+            } else {
 
                 $("#m_modal_date").modal("show");
             }

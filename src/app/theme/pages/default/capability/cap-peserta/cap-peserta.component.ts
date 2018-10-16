@@ -18,15 +18,15 @@ export class CapabilityPesertaComponent implements OnInit, AfterViewInit, OnDest
 
 
     id: string;
-    
+
     users: any[];
-    tempUsr:any;
+    tempUsr: any;
     capForm: FormGroup;
     private sub: any;
 
 
-    constructor(private _script: ScriptLoaderService, private capabilityService:CapabilityService, private router:Router, private route: ActivatedRoute) { }
-    
+    constructor(private _script: ScriptLoaderService, private capabilityService: CapabilityService, private router: Router, private route: ActivatedRoute) { }
+
     ngOnInit() {
 
 
@@ -39,8 +39,8 @@ export class CapabilityPesertaComponent implements OnInit, AfterViewInit, OnDest
             this.capabilityService.getCapabilityUser(this.id).subscribe(
                 data => {
                     this.tempUsr = data;
-                    this.users = this.tempUsr.filter(value=> value.status === '1')
-                    if(this.users.length==0){
+                    this.users = this.tempUsr.filter(value => value.status === '1')
+                    if (this.users.length == 0) {
                         $("#m_modal_kosong").modal("show");
                     }
                 }
@@ -48,30 +48,30 @@ export class CapabilityPesertaComponent implements OnInit, AfterViewInit, OnDest
         });
 
         this.capForm = new FormGroup({
-            name: new FormControl({value: '', disabled: true}, Validators.required),
-        
+            name: new FormControl({ value: '', disabled: true }, Validators.required),
+
         })
-    
-    
+
+
     }
 
-    close(){
+    close() {
         $("#m_modal_kosong").modal("hide");
         this.router.navigate(['/cap/list/coach']);
     }
-    redirectValuation(id){
-        this.router.navigate(['/cap/valuation/'+id]);
+    redirectValuation(id) {
+        this.router.navigate(['/cap/valuation/' + id]);
     }
 
-    ngOnDestroy(): void{
-       this.sub.unsubscribe();
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     ngAfterViewInit() {
-         // this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-         //     'assets/osdec/validation/training/training-val.js');
+        // this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+        //     'assets/osdec/validation/training/training-val.js');
     }
 
-    onSubmit(){
+    onSubmit() {
     }
 }

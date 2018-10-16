@@ -9,8 +9,8 @@ import { environment } from "../../../../../../environments/environment";
 
 import { message } from "../../../../../message/default";
 
-declare let toastr:any;
-declare let jQuery:any;
+declare let toastr: any;
+declare let jQuery: any;
 
 
 @Component({
@@ -21,16 +21,16 @@ declare let jQuery:any;
 })
 export class SchemaListComponent implements OnInit, AfterViewInit {
 
-  token : string;
-  bearToken : string;
-  allId: any[];
-  id: string;
+    token: string;
+    bearToken: string;
+    allId: any[];
+    id: string;
 
-  confirmType: string;
-  confirmMsg: string;
-  btnAction: string;
+    confirmType: string;
+    confirmMsg: string;
+    btnAction: string;
 
-  datatable: any;
+    datatable: any;
     constructor(private elRef: ElementRef, private _script: ScriptLoaderService, private router: Router, private schemaService: SchemaService) { }
 
     ngOnInit() {
@@ -107,10 +107,9 @@ export class SchemaListComponent implements OnInit, AfterViewInit {
                 title: "Tindakan",
                 sortable: !1,
                 overflow: "visible",
-                template: function(t)
-                {
-                    return '<a href="/setting-schema/edit/'+t.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill btn-outline-success" title="Kemaskini Maklumat">\t\t\t\t\t\t\t<i class="la la-pencil"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t'+
-                    '<button id="'+t.id+'" class="deleteFn m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill btn-outline-danger" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</button>\t\t\t\t\t'
+                template: function(t) {
+                    return '<a href="/setting-schema/edit/' + t.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill btn-outline-success" title="Kemaskini Maklumat">\t\t\t\t\t\t\t<i class="la la-pencil"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t' +
+                        '<button id="' + t.id + '" class="deleteFn m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill btn-outline-danger" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</button>\t\t\t\t\t'
                 }
             }]
         }
@@ -124,23 +123,23 @@ export class SchemaListComponent implements OnInit, AfterViewInit {
         })
 
         $(document).on('click', '#m_datatable_check_all', (e) => {
-          e.preventDefault();
+            e.preventDefault();
 
-          let cbArr: any[] = new Array();
+            let cbArr: any[] = new Array();
 
-          var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
-          $cbAnswer.each( function(i) {
-            var status = $(this).is(":checked");
-            if(status){
-              var id = $(this).val();
-              cbArr.push(id);
-            }
-           });
+            var $cbAnswer = $(".m-datatable__body").find(".m-checkbox > input");
+            $cbAnswer.each(function(i) {
+                var status = $(this).is(":checked");
+                if (status) {
+                    var id = $(this).val();
+                    cbArr.push(id);
+                }
+            });
 
-           this.allId = cbArr;
-           this.btnAction = "DELETE_ALL";
-           this.confirmMsg = message.global.confirmDelete;
-           jQuery('#m_modal_add').modal('show');
+            this.allId = cbArr;
+            this.btnAction = "DELETE_ALL";
+            this.confirmMsg = message.global.confirmDelete;
+            jQuery('#m_modal_add').modal('show');
         });
 
         $(".m_datatable").on("m-datatable--on-check", function(e, a) {
@@ -152,14 +151,14 @@ export class SchemaListComponent implements OnInit, AfterViewInit {
         })
 
         $(document).on('click', '.deleteFn', (e) => {
-          e.preventDefault();
-          var id = $(e.target).closest('.m-datatable__row').find('[data-field="id"]').find('.m-checkbox > input').val();
-          var newid = id.toString();
+            e.preventDefault();
+            var id = $(e.target).closest('.m-datatable__row').find('[data-field="id"]').find('.m-checkbox > input').val();
+            var newid = id.toString();
 
-          this.id = newid;
-          this.btnAction = "DELETE";
-          this.confirmMsg = message.global.confirmDelete;
-          jQuery('#m_modal_add').modal('show');
+            this.id = newid;
+            this.btnAction = "DELETE";
+            this.confirmMsg = message.global.confirmDelete;
+            jQuery('#m_modal_add').modal('show');
 
         });
     }
@@ -170,36 +169,36 @@ export class SchemaListComponent implements OnInit, AfterViewInit {
 
 
 
-    onConfirm($event){
-      $event.preventDefault();
+    onConfirm($event) {
+        $event.preventDefault();
 
-      let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-      if(this.btnAction === "DELETE"){
+        if (this.btnAction === "DELETE") {
 
-        if(this.id){
-          this.schemaService.deleteSchemaById(this.id)
-            .subscribe(
-              successCode => {
-                toastr.success(message.global.successDelete);
-                jQuery('#m_modal_add').modal('hide');
-                 this.datatable.reload();
-              },
-              errorCode => {
-                toastr.success(message.global.successDelete);
-                jQuery('#m_modal_add').modal('hide');
-                this.datatable.reload();
-              });
+            if (this.id) {
+                this.schemaService.deleteSchemaById(this.id)
+                    .subscribe(
+                    successCode => {
+                        toastr.success(message.global.successDelete);
+                        jQuery('#m_modal_add').modal('hide');
+                        this.datatable.reload();
+                    },
+                    errorCode => {
+                        toastr.success(message.global.successDelete);
+                        jQuery('#m_modal_add').modal('hide');
+                        this.datatable.reload();
+                    });
+            }
+        } else if (this.btnAction === "DELETE_ALL") {
+            for (let id of this.allId) {
+                this.schemaService.deleteSchemaById(id)
+                    .subscribe();
+            }
+            toastr.success(message.global.successDelete);
+            jQuery('#m_modal_add').modal('hide');
+            setTimeout(() => { this.datatable.reload(); }, 2000)
         }
-      }else if(this.btnAction === "DELETE_ALL"){
-        for(let id of this.allId){
-          this.schemaService.deleteSchemaById(id)
-            .subscribe();
-        }
-        toastr.success(message.global.successDelete);
-        jQuery('#m_modal_add').modal('hide');
-        setTimeout(()=>{ this.datatable.reload(); }, 2000)
-      }
     }
 
 

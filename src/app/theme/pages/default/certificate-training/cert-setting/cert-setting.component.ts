@@ -21,23 +21,23 @@ import { NgbDatepickerConfig, NgbDateParserFormatter, NgbDateStruct } from '@ng-
 import { NgbDateFRParserFormatter } from "../../../../../_directives/ngb-date-fr-parser-formatter"
 
 declare var $: any;
-declare let toastr:any;
-declare var jQuery:any;
+declare let toastr: any;
+declare var jQuery: any;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./cert-setting.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers: [CertificationService, UserService, TechnologyService,  MandayService, {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
+    providers: [CertificationService, UserService, TechnologyService, MandayService, { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }]
 
 })
-export class CertSettingComponent implements OnInit, AfterViewInit, OnDestroy{
-model;
-    minDate: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    maxDate: NgbDateStruct = {year: 2099, month: 12, day: 31};
+export class CertSettingComponent implements OnInit, AfterViewInit, OnDestroy {
+    model;
+    minDate: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    maxDate: NgbDateStruct = { year: 2099, month: 12, day: 31 };
 
-    endMin: NgbDateStruct = {year: 1950, month: 1, day: 1};
-    startMax: NgbDateStruct = {year: 2099, month: 12, day: 31};
+    endMin: NgbDateStruct = { year: 1950, month: 1, day: 1 };
+    startMax: NgbDateStruct = { year: 2099, month: 12, day: 31 };
 
     certification: Certification;
     id: string;
@@ -47,19 +47,19 @@ model;
     isEditable = false;
 
     message: any = {
-          success: "Maklumat telah berjaya disimpan",
-          update: "Maklumat telah berjaya dikemaskini",
-        }
+        success: "Maklumat telah berjaya disimpan",
+        update: "Maklumat telah berjaya dikemaskini",
+    }
 
     manday: any;
-    manday2:any;
+    manday2: any;
     mandayUsed: any;
     mandayId: string;
     usedManday: number;
     mandayObj: any;
 
     databaseLs: any[];
-    bearToken : string;
+    bearToken: string;
 
     technology: Technology;
     user: User;
@@ -79,44 +79,44 @@ model;
     loaded: boolean = false;
     errAvatar: boolean = false;
 
-    confirmType : string = "success";
-    confirmMsg : string;
+    confirmType: string = "success";
+    confirmMsg: string;
 
     constructor(private _script: ScriptLoaderService,
-      private certificationService:CertificationService,
-      private userService:UserService,
-      private technologyService:TechnologyService,
-      private mandayService:MandayService,
-      private router:Router,
-      private route: ActivatedRoute,
-      private parserFormatter: NgbDateParserFormatter,
-      config: NgbDatepickerConfig) { 
-      
-      config.outsideDays = 'collapsed';
-      config.firstDayOfWeek = 7; 
+        private certificationService: CertificationService,
+        private userService: UserService,
+        private technologyService: TechnologyService,
+        private mandayService: MandayService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private parserFormatter: NgbDateParserFormatter,
+        config: NgbDatepickerConfig) {
 
-      config.markDisabled = (date: NgbDateStruct) => {
-        const d = new Date(date.year, date.month - 1, date.day);
-        return d.getDay() === 0 || d.getDay() === 6;
-      };
+        config.outsideDays = 'collapsed';
+        config.firstDayOfWeek = 7;
+
+        config.markDisabled = (date: NgbDateStruct) => {
+            const d = new Date(date.year, date.month - 1, date.day);
+            return d.getDay() === 0 || d.getDay() === 6;
+        };
     }
 
-    onChange(value){
-        if(value==null){
+    onChange(value) {
+        if (value == null) {
             this.endMin = this.endMin;
-        }else{
+        } else {
             this.endMin = value;
         }
     }
 
-    onChange2(value){
-        if(value==null){
+    onChange2(value) {
+        if (value == null) {
             this.startMax = this.startMax;
-        }else{
+        } else {
             this.startMax = value;
         }
     }
-   
+
     onFileChange(event) {
         if (event.target.files.length > 0) {
             let file = event.target.files[0];
@@ -125,275 +125,275 @@ model;
     }
 
     clearFile() {
-      this.certForm.get('avatar').setValue(null);
-      this.fileInput.nativeElement.value = '';
+        this.certForm.get('avatar').setValue(null);
+        this.fileInput.nativeElement.value = '';
     }
 
 
     ngOnInit() {
 
-    this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
 
-      this.technologyService.getTechnology().subscribe(
-          success => {
-            this.technologies = success;
-         }
-      );
+        this.technologyService.getTechnology().subscribe(
+            success => {
+                this.technologies = success;
+            }
+        );
 
-      this.mandayService.getManday().subscribe(
-           data => {
+        this.mandayService.getManday().subscribe(
+            data => {
                 this.manday = data;
-                this.manday2= this.manday.filter(value =>value.category==='certificate');
+                this.manday2 = this.manday.filter(value => value.category === 'certificate');
                 this.mandayObj = this.manday2[0];
-          }
+            }
 
         );
 
 
-      this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
-      });
+        this.sub = this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
 
-      this.certForm = new FormGroup({
-        title: new FormControl('', Validators.required),
-        technology: new FormControl('0', Validators.required),
-        //duration: new FormControl('', Validators.required),
-        remark: new FormControl('', Validators.required),
-        place: new FormControl('', Validators.required),
-        level: new FormControl('', Validators.required),
-        status: new FormControl('', Validators.required),
-        startDate: new FormControl('', Validators.required),
-        endDate: new FormControl('', Validators.required),
-        avatar: new FormControl(),
-        limitation: new FormControl('0', Validators.required)
+        this.certForm = new FormGroup({
+            title: new FormControl('', Validators.required),
+            technology: new FormControl('0', Validators.required),
+            //duration: new FormControl('', Validators.required),
+            remark: new FormControl('', Validators.required),
+            place: new FormControl('', Validators.required),
+            level: new FormControl('', Validators.required),
+            status: new FormControl('', Validators.required),
+            startDate: new FormControl('', Validators.required),
+            endDate: new FormControl('', Validators.required),
+            avatar: new FormControl(),
+            limitation: new FormControl('0', Validators.required)
 
 
-      });
+        });
 
-      //Load cert by id to edit
-      if (this.id) { //edit form
-          this.isEditable = true;
+        //Load cert by id to edit
+        if (this.id) { //edit form
+            this.isEditable = true;
 
-         this.certificationService.getCertificationById(this.id).subscribe(
-           cert => {
+            this.certificationService.getCertificationById(this.id).subscribe(
+                cert => {
 
-             var startDate = new Date(cert.startDate);
-             var endDate = new Date(cert.endDate);
-              var techId = "";
-              var tech = cert.technology;
-              this.technology = cert.technology;
-              if(tech){
-                techId = tech.id;
-              }
-               this.imageSrc = "data:image/JPEG;base64,"+cert.image;
-               this.id = cert.id;
-               this.certForm.patchValue({
-               title: cert.title,
-               technology: techId,
-               user: cert.user,
-               startDate: {year: startDate.getFullYear(), month: startDate.getMonth()+1, day: startDate.getDate()},
-               endDate: {year: endDate.getFullYear(), month: endDate.getMonth()+1, day: endDate.getDate()},
-               place: cert.place,
-               level: cert.level,
-               status: cert.status,
-               remark: cert.remark,
-               limitation: cert.limitation,
+                    var startDate = new Date(cert.startDate);
+                    var endDate = new Date(cert.endDate);
+                    var techId = "";
+                    var tech = cert.technology;
+                    this.technology = cert.technology;
+                    if (tech) {
+                        techId = tech.id;
+                    }
+                    this.imageSrc = "data:image/JPEG;base64," + cert.image;
+                    this.id = cert.id;
+                    this.certForm.patchValue({
+                        title: cert.title,
+                        technology: techId,
+                        user: cert.user,
+                        startDate: { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() },
+                        endDate: { year: endDate.getFullYear(), month: endDate.getMonth() + 1, day: endDate.getDate() },
+                        place: cert.place,
+                        level: cert.level,
+                        status: cert.status,
+                        remark: cert.remark,
+                        limitation: cert.limitation,
 
-             });
+                    });
 
-             if(techId){
-                       this.setTechnology(techId);
-             }
-            },error => {
-             console.log(error);
-            }
-         );
-       }
+                    if (techId) {
+                        this.setTechnology(techId);
+                    }
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
 
     }
 
-    ngOnDestroy(): void{
+    ngOnDestroy(): void {
     }
 
     ngAfterViewInit() {
-         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-             'assets/osdec/validation/certification/cert-val.js', 'assets/osdec/validation/validation.js');
+        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/osdec/validation/certification/cert-val.js', 'assets/osdec/validation/validation.js');
 
     }
 
     setTechnology(id: any): void {
-      this.currentTechnology = this.technologies.filter(value =>value.id===id);
-      this.technology = this.currentTechnology[0];
+        this.currentTechnology = this.technologies.filter(value => value.id === id);
+        this.technology = this.currentTechnology[0];
     }
 
     onSubmit() {
 
-      var form = $('#certForm');
+        var form = $('#certForm');
 
-         form.validate({
-           rules:{
-             startDate: "required",
-             endDate: "required"
-           }
+        form.validate({
+            rules: {
+                startDate: "required",
+                endDate: "required"
+            }
         });
 
 
-        if(!form.valid()){
+        if (!form.valid()) {
             return false;
-      }else{
-      if (this.certForm.valid) {
+        } else {
+            if (this.certForm.valid) {
 
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        let ngbDate = this.certForm.controls['startDate'].value;
-        let ngbDate2 = this.certForm.controls['endDate'].value;
-        let startdate = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
-        let enddate = new Date(ngbDate2.year, ngbDate2.month-1, ngbDate2.day);
+                let ngbDate = this.certForm.controls['startDate'].value;
+                let ngbDate2 = this.certForm.controls['endDate'].value;
+                let startdate = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
+                let enddate = new Date(ngbDate2.year, ngbDate2.month - 1, ngbDate2.day);
 
-        if (this.id){
-          let certification: Certification = new Certification(
-            this.certForm.controls['title'].value,
-            this.technology,
-            this.user,
-            //this.certForm.controls['duration'].value,
-            startdate,
-            enddate,
-            this.certForm.controls['place'].value,
-            this.certForm.controls['level'].value,
-            this.certForm.controls['status'].value,
-            this.certForm.controls['remark'].value,
-            this.id,
-            null,
-            null,
-            currentUser.id,
-            this.certForm.controls['limitation'].value
-            );
-
-          let input = new FormData();
-            input.append('avatar', this.certForm.get('avatar').value);
-            input.append('info', new Blob([JSON.stringify(certification)],
-                {
-                    type: "application/json"
-                }));
-
-            const formModel = input;
-
-            this.certificationService.updateCertification(formModel).subscribe(
-              success => {
-                        this.redirectCertPage();
-                        this.isEditable = true;
-                        this.loading = false;
-                        toastr.success(this.message.update);
-                        }
-                   )
-
-            }else{
-            let certification: Certification = new Certification(
-            this.certForm.controls['title'].value,
-            this.technology,
-            this.user,
-            //this.certForm.controls['duration'].value,
-            startdate,
-            enddate,
-            this.certForm.controls['place'].value,
-            this.certForm.controls['level'].value,
-            this.certForm.controls['status'].value,
-            this.certForm.controls['remark'].value,
-            null,
-            null,
-            currentUser.id,
-            null,
-            this.certForm.controls['limitation'].value,
-
-            );
-
-            let input = new FormData();
-                input.append('avatar', this.certForm.get('avatar').value);
-                input.append('info', new Blob([JSON.stringify(certification)],
-                    {
-                        type: "application/json"
-                    }));
-
-                const formModel = input;
-
-            this.certificationService.createCertification(formModel).subscribe(
-                 data=>{
-
-                  this.certTemp = data;
-
-                    let manday: MandayTransaction = new MandayTransaction (
-                    'Persijilan',
-                    this.certTemp.id,
-                    1,
-                    null,
-                    startdate
+                if (this.id) {
+                    let certification: Certification = new Certification(
+                        this.certForm.controls['title'].value,
+                        this.technology,
+                        this.user,
+                        //this.certForm.controls['duration'].value,
+                        startdate,
+                        enddate,
+                        this.certForm.controls['place'].value,
+                        this.certForm.controls['level'].value,
+                        this.certForm.controls['status'].value,
+                        this.certForm.controls['remark'].value,
+                        this.id,
+                        null,
+                        null,
+                        currentUser.id,
+                        this.certForm.controls['limitation'].value
                     );
 
-                  this.mandayService.createMandayTrans(manday).subscribe(
+                    let input = new FormData();
+                    input.append('avatar', this.certForm.get('avatar').value);
+                    input.append('info', new Blob([JSON.stringify(certification)],
+                        {
+                            type: "application/json"
+                        }));
 
-                    success => {
+                    const formModel = input;
 
-                      this.usedManday = this.mandayObj.mandayUsed; //value lama
-                      this.usedManday = this.usedManday +1;
+                    this.certificationService.updateCertification(formModel).subscribe(
+                        success => {
+                            this.redirectCertPage();
+                            this.isEditable = true;
+                            this.loading = false;
+                            toastr.success(this.message.update);
+                        }
+                    )
 
-                      let manday2: Manday = new Manday (
+                } else {
+                    let certification: Certification = new Certification(
+                        this.certForm.controls['title'].value,
+                        this.technology,
+                        this.user,
+                        //this.certForm.controls['duration'].value,
+                        startdate,
+                        enddate,
+                        this.certForm.controls['place'].value,
+                        this.certForm.controls['level'].value,
+                        this.certForm.controls['status'].value,
+                        this.certForm.controls['remark'].value,
                         null,
                         null,
-                        this.usedManday,
+                        currentUser.id,
                         null,
-                        this.mandayObj.id
-                        );
+                        this.certForm.controls['limitation'].value,
 
-                      this.mandayService.updateMandayUsed(manday2).subscribe(
+                    );
 
-                      success => {
-                        this.redirectCertPage();
-                        this.isEditable = true;
-                        this.loading = false;
-                        toastr.success(this.message.success);
-                      });
-                    })
-                })
-              }
-           }
-         }
-       }
+                    let input = new FormData();
+                    input.append('avatar', this.certForm.get('avatar').value);
+                    input.append('info', new Blob([JSON.stringify(certification)],
+                        {
+                            type: "application/json"
+                        }));
+
+                    const formModel = input;
+
+                    this.certificationService.createCertification(formModel).subscribe(
+                        data => {
+
+                            this.certTemp = data;
+
+                            let manday: MandayTransaction = new MandayTransaction(
+                                'Persijilan',
+                                this.certTemp.id,
+                                1,
+                                null,
+                                startdate
+                            );
+
+                            this.mandayService.createMandayTrans(manday).subscribe(
+
+                                success => {
+
+                                    this.usedManday = this.mandayObj.mandayUsed; //value lama
+                                    this.usedManday = this.usedManday + 1;
+
+                                    let manday2: Manday = new Manday(
+                                        null,
+                                        null,
+                                        this.usedManday,
+                                        null,
+                                        this.mandayObj.id
+                                    );
+
+                                    this.mandayService.updateMandayUsed(manday2).subscribe(
+
+                                        success => {
+                                            this.redirectCertPage();
+                                            this.isEditable = true;
+                                            this.loading = false;
+                                            toastr.success(this.message.success);
+                                        });
+                                })
+                        })
+                }
+            }
+        }
+    }
 
     redirectCertPage() {
-      this.router.navigate(['/cert/listing']);
+        this.router.navigate(['/cert/listing']);
     }
 
     handleInputChange(e) {
 
-          // if (event.target.files.length > 0) {
-          //     let file = event.target.files[0];
-          //     this.trainingForm.get('avatar').setValue(file);
-          // }
-            var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+        // if (event.target.files.length > 0) {
+        //     let file = event.target.files[0];
+        //     this.trainingForm.get('avatar').setValue(file);
+        // }
+        var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
 
-            var pattern = /image-*/;
-            var reader = new FileReader();
+        var pattern = /image-*/;
+        var reader = new FileReader();
 
-            if (!file.type.match(pattern)) {
-                alert('invalid format');
-                return;
-            }
-
-            this.loaded = false;
-
-            this.certForm.get('avatar').setValue(file);
-
-            reader.onload = this._handleReaderLoaded.bind(this);
-            reader.readAsDataURL(file);
+        if (!file.type.match(pattern)) {
+            alert('invalid format');
+            return;
         }
 
-        handleImageLoad() {
-            this.imageLoaded = true;
-        }
+        this.loaded = false;
 
-        _handleReaderLoaded(e) {
-            var reader = e.target;
-            this.imageSrc = reader.result;
-            this.loaded = true;
-        }
+        this.certForm.get('avatar').setValue(file);
+
+        reader.onload = this._handleReaderLoaded.bind(this);
+        reader.readAsDataURL(file);
     }
+
+    handleImageLoad() {
+        this.imageLoaded = true;
+    }
+
+    _handleReaderLoaded(e) {
+        var reader = e.target;
+        this.imageSrc = reader.result;
+        this.loaded = true;
+    }
+}

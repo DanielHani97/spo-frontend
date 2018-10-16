@@ -4,15 +4,15 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
-  selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
-  templateUrl: "./role-list.component.html",
-  encapsulation: ViewEncapsulation.None,
+    selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
+    templateUrl: "./role-list.component.html",
+    encapsulation: ViewEncapsulation.None,
 })
 export class RoleListComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

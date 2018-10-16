@@ -13,8 +13,8 @@ import { AssesmentService } from '../../../../../services/assesment/assesment.se
 import { Assesment } from '../../../../../model/assesment/assesment'
 import { message } from "../../../../../message/default";
 
-declare let toastr:any;
-declare var jQuery:any;
+declare let toastr: any;
+declare var jQuery: any;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./cert-register.component.html",
@@ -32,49 +32,49 @@ export class CertRegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     id: string;
     user: any;
     private sub: any;
-    userid : string;
+    userid: string;
 
     objUser = null;
 
     message: any = {
-      success: "Permohonan latihan telah berjaya disimpan",
-      error404: "Penilaian Kendiri tiada bagi Latihan ini, Sila hubungi Pentadbir sistem untuk maklumat lanjut",
-      error409: "Anda telah membuat Penilaian untuk Latihan ini."
+        success: "Permohonan latihan telah berjaya disimpan",
+        error404: "Penilaian Kendiri tiada bagi Latihan ini, Sila hubungi Pentadbir sistem untuk maklumat lanjut",
+        error409: "Anda telah membuat Penilaian untuk Latihan ini."
     }
 
-    confirmType : string = "success";
-    confirmMsg : string;
-    action : string;
+    confirmType: string = "success";
+    confirmMsg: string;
+    action: string;
 
     constructor(private _script: ScriptLoaderService,
-      private certificationService:CertificationService,
-      private router:Router,
-      private route: ActivatedRoute,
-      private assesmentService: AssesmentService) { }
+        private certificationService: CertificationService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private assesmentService: AssesmentService) { }
 
 
     ngOnInit() {
 
-         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-             this.userid = currentUser.id;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.userid = currentUser.id;
 
-            this.certificationService.getCertification().subscribe (
-                certification => {
+        this.certificationService.getCertification().subscribe(
+            certification => {
 
-                     this.user = certification;
+                this.user = certification;
 
-                },
-           );
+            },
+        );
 
-            this.certificationService.getUser(this.userid).subscribe(
-                data => {
-                    this.objUser = data;
-               }
-            )
+        this.certificationService.getUser(this.userid).subscribe(
+            data => {
+                this.objUser = data;
+            }
+        )
     }
 
-    backPage(){
-      this.router.navigate(['/cert/list/']);
+    backPage() {
+        this.router.navigate(['/cert/list/']);
     }
 
     redirectNewListPage(id: string) {
@@ -84,74 +84,74 @@ export class CertRegisterComponent implements OnInit, AfterViewInit, OnDestroy {
                 data => {
                     this.certification = data;
 
-                    let certificationUser: CertificationUser = new CertificationUser (
-                    this.objUser,
-                    this.certification,
-                    null,
-                    "1",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,null);
+                    let certificationUser: CertificationUser = new CertificationUser(
+                        this.objUser,
+                        this.certification,
+                        null,
+                        "1",
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null, null);
 
                     let assesArr: any[] = new Array();
-                    let assesObj : Assesment =  new Assesment (
-                      null,
-                      null,
-                      null,
-                      data.level,//level
-                      null,
-                      data.technology,//tech
-                      null,
-                      null,
-                      null,
-                      null,
-                      this.objUser//user
+                    let assesObj: Assesment = new Assesment(
+                        null,
+                        null,
+                        null,
+                        data.level,//level
+                        null,
+                        data.technology,//tech
+                        null,
+                        null,
+                        null,
+                        null,
+                        this.objUser//user
                     )
                     assesArr.push(assesObj);
 
                     this.certificationService.isExistCertificationUser(certificationUser).subscribe(
-                        success=>{
+                        success => {
 
-                          this.assesmentService.generateQue(assesArr).subscribe(
-                            success => {
-                              this.action = "NEW";
-                              this.confirmMsg = message.certificate.new;
-                              this.confirmType = "danger";
-                              jQuery('#m_modal_add').modal('show');
-                              localStorage.setItem("EXAMOBJ",JSON.stringify(success));
-                              localStorage.setItem("CERTOBJ",JSON.stringify(data));
-                              localStorage.setItem("ASSESMODE","CERTIFICATE");
-                            },
-                            error => {
-                              var errorType = error;
+                            this.assesmentService.generateQue(assesArr).subscribe(
+                                success => {
+                                    this.action = "NEW";
+                                    this.confirmMsg = message.certificate.new;
+                                    this.confirmType = "danger";
+                                    jQuery('#m_modal_add').modal('show');
+                                    localStorage.setItem("EXAMOBJ", JSON.stringify(success));
+                                    localStorage.setItem("CERTOBJ", JSON.stringify(data));
+                                    localStorage.setItem("ASSESMODE", "CERTIFICATE");
+                                },
+                                error => {
+                                    var errorType = error;
 
-                              if(errorType == 404){
-                                toastr.error(message.certificate.error404);
-                              }else if(errorType == 409){
-                                this.confirmMsg = message.certificate.error409;
-                                this.confirmType = "success";
-                                this.action = "EXIST";
-                                jQuery('#m_modal_add').modal('show');
+                                    if (errorType == 404) {
+                                        toastr.error(message.certificate.error404);
+                                    } else if (errorType == 409) {
+                                        this.confirmMsg = message.certificate.error409;
+                                        this.confirmType = "success";
+                                        this.action = "EXIST";
+                                        jQuery('#m_modal_add').modal('show');
 
-                              }
-                            }
-                          );
+                                    }
+                                }
+                            );
                         },
-                        error=>{
-                          console.log(error)
+                        error => {
+                            console.log(error)
                             toastr.error(message.cap.danger);
                         }
                     );
-          }
-        );
-      }
+                }
+            );
+        }
     }
 
     redirectNewDetailsPage(id: string) {
-    this.router.navigate(['cert/details/', id]);
+        this.router.navigate(['cert/details/', id]);
     }
 
 
@@ -159,44 +159,44 @@ export class CertRegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    ngOnDestroy(): void{
+    ngOnDestroy(): void {
     }
 
 
-    onSubmit(){
+    onSubmit() {
 
     }
 
-    onConfirm($event){
-      $event.preventDefault();
+    onConfirm($event) {
+        $event.preventDefault();
 
-      if(this.action === "NEW"){
+        if (this.action === "NEW") {
 
-        jQuery('#m_modal_add').modal('hide');
-        this.router.navigate(['assesment/user']);
-      }else if(this.action === "EXIST"){
+            jQuery('#m_modal_add').modal('hide');
+            this.router.navigate(['assesment/user']);
+        } else if (this.action === "EXIST") {
 
-        let certificationUser: CertificationUser = new CertificationUser (
-        this.objUser,
-        this.certification,
-        null,
-        "1",
-        null,
-        this.objUser,
-        null,
-        null,
-        null,
-        null,null);
+            let certificationUser: CertificationUser = new CertificationUser(
+                this.objUser,
+                this.certification,
+                null,
+                "1",
+                null,
+                this.objUser,
+                null,
+                null,
+                null,
+                null, null);
 
-        this.certificationService.createCertificationUser(certificationUser).subscribe(
-            success => {
-                this.isEditable = true;
-                this.loading = false;
-                jQuery('#m_modal_add').modal('hide');
-                toastr.success(message.certificate.success);
-                this.router.navigate(['cert/list/']);
-            }
-        );
-      }
+            this.certificationService.createCertificationUser(certificationUser).subscribe(
+                success => {
+                    this.isEditable = true;
+                    this.loading = false;
+                    jQuery('#m_modal_add').modal('hide');
+                    toastr.success(message.certificate.success);
+                    this.router.navigate(['cert/list/']);
+                }
+            );
+        }
     }
 }

@@ -24,11 +24,11 @@ export class TrainingDetails2Component implements OnInit, AfterViewInit {
     user: any;
     userid: string;
 
-    title : string;
-    endDate : string;
-    startDate : string;
-    level : string;
-    remark : string;
+    title: string;
+    endDate: string;
+    startDate: string;
+    level: string;
+    remark: string;
 
     objUser = null;
 
@@ -36,7 +36,7 @@ export class TrainingDetails2Component implements OnInit, AfterViewInit {
     private sub: any;
     imageStr: string = "";
 
-    constructor(private _script: ScriptLoaderService, private trainingService:TrainingService, private router:Router, private route: ActivatedRoute) { }
+    constructor(private _script: ScriptLoaderService, private trainingService: TrainingService, private router: Router, private route: ActivatedRoute) { }
 
 
     ngOnInit() {
@@ -58,9 +58,9 @@ export class TrainingDetails2Component implements OnInit, AfterViewInit {
         );
 
         this.trainingService.getUser(this.userid).subscribe(
-                data => {
-                    this.objUser = data;
-                }
+            data => {
+                this.objUser = data;
+            }
         )
 
 
@@ -68,43 +68,43 @@ export class TrainingDetails2Component implements OnInit, AfterViewInit {
 
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
-           this.trainingService.getTrainingById(this.id).subscribe(
+            this.trainingService.getTrainingById(this.id).subscribe(
                 data => {
 
-                this.title = data.title,
-                this.endDate = this.formatDate(data.endDate),
-                this.startDate = this.formatDate(data.startDate),
-                this.level = data.level,
-                this.remark = data.remark
+                    this.title = data.title,
+                        this.endDate = this.formatDate(data.endDate),
+                        this.startDate = this.formatDate(data.startDate),
+                        this.level = data.level,
+                        this.remark = data.remark
 
-                this.imageStr=data.image;
+                    this.imageStr = data.image;
 
                 });
-               },
+        },
 
             error => {
-              console.log(error);
+                console.log(error);
             }
-           );
-      }
+        );
+    }
 
     ngAfterViewInit() {
 
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
     redirectListPage() {
-      this.router.navigate(['/training/list']);
+        this.router.navigate(['/training/list']);
     }
 
-    onSubmit(){
+    onSubmit() {
 
-        }
     }
+}

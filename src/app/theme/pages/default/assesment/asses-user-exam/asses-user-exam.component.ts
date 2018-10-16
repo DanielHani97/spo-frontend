@@ -14,15 +14,15 @@ import { environment } from "../../../../../../environments/environment";
     encapsulation: ViewEncapsulation.None,
     providers: [AssesmentService]
 })
-export class AssesUserExamComponent implements OnInit, AfterViewInit{
+export class AssesUserExamComponent implements OnInit, AfterViewInit {
 
-    token : string;
-    bearToken : string;
+    token: string;
+    bearToken: string;
 
-    constructor(private elRef: ElementRef, private router: Router, private assesmentService:AssesmentService) { }
+    constructor(private elRef: ElementRef, private router: Router, private assesmentService: AssesmentService) { }
 
     ngOnInit() {
-      this.bearToken = "Bearer "+localStorage.getItem('jwtToken');
+        this.bearToken = "Bearer " + localStorage.getItem('jwtToken');
     }
 
     ngAfterViewInit() {
@@ -31,6 +31,6 @@ export class AssesUserExamComponent implements OnInit, AfterViewInit{
     }
 
     sitExam() {
-      this.router.navigate(['assesment/list/setup']);
-  }
+        this.router.navigate(['assesment/list/setup']);
+    }
 }

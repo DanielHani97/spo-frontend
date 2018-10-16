@@ -158,51 +158,51 @@ export class IndexComponent implements OnInit, AfterViewInit {
                 this.trainDate = data;
 
                 for (let obj of data) {
-                  var instanceDate = new Date(obj.instanceDate);
-                  var currentDate = new Date();
-                  var manday = obj.manday;
-                  var month = instanceDate.getMonth();
-                  var year = instanceDate.getFullYear();
-                  var year2 = currentDate.getFullYear();
+                    var instanceDate = new Date(obj.instanceDate);
+                    var currentDate = new Date();
+                    var manday = obj.manday;
+                    var month = instanceDate.getMonth();
+                    var year = instanceDate.getFullYear();
+                    var year2 = currentDate.getFullYear();
 
                     if (year == year2) {
 
-                      if (month == 0) {
-                          this.arrayTrain[0] = this.arrayTrain[0] + manday;
-                      }
-                      if (month == 1) {
-                          this.arrayTrain[1] = this.arrayTrain[1] + manday;
-                      }
-                      if (month == 2) {
-                          this.arrayTrain[2] = this.arrayTrain[2] + manday;
-                      }
-                      if (month == 3) {
-                          this.arrayTrain[3] = this.arrayTrain[3] + manday;
-                      }
-                      if (month == 4) {
-                          this.arrayTrain[4] = this.arrayTrain[4] + manday;
-                      }
-                      if (month == 5) {
-                          this.arrayTrain[5] = this.arrayTrain[5] + manday;
-                      }
-                      if (month == 6) {
-                          this.arrayTrain[6] = this.arrayTrain[6] + manday;
-                      }
-                      if (month == 7) {
-                          this.arrayTrain[7] = this.arrayTrain[7] + manday;
-                      }
-                      if (month == 8) {
-                          this.arrayTrain[8] = this.arrayTrain[8] + manday;
-                      }
-                      if (month == 9) {
-                          this.arrayTrain[9] = this.arrayTrain[9] + manday;
-                      }
-                      if (month == 10) {
-                          this.arrayTrain[10] = this.arrayTrain[10] + manday;
-                      }
-                      if (month == 11) {
-                          this.arrayTrain[11] = this.arrayTrain[11] + manday;
-                      }
+                        if (month == 0) {
+                            this.arrayTrain[0] = this.arrayTrain[0] + manday;
+                        }
+                        if (month == 1) {
+                            this.arrayTrain[1] = this.arrayTrain[1] + manday;
+                        }
+                        if (month == 2) {
+                            this.arrayTrain[2] = this.arrayTrain[2] + manday;
+                        }
+                        if (month == 3) {
+                            this.arrayTrain[3] = this.arrayTrain[3] + manday;
+                        }
+                        if (month == 4) {
+                            this.arrayTrain[4] = this.arrayTrain[4] + manday;
+                        }
+                        if (month == 5) {
+                            this.arrayTrain[5] = this.arrayTrain[5] + manday;
+                        }
+                        if (month == 6) {
+                            this.arrayTrain[6] = this.arrayTrain[6] + manday;
+                        }
+                        if (month == 7) {
+                            this.arrayTrain[7] = this.arrayTrain[7] + manday;
+                        }
+                        if (month == 8) {
+                            this.arrayTrain[8] = this.arrayTrain[8] + manday;
+                        }
+                        if (month == 9) {
+                            this.arrayTrain[9] = this.arrayTrain[9] + manday;
+                        }
+                        if (month == 10) {
+                            this.arrayTrain[10] = this.arrayTrain[10] + manday;
+                        }
+                        if (month == 11) {
+                            this.arrayTrain[11] = this.arrayTrain[11] + manday;
+                        }
                     }
 
 
@@ -214,50 +214,50 @@ export class IndexComponent implements OnInit, AfterViewInit {
             data => {
                 this.coachDate = data
                 for (let obj of data) {
-                  var instanceDate = new Date(obj.instanceDate);
-                  var currentDate = new Date();
-                  var manday = obj.manday;
-                  var month = instanceDate.getMonth();
-                  var year = instanceDate.getFullYear();
-                  var year2 = currentDate.getFullYear();
+                    var instanceDate = new Date(obj.instanceDate);
+                    var currentDate = new Date();
+                    var manday = obj.manday;
+                    var month = instanceDate.getMonth();
+                    var year = instanceDate.getFullYear();
+                    var year2 = currentDate.getFullYear();
 
                     if (year == year2) {
-                      if (month == 0) {
-                          this.arrayCoach[0] = this.arrayCoach[0] + manday;
-                      }
-                      if (month == 1) {
-                          this.arrayCoach[1] = this.arrayCoach[1] + manday;
-                      }
-                      if (month == 2) {
-                          this.arrayCoach[2] = this.arrayCoach[2] + manday;
-                      }
-                      if (month == 3) {
-                          this.arrayCoach[3] = this.arrayCoach[3] + manday;
-                      }
-                      if (month == 4) {
-                          this.arrayCoach[4] = this.arrayCoach[4] + manday;
-                      }
-                      if (month == 5) {
-                          this.arrayCoach[5] = this.arrayCoach[5] + manday;
-                      }
-                      if (month == 6) {
-                          this.arrayCoach[6] = this.arrayCoach[6] + manday;
-                      }
-                      if (month == 7) {
-                          this.arrayCoach[7] = this.arrayCoach[7] + manday;
-                      }
-                      if (month == 8) {
-                          this.arrayCoach[8] = this.arrayCoach[8] + manday;
-                      }
-                      if (month == 9) {
-                          this.arrayCoach[9] = this.arrayCoach[9] + manday;
-                      }
-                      if (month == 10) {
-                          this.arrayCoach[10] = this.arrayCoach[10] + manday;
-                      }
-                      if (month == 11) {
-                          this.arrayCoach[11] = this.arrayCoach[11] + manday;
-                      }
+                        if (month == 0) {
+                            this.arrayCoach[0] = this.arrayCoach[0] + manday;
+                        }
+                        if (month == 1) {
+                            this.arrayCoach[1] = this.arrayCoach[1] + manday;
+                        }
+                        if (month == 2) {
+                            this.arrayCoach[2] = this.arrayCoach[2] + manday;
+                        }
+                        if (month == 3) {
+                            this.arrayCoach[3] = this.arrayCoach[3] + manday;
+                        }
+                        if (month == 4) {
+                            this.arrayCoach[4] = this.arrayCoach[4] + manday;
+                        }
+                        if (month == 5) {
+                            this.arrayCoach[5] = this.arrayCoach[5] + manday;
+                        }
+                        if (month == 6) {
+                            this.arrayCoach[6] = this.arrayCoach[6] + manday;
+                        }
+                        if (month == 7) {
+                            this.arrayCoach[7] = this.arrayCoach[7] + manday;
+                        }
+                        if (month == 8) {
+                            this.arrayCoach[8] = this.arrayCoach[8] + manday;
+                        }
+                        if (month == 9) {
+                            this.arrayCoach[9] = this.arrayCoach[9] + manday;
+                        }
+                        if (month == 10) {
+                            this.arrayCoach[10] = this.arrayCoach[10] + manday;
+                        }
+                        if (month == 11) {
+                            this.arrayCoach[11] = this.arrayCoach[11] + manday;
+                        }
                     }
 
 
@@ -276,43 +276,43 @@ export class IndexComponent implements OnInit, AfterViewInit {
                     var year = instanceDate.getFullYear();
                     var year2 = currentDate.getFullYear();
 
-                    if (year == year2){
-                      if (month == 0) {
-                          this.arrayCert[0] = this.arrayCert[0] + manday;
-                      }
-                      if (month == 1) {
-                          this.arrayCert[1] = this.arrayCert[1] + manday;
-                      }
-                      if (month == 2) {
-                          this.arrayCert[2] = this.arrayCert[2] + manday;
-                      }
-                      if (month == 3) {
-                          this.arrayCert[3] = this.arrayCert[3] + manday;
-                      }
-                      if (month == 4) {
-                          this.arrayCert[4] = this.arrayCert[4] + manday;
-                      }
-                      if (month == 5) {
-                          this.arrayCert[5] = this.arrayCert[5] + manday;
-                      }
-                      if (month == 6) {
-                          this.arrayCert[6] = this.arrayCert[6] + manday;
-                      }
-                      if (month == 7) {
-                          this.arrayCert[7] = this.arrayCert[7] + manday;
-                      }
-                      if (month == 8) {
-                          this.arrayCert[8] = this.arrayCert[8] + manday;
-                      }
-                      if (month == 9) {
-                          this.arrayCert[9] = this.arrayCert[9] + manday;
-                      }
-                      if (month == 10) {
-                          this.arrayCert[10] = this.arrayCert[10] + manday;
-                      }
-                      if (month == 11) {
-                          this.arrayCert[11] = this.arrayCert[11] + manday;
-                      }
+                    if (year == year2) {
+                        if (month == 0) {
+                            this.arrayCert[0] = this.arrayCert[0] + manday;
+                        }
+                        if (month == 1) {
+                            this.arrayCert[1] = this.arrayCert[1] + manday;
+                        }
+                        if (month == 2) {
+                            this.arrayCert[2] = this.arrayCert[2] + manday;
+                        }
+                        if (month == 3) {
+                            this.arrayCert[3] = this.arrayCert[3] + manday;
+                        }
+                        if (month == 4) {
+                            this.arrayCert[4] = this.arrayCert[4] + manday;
+                        }
+                        if (month == 5) {
+                            this.arrayCert[5] = this.arrayCert[5] + manday;
+                        }
+                        if (month == 6) {
+                            this.arrayCert[6] = this.arrayCert[6] + manday;
+                        }
+                        if (month == 7) {
+                            this.arrayCert[7] = this.arrayCert[7] + manday;
+                        }
+                        if (month == 8) {
+                            this.arrayCert[8] = this.arrayCert[8] + manday;
+                        }
+                        if (month == 9) {
+                            this.arrayCert[9] = this.arrayCert[9] + manday;
+                        }
+                        if (month == 10) {
+                            this.arrayCert[10] = this.arrayCert[10] + manday;
+                        }
+                        if (month == 11) {
+                            this.arrayCert[11] = this.arrayCert[11] + manday;
+                        }
                     }
 
                 }
@@ -417,12 +417,12 @@ export class IndexComponent implements OnInit, AfterViewInit {
                 }
             })
 
-            this.userService.countUser().subscribe(
-                data => {
-                    console.log("sadasdasdasd:"+data)
-                    this.noUser = data;
-                }
-            )
+        this.userService.countUser().subscribe(
+            data => {
+                console.log("sadasdasdasd:" + data)
+                this.noUser = data;
+            }
+        )
 
     }
     ngAfterViewInit() {

@@ -24,20 +24,20 @@ export class TrainingLaporanKehadiranComponent implements OnInit, AfterViewInit 
     user: any;
     userid: string;
 
-    title : string;
-    place : string;
-    endDate : string;
-    startDate : string;
-    level : string;
-    peserta : any[];
-    
+    title: string;
+    place: string;
+    endDate: string;
+    startDate: string;
+    level: string;
+    peserta: any[];
+
     objUser = null;
     kehadiran: any[];
 
     trainingForm: FormGroup;
     private sub: any;
 
-    constructor(private _script: ScriptLoaderService, private trainingService:TrainingService, private router:Router, private route: ActivatedRoute) { }
+    constructor(private _script: ScriptLoaderService, private trainingService: TrainingService, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
 
@@ -45,62 +45,62 @@ export class TrainingLaporanKehadiranComponent implements OnInit, AfterViewInit 
         this.userid = currentUser.id;
 
         this.trainingService.getUser(this.userid).subscribe(
-                data => {
-                    this.objUser = data;
-                }
+            data => {
+                this.objUser = data;
+            }
         )
 
-            this.sub = this.route.params.subscribe(
-              params => {
+        this.sub = this.route.params.subscribe(
+            params => {
                 this.id = params['id'];
-            //console.log("----------->"+this.id);
+                //console.log("----------->"+this.id);
 
-            this.trainingService.getCoachByTraining(this.id).subscribe(
+                this.trainingService.getCoachByTraining(this.id).subscribe(
                     data => {
                         this.user = data;
                     }
-             )
-
-            this.trainingService.getTrainingById(this.id).subscribe(
-                data => {
-
-                this.title = data.title,
-                this.place = data.place,
-                this.endDate = this.formatDate(data.endDate),
-                this.startDate = this.formatDate(data.startDate),
-                this.level = data.level
-                });
-               
-               this.trainingService.getTrainingLaporan(this.id).subscribe(
-                  data=>{
-                    this.kehadiran = data;
-                  }
                 )
-             },
+
+                this.trainingService.getTrainingById(this.id).subscribe(
+                    data => {
+
+                        this.title = data.title,
+                            this.place = data.place,
+                            this.endDate = this.formatDate(data.endDate),
+                            this.startDate = this.formatDate(data.startDate),
+                            this.level = data.level
+                    });
+
+                this.trainingService.getTrainingLaporan(this.id).subscribe(
+                    data => {
+                        this.kehadiran = data;
+                    }
+                )
+            },
 
             error => {
-              console.log(error);
+                console.log(error);
             }
-          );
-      }
+        );
+    }
 
     ngAfterViewInit() {
 
     }
 
-    formatDate(date){
+    formatDate(date) {
         var datemagic = new Date(date);
         var day = datemagic.getDate();
-        var month = datemagic.getMonth()+1;
+        var month = datemagic.getMonth() + 1;
         var year = datemagic.getFullYear();
         return day + '/' + month + '/' + year;
     }
 
 
-    onSubmit(){}
+    onSubmit() { }
 
-    backPage(){
-      this.router.navigate(['/training/laporan/']);
+    backPage() {
+        this.router.navigate(['/training/laporan/']);
     }
 
-  }
+}
