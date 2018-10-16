@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
+import { APP_INITIALIZER } from '@angular/core';
 
 
 @NgModule({
@@ -24,7 +25,10 @@ import { AuthModule } from "./auth/auth.module";
         ThemeRoutingModule,
         AuthModule,
     ],
-    providers: [ScriptLoaderService],
+    providers: [
+        ScriptLoaderService,
+        
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
