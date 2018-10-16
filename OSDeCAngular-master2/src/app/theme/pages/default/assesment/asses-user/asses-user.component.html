@@ -1,0 +1,201 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Penilaian Kendiri
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a href="#" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Penilaian Kendiri
+						</span>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Senarai Soalan Penilaian Kendiri
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Penilaian Kendiri
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin: Search Form -->
+			<form class="m-form m-form--fit m-form--label-align-right" novalidate id="queForm" (ngSubmit)="onSubmit()">
+				<div class="m-portlet__body">
+					<div id="questionList">
+						<div *ngFor="let obj of asses let j = index" [attr.data-index]="j">
+							<div *ngIf="j != 0" class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+							<div *ngIf="obj.details == null; else markdiv ">
+								<div *ngFor="let question of obj.assesmentQuestion let i = index" [attr.data-index]="i" class="form-group m-form__group row">
+									<div *ngIf=" i === 0; else other_content" class="col-form-label col-lg-3 col-sm-12">
+										<h5 class="m-section__heading">
+											{{obj.title}}
+										</h5>
+										<span class="m-section__sub">
+											Teknologi:
+												<span class="m--font-info">
+													{{obj.technology.name}}
+												</span>
+										</span>
+										<br>
+										<span class="m-section__sub">
+											Tahap:
+												<span class="m--font-info">
+													{{obj.level}}
+												</span>
+										</span>
+									</div>
+									<ng-template #other_content><div class="col-form-label col-lg-3 col-sm-12"></div></ng-template>
+									<div class="m-form__group form-group">
+										<blockquote class="blockquote">
+											<p class="mb-0 m--font-info">
+												{{i+1}})&nbsp;{{question.question}}
+											</p>
+										</blockquote>
+										<div *ngFor="let answer of question.assesmentAnswer" class="m-radio-list">
+											<label  class="m-radio m-radio--solid m-radio--success">
+												<input type="hidden" id="{{obj.technology.id}}" value="{{obj.level}}"/>
+												<input type="radio" class="ansRadFn" id="{{obj.id}}" name="{{question.id}}" value="{{answer.id}}">
+													{{answer.option}}
+												<span></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-9 ml-lg-auto">
+										 <button type="reset" [disabled]="loadingMark" [ngClass]="{'m-loader m-loader--right m-loader--success': loadingMark}" class="btn btn-outline-info" (click)="submitAnswer(obj.id)">Hantar Jawapan</button>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="obj.details != null " class="form-group m-form__group row">
+								<div class="col-form-label col-lg-3 col-sm-12">
+									<h5 class="m-section__heading">
+										{{obj.title}}
+									</h5>
+									<span class="m-section__sub">
+										Teknologi:
+											<span class="m--font-info">
+												{{obj.technology.name}}
+											</span>
+									</span>
+									<br>
+									<span class="m-section__sub">
+										Tahap:
+											<span class="m--font-info">
+												{{obj.level}}
+											</span>
+									</span>
+								</div>
+								<div class="m-form__group form-group">
+									<blockquote class="blockquote">
+										<p class="mb-0">
+											Markah :
+										</p>
+										<h1>
+											{{obj.details}}%
+										</h1>
+										<p class="mb-0">
+											{{obj.modifiedby}}
+										</p>
+									</blockquote>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div *ngIf="isSubmit"  class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">
+						</label>
+						<div class="m-form__group form-group">
+							<blockquote class="blockquote">
+								<p class="mb-0">
+									Markah :
+								</p>
+								<h1>
+									{{totalMarks}}%
+								</h1>
+								<div class="m-widget4__info">
+									<span *ngFor="let star of stars" class="fa fa-star star-checked w3-large"></span>
+								</div>
+							</blockquote>
+						</div>
+					</div> -->
+
+			</div>
+			<div class="m-portlet__foot m-portlet__foot--fit">
+				<div class="m-form__actions">
+					<div class="row">
+						<div class="col-lg-9 ml-lg-auto">
+							<button *ngIf="mode != 'COACHING' " type="reset" (click)="submit()" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-success">{{btnName}}</button>
+							 <button type="reset" class="btn btn-outline-danger" (click)="back()">Kembali</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+			<!--end: Search Form -->
+		</div>
+		<!--begin::Modal-->
+		<div class="modal fade" id="m_modal_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header m-portlet m-portlet--success m-portlet--head-solid-bg m-portlet--bordered">
+						<h5 class="modal-title text-white" id="exampleModalLabel">
+							Pengesahan
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">
+								&times;
+							</span>
+						</button>
+					</div>
+					<div class="modal-body col-centered">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-12 col-sm-12">
+								<p class="lead">{{confirmMsg}}</p>
+							</label>
+						</div>
+						<div class="row">
+							<div class="col-centered">
+								<button type="reset" class="btn btn-outline-danger" data-dismiss="modal">
+									Tutup
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end::Modal-->
+	</div>
+</div>

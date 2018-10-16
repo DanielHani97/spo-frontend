@@ -1,0 +1,570 @@
+<head>
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+    color: yellow;
+}
+</style>
+</head>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				Kemaskini Aktiviti Coaching
+			</h3>
+		</div>
+		<div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="m-portlet m-portlet--full-height m-portlet--tabs">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-tools">
+						<ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
+							<li class="nav-item m-tabs__item">
+								<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
+									<i class="flaticon-share m--hide"></i>
+									Maklumat Coaching
+								</a>
+							</li>
+							<li class="nav-item m-tabs__item">
+								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
+									Dokumentasi Coaching
+								</a>
+							</li>
+							<li class="nav-item m-tabs__item">
+								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_3" role="tab">
+									Peserta Coaching
+								</a>
+							</li>
+							<li class="nav-item m-tabs__item">
+								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_4" role="tab">
+									Maklumat Pelaksanaan Coaching
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="tab-content">
+					<div class="tab-pane active" id="m_user_profile_tab_1">
+						<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="coachingForm" id="coachingForm">
+							<div class="m-portlet__body">
+
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Nama Coaching
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="name" name="name">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Agensi
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="agency" name="agency">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Ketua Pasukan/Pemohon
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="user" name="user">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Framework
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="frontend" name="frontend">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Tahap Kemahiran Framework
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="frontendlevel" name="frontendlevel">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Language
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="backend" name="backend">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Tahap Kemahiran Language
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="backendlevel" name="backendlevel">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Database
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="database" name="database">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Tahap Kemahiran Database
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" formControlName="databaselevel" name="databaselevel">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-2 col-form-label" for="example-text-input">
+										Penerangan Keperluan Coaching
+									</label>
+									<div class="col-7">
+										<textarea class="form-control m-input m-input--solid" id="exampleTextarea" rows="6" formControlName="remarks" name="remarks"></textarea>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+
+					<div class="tab-pane fade" id="m_user_profile_tab_2">
+						<div class="m-portlet__body">
+							<div class="m-widget3">
+								<div class="m-widget3__item">
+									<div class="row m-row--no-padding align-items-center">
+										<div class="col">
+											<h4 class="m-widget1__title">
+												User Requirement Specification
+											</h4>
+											<span class="m-widget1__desc">
+												URS Sistem.docx
+											</span>
+										</div>
+										<div class="col m--align-right">
+											<button class="btn btn-outline-primary" type="button">
+												Muat Turun
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="m-widget3__item">
+									<div class="row m-row--no-padding align-items-center">
+										<div class="col">
+											<h4 class="m-widget1__title">
+												System Requirement Specification
+											</h4>
+											<span class="m-widget1__desc">
+												SRS Sistem.docx
+											</span>
+										</div>
+										<div class="col m--align-right">
+											<button class="btn btn-outline-primary" type="button">
+												Muat Turun
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="m-widget3__item">
+									<div class="row m-row--no-padding align-items-center">
+										<div class="col">
+											<h4 class="m-widget1__title">
+												System Definition Specification
+											</h4>
+											<span class="m-widget1__desc">
+												SDS Sistem.pdf
+											</span>
+										</div>
+										<div class="col m--align-right">
+											<button class="btn btn-outline-primary" type="button">
+												Muat Turun
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-pane fade" id="m_user_profile_tab_3">
+						<form class="m-form m-form--fit m-form--label-align-right">
+							<div class="m-portlet m-portlet--full-height">
+								<div class="m-portlet__body">
+                  <div class="m-widget3 m-widget4 m-widget4--progress">
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6 col-xl-3 border border-white" style="background: #e9f7ff" *ngFor="let item of user">
+                        <div class="col-md-12 col-lg-12 col-xl-3 m-widget4__item">
+                          <div class="m-widget4__img m-widget4__img--pic">
+                            <div *ngIf="item.user.image != null;else other_content">
+                              <img src="data:image/JPEG;base64,{{item.user.image}}" alt="">
+                            </div>
+                            <ng-template #other_content><img src="./assets/app/media/img/users/people.png" alt=""></ng-template>
+                          </div>
+                          <div class="m-widget4__info">
+                            <span class="m-widget4__title">
+                              <a href="#" (click)="redirectProfile(item.user.id)">
+                                {{item.user.name}}
+                              </a>
+                            </span>
+                            <br>
+                            <span class="m-widget4__sub">
+                              {{item.user.email}}
+                            </span>
+                          </div>
+
+                        </div>
+                        <div *ngIf="item.coaching.frontend != null " class="col-md-12 col-lg-12 col-xl-12">
+                          <div style="padding-bottom: 10px;">
+                            <div class="m-widget4__progress-wrapper">
+                              <span class="m-widget17__progress-number">
+                                {{item.coaching.frontend.modifiedby}}%
+                              </span>
+                              <span class="m-widget17__progress-label">
+                                {{item.coaching.frontend.name}} ({{item.coaching.frontendlevel}})
+                              </span>
+                              <div class="progress m-progress--sm">
+                                <div class="progress-bar bg-success" role="progressbar" [style.width]="item.coaching.frontend.modifiedby + '%'" aria-valuenow="65" aria-valuemin="0" aria-valuemax="23"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="item.coaching.backend != null " class="col-md-12 col-lg-12 col-xl-12">
+                          <div style="padding-bottom: 10px;">
+                            <div class="m-widget4__progress-wrapper">
+                              <span class="m-widget17__progress-number">
+                                {{item.coaching.backend.modifiedby}}%
+                              </span>
+                              <span class="m-widget17__progress-label">
+                                {{item.coaching.backend.name}}({{item.coaching.backendlevel}})
+                              </span>
+                              <div class="progress m-progress--sm">
+                                <div class="progress-bar bg-brand" role="progressbar" [style.width]="item.coaching.backend.modifiedby + '%'" aria-valuenow="65" aria-valuemin="0" aria-valuemax="23"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="item.coaching.database != null " class="col-md-12 col-lg-12 col-xl-12">
+                          <div style="padding-bottom: 10px;">
+                            <div class="m-widget4__progress-wrapper">
+                              <span class="m-widget17__progress-number">
+                                {{item.coaching.database.modifiedby}}%
+                              </span>
+                              <span class="m-widget17__progress-label">
+                                {{item.coaching.database.name}}({{item.coaching.databaselevel}})
+                              </span>
+                              <div class="progress m-progress--sm">
+                                <div class="progress-bar bg-danger" role="progressbar" [style.width]="item.coaching.database.modifiedby + '%'"  aria-valuenow="65" aria-valuemin="0" aria-valuemax="23"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="tab-pane fade" id="m_user_profile_tab_4">
+						<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="belowForm" id="belowForm">
+							<div class="m-portlet m-portlet--full-height">
+								<div class="m-portlet__body">
+									<div class="m-widget3">
+										<div class="m-widget3__item">
+											<div class="form-group m-form__group row">
+												<label  class="col-2 col-form-label">
+													Coacher
+												</label>
+												<div class="col-8">
+													<input *ngFor="let item of currentCoach" class="form-control m-input" type="text" placeholder="{{item.coach.name}}" disabled="true">
+												</div>
+											</div>
+
+											<div class="form-group m-form__group row">
+												<label  class="col-2 col-form-label">
+													Tarikh Mula Projek
+												</label>
+												<div class="col-8">
+													<input class="form-control m-input" type="text" formControlName="starting_date" name="starting_date">
+												</div>
+											</div>
+											<div class="form-group m-form__group row">
+												<label  class="col-2 col-form-label">
+													Tarikh Tamat Projek
+												</label>
+												<div class="col-8">
+													<input class="form-control m-input" type="text" formControlName="ending_date" name="ending_date">
+												</div>
+											</div>
+											<div class="form-group m-form__group row">
+												<label  class="col-2 col-form-label">
+													Peruntukan Manday
+												</label>
+												<div class="col-8">
+													<input class="form-control m-input" type="text" formControlName="reservedManday" name="reservedManday">
+												</div>
+											</div>
+											<div class="form-group m-form__group row">
+												<label class="col-2 col-form-label">
+													Catatan Coach
+												</label>
+												<div class="col-8">
+													<textarea class="form-control m-input m-input--solid" rows="3" formControlName="coach_remarks" name="coach_remarks"></textarea>
+												</div>
+											</div>
+
+											<div class="form-group m-form__group row">
+												<label  class="col-2 col-form-label">
+													Catatan Pentadbir
+												</label>
+												<div class="col-8">
+													<textarea class="form-control m-input m-input--solid" rows="3" formControlName="admin_remarks" name="admin_remarks">
+
+													</textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="m-portlet">
+		<div class="m-portlet m-portlet--full-height">
+			<div class="m-portlet__head">
+				<div class="m-portlet__head-caption">
+					<div class="m-portlet__head-title">
+						<h3 class="m-portlet__head-text">
+							Senarai Aktiviti
+						</h3>
+					</div>
+				</div>
+				<div class="m-portlet__head-tools">
+					<ul class="m-portlet__nav">
+						<li class="m-portlet__nav-item">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<button type="button" class="btn btn-outline-primary" (click)="tambah()">
+									<span>
+		  								<i class="la la-plus"></i>
+		  								<span>
+		  									Tambah
+		  								</span>
+									</span>
+								</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="m-portlet__body">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<br>
+					<table class="table m-table m-table--head-bg-brand">
+						<thead>
+							<tr>
+								<th>Aktiviti</th>
+								<th>Tempat</th>
+								<th>Tarikh Mula</th>
+								<th>Tarikh Tamat</th>
+								<th>Kehadiran</th>
+								<th>Tempoh</th>
+								<th> </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let activity of activities; let i = index">
+								<th>{{activity.name}}</th>
+								<th>{{activity.place}}</th>
+								<th>{{activity.start | date : "dd/MM/yyyy"}}</th>
+								<th>{{activity.endo | date : "dd/MM/yyyy"}}</th>
+								<th>{{activity.attendance}}</th>
+								<th>{{activity.duration}}</th>
+								<th *ngIf="activity.kelulusan == '1'"><span style="overflow: visible; width: 110px;">
+									<a (click)="deleteFn(i)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Padam"><i class="la la-trash"></i></a>
+								</span></th>
+							</tr>
+							<tr>
+								<th> </th>
+								<th> </th>
+								<th> </th>
+								<th> </th>
+								<th><strong>Jumlah Manday</strong></th>
+								<th><strong>{{jumlahManday}}</strong></th>
+								<th> </th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="m-portlet">
+		<div class="m-portlet__body">
+			<div class="col m--align-center">
+				<button type="submit" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-success" (click)="simpan()">
+                  Simpan
+                </button>
+                <button type="reset" class="btn btn-outline-danger" (click)="redirectListPage()">
+                  Kembali
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="m_modal_used" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--bordered">
+                <h5 class="modal-title text-white" id="exampleModalLabel">
+                    Bilangan Manday
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body col-centered">
+                <div class="form-group m-form__group row">
+                    <label class="col-form-label col-lg-12 col-sm-12">
+                        <p class="lead">Jumlah manday aktiviti melebihi manday yang diperuntukkan untuk sesi coaching ini.</p>
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-centered">
+                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">
+                            Okay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								Kemaskini Aktiviti
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">
+									&times;
+								</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="activityForm" id="activityForm" (ngSubmit)="newAct()">
+								<div class="m-portlet__body">
+
+									<div class="form-group m-form__group row">
+										<label class="col-form-label col-lg-5 col-sm-12">
+											Nama Aktiviti *
+										</label>
+										<div class="col-lg-6 col-md-10 col-sm-12">
+											<input type="text" class="form-control m-input" formControlName="name" name="name" id="name">
+										</div>
+									</div>
+									<div class="form-group m-form__group row">
+										<label class="col-form-label col-lg-5 col-sm-12">
+											Tempat Aktiviti *
+										</label>
+										<div class="col-lg-6 col-md-10 col-sm-12">
+											<input type="text" class="form-control m-input" formControlName="place" name="place">
+										</div>
+									</div>
+									<div class="form-group m-form__group row">
+										<label class="col-form-label col-lg-5 col-sm-12">
+											Tarikh Mula *
+										</label>
+										<div class="col-lg-6 col-md-10 col-sm-12">
+											<div class="input-group">
+												<input readonly="" placeholder="dd/mm/yyyy" class="form-control m-input" formControlName="start" name="start" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [maxDate]="maxDate2" id="start" [ngModel]="start" (ngModelChange)="onChange3($event)">
+									     		<button class="input-group-addon" (click)="d.toggle()" type="button">
+									       			<i class="la la-calendar glyphicon-th"></i>
+									      		</button>
+									      	</div>
+									      	<span class="m-form__help">
+
+											</span>
+										</div>
+									</div>
+									<div class="form-group m-form__group row">
+										<label class="col-form-label col-lg-5 col-sm-12">
+											Tarikh Tamat *
+										</label>
+										<div class="col-lg-6 col-md-10 col-sm-12">
+											<div class="input-group">
+												<input readonly="" placeholder="dd/mm/yyyy" class="form-control m-input" formControlName="endo" name="endo" ngbDatepicker #d2="ngbDatepicker" [minDate]="minDate2" [maxDate]="maxDate" id="endo" [ngModel]="endo" (ngModelChange)="onChange4($event)">
+									     		<button class="input-group-addon" (click)="d2.toggle()" type="button">
+									       			<i class="la la-calendar glyphicon-th"></i>
+									      		</button>
+									      	</div>
+									      	<span class="m-form__help">
+
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group m-form__group row">
+										<label class="col-form-label col-lg-5 col-sm-12">
+											Kehadiran *
+										</label>
+										<div class="m-radio-inline">
+											<label class="m-radio m-radio--bold m-radio--state-brand">
+												<input formControlName="attendance" name="attendance" type="radio" value="Ada">
+												Ada
+												<span></span>
+											</label>
+											<label class="m-radio m-radio--bold m-radio--state-brand">
+												<input formControlName="attendance" name="attendance" type="radio" value="Tiada">
+												Tiada
+												<span></span>
+											</label>
+											<span class="m-form__help">
+
+											</span>
+										</div>
+									</div>
+
+
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-outline-success">
+										Simpan
+									</button>
+									<button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+										Kembali
+									</button>
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>

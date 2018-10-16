@@ -1,0 +1,111 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Teknologi
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Cipta Teknologi Baru
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="technologyForm" id="technologyForm" (ngSubmit)="onSubmit()">
+                    <div class="m-portlet__body">
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">
+								Nama Teknologi*
+							</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input type="text" class="form-control m-input" formControlName="name" name="name" placeholder="Nama Teknologi">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">
+								Jenis Teknologi*
+							</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select id="jenis" class="form-control m-input" formControlName="type" name="type">
+									<option value="Frontend">Framework</option>
+									<option value="Backend">Language</option>
+									<option value="Database">Database</option>
+									<option value="Perkakasan">Perkakasan</option>
+                                    <option value="Lain-Lain">Lain-Lain</option>
+								</select>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group m-form__group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">
+                                Bahasa Pengaturcaraan*
+                            </label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select id="jenis" class="form-control m-input" formControlName="language" name="language">
+                                    <option>PHP</option>
+                                    <option>R</option>
+                                    <option>Java</option>
+                                    <option>JavaScript</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">
+								Status*
+							</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <div class="m-radio-inline">
+                                    <label class="m-radio m-radio--bold m-radio--state-brand">
+										<input formControlName="status" name="status" type="radio" value="1">
+										  Aktif
+										<span></span>
+									</label>
+                                     <label class="m-radio m-radio--bold m-radio--state-brand">
+										<input formControlName="status" name="status" type="radio" value="2">
+										  Tidak Aktif
+										<span></span>
+									</label>
+                                    <span class="m-form__help">
+                                            
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions">
+                            <div class="row">
+                                <div class="col-lg-9 ml-lg-auto">
+                                    <button type="submit" [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--success': loading}" class="btn btn-outline-success">
+	                  Hantar
+	                </button>
+                                    <button type="button" class="btn btn-outline-danger" (click)="redirectTechnologyPage()">
+	                  Batal
+	                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+</div>

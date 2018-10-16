@@ -1,0 +1,46 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				Senarai Penilaian Peserta
+			</h3>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+	<!--begin::Portlet-->
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Maklumat
+					</h3>
+					</div>
+				</div>
+			<div class="tab-content">
+					<div class="tab-pane active" id="m_user_profile_tab_1">
+						<form class="m-form m-form--fit m-form--label-align-right" novalidate [formGroup]="certForm" id="certForm" (ngSubmit)="onSubmit()">
+							<div class="m-portlet__body">
+								<div class="form-group m-form__group row"  *ngFor="let item of peserta">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Nama Peserta
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" type="email" formControlName="name" name="name" placeholder={{item.user.name}} >
+									</div>
+									<button id="{{item.id}}" (click)="redirectValuation(item.id)"  class="btn btn-outline-primary" type="button">
+									Nilai
+									</button>
+								</div>
+							</div>
+						</form>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
