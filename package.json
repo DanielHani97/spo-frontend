@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "start": "npm start",
-        "build": "npm run build",
+        "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev",
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
         "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
