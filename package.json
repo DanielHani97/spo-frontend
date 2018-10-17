@@ -2,16 +2,15 @@
     "name": "default",
     "version": "0.0.0",
     "license": "MIT",
-    "main": "src/server.js",
+    "main": "server.js",
     "scripts": {
-        "start": "node src/server.js | pino",
-        "build": "npm run build",
+        "ng": "ng",
+        "start": "node server.js",
+        "build": "ng build",
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
         "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
-        "postinstall": "npm run build",
-        "nodeshift": "nodeshift",
-        "tsformat": "tsfmt -r"
+        "nodeshift": "nodeshift"
     },
     "private": true,
     "dependencies": {
