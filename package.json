@@ -9,8 +9,7 @@
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
         "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
-        "postinstall": "npm run tsformat",
-        "tsformat": "tsfmt -r"
+        "postinstall": "npm install"
     },
     "private": true,
     "dependencies": {
