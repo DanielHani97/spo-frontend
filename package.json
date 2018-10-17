@@ -5,11 +5,12 @@
     "main": "src/server.js",
     "scripts": {
         "start": "node src/server.js | pino",
-        "build": "ng build",
+        "build": "npm run build",
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
         "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
         "postinstall": "npm run build",
+        "nodeshift": "nodeshift",
         "tsformat": "tsfmt -r"
     },
     "private": true,
@@ -44,6 +45,7 @@
         "@angular/cli": "^1.4.9",
         "@angular/compiler-cli": "^4.2.4",
         "@angular/language-service": "^4.2.4",
+        "nodeshift": "~1.9.0",
         "typescript": "2.6.1"
     }
 }
