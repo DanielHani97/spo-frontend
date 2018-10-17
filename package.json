@@ -2,13 +2,15 @@
     "name": "default",
     "version": "0.0.0",
     "license": "MIT",
+    "main": "src/server.js",
     "scripts": {
-        "start": "ng serve",
-        "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev",
+        "start": "node src/server.js | pino",
+        "build": "tsc",
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
         "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
-        "postinstall": "npm start"
+        "postinstall": "npm run build",
+        "tsformat": "tsfmt -r"
     },
     "private": true,
     "dependencies": {
