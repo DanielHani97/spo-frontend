@@ -8,7 +8,7 @@
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
         "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
-        "postinstall": "npm install -g @angular/cli@1.4"
+        "postinstall": "npm start"
     },
     "private": true,
     "dependencies": {
