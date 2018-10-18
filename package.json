@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "node server.js",
+        "start": "npm install @angular/cli@1.4 && ng serve",
         "build": "ng build",
         "test": "echo \"Error: no test... minimal project\" && exit 1",
         "lint": "echo \"Error: no lint... minimal project\" && exit 1",
@@ -30,16 +30,18 @@
         "classlist.js": "^1.1.20150312",
         "core-js": "^2.4.1",
         "enhanced-resolve": "^3.3.0",
+        "express": "^4.16.4",
         "jquery": "^3.2.1",
         "ng-recaptcha": "^3.0.0",
         "node-modules": "^1.0.1",
         "primeng": "^4.1.3",
         "rxjs": "^5.5.12",
+        "server": "^1.0.18",
         "typescript-formatter": "^5.2.0",
         "zone.js": "^0.8.14"
     },
     "devDependencies": {
-        "@angular/cli": "^1.4.9",
+        "@angular/cli": "^1.4.10",
         "@angular/compiler-cli": "^4.2.4",
         "@angular/language-service": "^4.2.4",
         "typescript": "^2.6.1"
