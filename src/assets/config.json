@@ -1,4 +1,5 @@
 {
     "production": false,
-    "hostname": "http://localhost:8080"
+    "hostname": "http://localhost:8080",
+    "angularhost": "http://angular1-spo-dev.apps.osdec.gov.my"
   }

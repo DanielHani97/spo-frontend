@@ -54,6 +54,10 @@
     }
   },
   "defaults": {
+    "serve": {
+        "port": 8080,
+        "host": "http://angular1-spo-dev.apps.osdec.gov.my"
+    },
     "styleExt": "scss",
     "component": {
       "spec": false,
