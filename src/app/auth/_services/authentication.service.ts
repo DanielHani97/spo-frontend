@@ -24,6 +24,8 @@ export class AuthenticationService {
     login(username: string, password: string) {
         let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: cpHeaders });
+        console.log( "cpHeaders => " + cpHeaders )
+        console.log( "options => " + options )
         return this.http.post(this.url, JSON.stringify({ username: username, password: password }), options)
             .map(
             success => {
